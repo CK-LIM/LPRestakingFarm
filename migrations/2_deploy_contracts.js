@@ -1,38 +1,57 @@
-const RestakingFarm = artifacts.require("RestakingFarm");
-const UniToken = artifacts.require("UniToken");
-const PurseToken = artifacts.require("PurseTokenUpgradable");
+// npx truffle migrate --reset --compile-all --network bscTestnet
 
+const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+
+// Pancake LP token Pair factory: https://testnet.bscscan.com/address/0xd9a601f3a434008b921f21185b814b55534eb243#readContract
+// Pancake LP token Pair:
+// 0xF52e1f503FffF3c212d72045839915B11478fAc6    PURSE-mUSDC
+// 0x58A26F9100f77aa68E19359EffDBd7f7B97320C1    mBNB-PURSE
+// 0x38da41759CF77FB897ef237D4116aa50aFb1F743    mWETH-PURSE
+// 0xEa6D6CE32bF9595c8e1ab706f7e8b2e2d8453850    PURSE-mUSDT
+// 0xF02D596b10297417e9F545DFDa8895F558a728A6    PURSE-mBTC
+
+// ONEINCH LP token pair:
+// 0x3A97a6084b10AA8d9Dd0DE753192E549f0D75bAe
+
+const RestakingFarm = artifacts.require("RestakingFarm");
+const LpToken = artifacts.require("LpToken");
+const PurseTokenUpgradable = artifacts.require("PurseTokenUpgradable");
+
+function tokens(n) {
+  return web3.utils.toWei(n, 'ether');
+}
 
 // network is for network and accounts is to allow people to have access to all accounts
-module.exports = async function(deployer, network, accounts) {
-    
-    // deploy mocktether & peceipt tokens...can remove the tether token and get real one
-    // deploy mock unitoken
-    await deployer.deploy(UniToken)
-    const uniToken = await UniToken.deployed()
+module.exports = async function (deployer, network, accounts) {
 
-    // deploy reward pursetoken
-    await deployer.deploy(PurseToken)
-    const purseToken = await PurseToken.deployed()
-    await purseToken.initialize(accounts[0],accounts[0],accounts[0],10,5,5)
-    // deploy RestakingFarm and pass in variables taken in in constructor ie the 2 token addresses and the 2 other variables
+    //Deploy PurseToken
+    const purseToken = await deployProxy(PurseTokenUpgradable,["0x8CF7Fb0326C6a5B5A8dA62e3FE8c5eD8Cb041217", "0xA2993e1171520ba0fD0AB39224e1B24BDa5c24a9", 10, 5, 5],{deployer, kind: 'uups' });
+    // const upgrade = await upgradeProxy(purseToken.address, PurseTokenUpgradableV2, { deployer }); //Upgrade smart contract
+    console.log(purseToken.address)
+    // console.log(upgrade.address)
 
-    await deployer.deploy(RestakingFarm, purseToken.address, uniToken.address, 100000000000000000000n, 1170)
-    const restakingFarm = await RestakingFarm.deployed()
-    await purseToken.addAdmin(restakingFarm.address)
-    await purseToken.setWhitelistedFrom(restakingFarm.address)
-    // transfer all lp tokens to RestakingFarm
-    // await purseToken.transfer(restakingFarm.address,'1000000000000000000000000000')
+  // deploy RestakingFarm and pass in variables taken in in constructor ie the 2 token addresses and the 2 other variables
+  await deployer.deploy(RestakingFarm, purseToken.address)
+  const restakingFarm = await RestakingFarm.deployed()
+  await restakingFarm.add("0xF52e1f503FffF3c212d72045839915B11478fAc6", tokens("100"), "false", 5000)
+  await restakingFarm.add("0x58A26F9100f77aa68E19359EffDBd7f7B97320C1", tokens("100"), "false", 5000)
+  await restakingFarm.add("0x38da41759CF77FB897ef237D4116aa50aFb1F743", tokens("100"), "false", 5000)
+  await restakingFarm.add("0x3A97a6084b10AA8d9Dd0DE753192E549f0D75bAe", tokens("100"), "false", 5000)
+  await purseToken.addAdmin(restakingFarm.address)
+  console.log("addAdmin")
+  await purseToken.setWhitelistedFrom(restakingFarm.address)
+  console.log("whitelistedAddress")
 
-    // transfer 100 mock USDT tokens to investor
-    // second account in ganache
-    await uniToken.transfer(accounts[1],'100000000000000000000')
+  // // transfer 100 mock USDT tokens to investor
+  // await lpToken.transfer(accounts[1], tokens('100'))
+  // console.log("done transfer1")
+  // // transfer 100 mock USDT tokens to investor
+  // await lpToken.transfer(accounts[2], tokens('100'))
+  // console.log("done transfer2")
+  // // transfer 100 mock USDT tokens to investor
+  // await lpToken.transfer(accounts[3], tokens('100'))
+  // console.log("done transfer3")
 
-    // transfer 100 mock USDT tokens to investor
-    // third account in ganache
-    await uniToken.transfer(accounts[2],'100000000000000000000')
-
-    // transfer 100 mock USDT tokens to investor
-    // forth account in ganache
-    await uniToken.transfer(accounts[3],'100000000000000000000')
+  // await restakingFarm.add(lpToken2.address, tokens('100'), false, 2170)
+  // console.log("addfarm")
 };

@@ -1,22 +1,38 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
-import UniToken from '../abis/UniToken.json'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import LpToken from '../abis/LpToken.json'
+import IPancakePair from '../abis/IPancakePair.json'
 import PurseTokenUpgradable from '../abis/PurseTokenUpgradable.json'
 import RestakingFarm from '../abis/RestakingFarm.json'
-import Navbar from './Navbar'
-import Main from './Main'
-import Deposit from './Deposit'
-import Withdraw from './Withdraw'
-import Owner from './Owner'
-import './App.css'
-import { BrowserRouter as Router,Switch, Route} from 'react-router-dom';
 
+import Navb from './Navbar'
+import Main from './Main'
+import Menu from './Menu'
+import Oneinch from './1inch'
+import Deposit from './Deposit'
+import Popup from './Popup'
+import './Popup.css'
+import './App.css'
 
 class App extends Component {
 
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
+    while (this.state.loading == false) {
+      if (this.state.wallet == false) {
+        await this.loadBlockchainData()
+        console.log("repeatfalse")
+        await this.delay(1500);
+      } else {
+        window.alert('Please connect metamask wallet to Binance Smart Chain Testnet and refresh webpage.')
+        await this.loadBlockchainData()
+        console.log("repeat")
+        await this.delay(1500);
+      }
+    }
   }
 
   async loadBlockchainData() {
@@ -24,64 +40,110 @@ class App extends Component {
 
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
-
+    const first4Account = this.state.account.substring(0, 4)
+    const last4Account = this.state.account.slice(-4)
+    this.setState({ first4Account: first4Account })
+    this.setState({ last4Account: last4Account })
     const networkId = await web3.eth.net.getId()
 
-    // Load uniToken
-
-    const uniTokenData = UniToken.networks[networkId]
-    if(uniTokenData) {
-      const uniToken = new web3.eth.Contract(UniToken.abi, uniTokenData.address)
-      this.setState({ uniToken })
-      let uniTokenBalance = await uniToken.methods.balanceOf(this.state.account).call()
-      this.setState({ uniTokenBalance: uniTokenBalance.toString() })
-    } else {
-      window.alert('UniToken contract not deployed to detected network.')
-    }
 
     // Load PurseTokenUpgradable
     const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
-    if(purseTokenUpgradableData) {
+    if (purseTokenUpgradableData) {
       const purseTokenUpgradable = new web3.eth.Contract(PurseTokenUpgradable.abi, purseTokenUpgradableData.address)
       this.setState({ purseTokenUpgradable })
       let purseTokenUpgradableBalance = await purseTokenUpgradable.methods.balanceOf(this.state.account).call()
       this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
-    } else {
-      window.alert('PurseTokenUpgradable contract not deployed to detected network.')
+      let purseTokenTotalSupply = await purseTokenUpgradable.methods.totalSupply().call()
+      this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
     }
+
+
+    // #########################################################################################################################
 
     // Load RestakingFarm
     const restakingFarmData = RestakingFarm.networks[networkId]
-    if(restakingFarmData) {
-      const uniToken = new web3.eth.Contract(UniToken.abi, uniTokenData.address)
-      const purseTokenUpgradable = new web3.eth.Contract(PurseTokenUpgradable.abi, purseTokenUpgradableData.address)
+    if (restakingFarmData) {
       const restakingFarm = new web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
       this.setState({ restakingFarm })
-      console.log(restakingFarm)
 
-      let uniTokenInContract = await uniToken.methods.balanceOf(restakingFarmData.address).call()
-      let purseTokenUpgradableInContract = await purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
-      this.setState({ uniTokenInContract })
-      this.setState({ purseTokenUpgradableInContract })
+      let poolLength = await restakingFarm.methods.poolLength().call()
+      this.setState({ poolLength })
 
-      let userInfo = await restakingFarm.methods.userInfo(this.state.account).call()
-      this.setState({ userInfo })
-      console.log({ userInfo: userInfo })
+      let totalrewardperblock = 0
+      let totalpendingReward = 0
 
-      let poolInfo = await restakingFarm.methods.poolInfo().call()
-      this.setState({ poolInfo })
-      console.log({ poolInfo: poolInfo })
-      
-      let pursePerBlock= await restakingFarm.methods.pursePerBlock().call()
-      let startBlock= await restakingFarm.methods.startBlock().call()
-      this.setState({ pursePerBlock})
-      this.setState({ startBlock})
+      let userSegmentInfo = [[], []]
+      let poolSegmentInfo = [[], []]
+      let lpTokenSegmentInContract = [[], []]
+      let lpTokenSegmentBalance = [[], []]
+      let lpTokenSegmentAsymbol = [[], []]
+      let lpTokenSegmentBsymbol = [[], []]
+      let pendingSegmentReward = [[], []]
+      let n = 0
+      let i = 0
+      for (i = 0; i < poolLength; i++) {
 
+        let userInfo = await restakingFarm.methods.userInfo(i, this.state.account).call()
+        let poolInfo = await restakingFarm.methods.poolInfo(i).call()
+
+        let lpTokenAddress = poolInfo.lpToken
+        let lpTokenPair = new web3.eth.Contract(IPancakePair.abi, lpTokenAddress)
+        let lpTokenPairA = await lpTokenPair.methods.token0().call()
+        let lpTokenPairB = await lpTokenPair.methods.token1().call()
+        let lpTokenA = new web3.eth.Contract(LpToken.abi, lpTokenPairA)
+        let lpTokenB = new web3.eth.Contract(LpToken.abi, lpTokenPairB)
+        let lpTokenInContract = await lpTokenPair.methods.balanceOf(restakingFarmData.address).call()
+        let lpTokenBalance = await lpTokenPair.methods.balanceOf(this.state.account).call()
+        let lpTokenPairsymbol = await lpTokenPair.methods.symbol().call()
+        let lpTokenAsymbol = await lpTokenA.methods.symbol().call()
+        let lpTokenBsymbol = await lpTokenB.methods.symbol().call()
+        let pendingReward = await restakingFarm.methods.pendingReward(i, this.state.account).call()
+
+        totalrewardperblock += parseInt(poolInfo.pursePerBlock)
+        totalpendingReward += parseInt(pendingReward)
+        // console.log(userInfo)
+
+        if (lpTokenPairsymbol == "Cake-LP") {
+          userSegmentInfo[0][n] = userInfo
+          poolSegmentInfo[0][n] = poolInfo
+          lpTokenSegmentInContract[0][n] = lpTokenInContract
+          lpTokenSegmentBalance[0][n] = lpTokenBalance
+          lpTokenSegmentAsymbol[0][n] = lpTokenAsymbol
+          lpTokenSegmentBsymbol[0][n] = lpTokenBsymbol
+          pendingSegmentReward[0][n] = pendingReward
+          n += 1
+        } else {
+          userSegmentInfo[1][n] = userInfo
+          poolSegmentInfo[1][n] = poolInfo
+          lpTokenSegmentInContract[1][n] = lpTokenInContract
+          lpTokenSegmentBalance[1][n] = lpTokenBalance
+          lpTokenSegmentAsymbol[1][n] = lpTokenAsymbol
+          lpTokenSegmentBsymbol[1][n] = lpTokenBsymbol
+          pendingSegmentReward[1][n] = pendingReward
+          n += 1
+        }
+      }
+      // this.setState({ n })
+      // this.setState({ i })
+      this.setState({ userSegmentInfo })
+      this.setState({ poolSegmentInfo })
+      this.setState({ lpTokenSegmentInContract })
+      this.setState({ lpTokenSegmentBalance })
+      this.setState({ lpTokenSegmentAsymbol })
+      this.setState({ lpTokenSegmentBsymbol })
+      this.setState({ pendingSegmentReward })
+
+      this.setState({ totalrewardperblock: totalrewardperblock.toString() })
+      this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
+
+
+      this.setState({ loading: false })
+      this.setState({ wallet: false })
     } else {
-      window.alert('RestakingFarm contract not deployed to detected network.')
+      this.setState({ loading: false })
+      this.setState({ wallet: true })
     }
-
-    this.setState({ loading: false })
   }
 
   async loadWeb3() {
@@ -97,155 +159,184 @@ class App extends Component {
     }
   }
 
-  deposit = (amount) => {
+  delay = ms => new Promise(res => setTimeout(res, ms));
+
+  deposit = async (i, amount, n) => {
     this.setState({ loading: true })
-    this.state.uniToken.methods.approve(this.state.restakingFarm._address, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.state.restakingFarm.methods.deposit(amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+    let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
+    // console.log(lpTokenAddress)
+    let lpToken = new window.web3.eth.Contract(LpToken.abi, lpTokenAddress)
+    await lpToken.methods.approve(this.state.restakingFarm._address, amount).send({ from: this.state.account }).then((result) => {
+      this.state.restakingFarm.methods.deposit(i, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({ loading: false })
+        this.componentWillMount()
       })
     })
   }
 
 
-  withdraw = (amount) => {
+  withdraw = (i, amount) => {
     this.setState({ loading: true })
-    this.state.restakingFarm.methods.withdraw(amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+    this.state.restakingFarm.methods.withdraw(i, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
       this.setState({ loading: false })
-
-      })
-  
+      this.componentWillMount()
+    })
   }
 
-  
-  
+  setI = (type, pair) => {
+    this.state.n = type
+    this.state.i = pair
+    // this.setState({ n: type })
+    // this.setState({ i: pair })
+  }
+
+  setTrigger = (state) => {
+    this.state.buttonPopup = state
+  }
+
+
   constructor(props) {
     super(props)
     this.state = {
       account: '',
-      uniToken: {},
+      lpToken: {},
       purseTokenUpgradable: {},
       restakingFarm: {},
-      uniTokenBalance: '0',
       purseTokenUpgradableBalance: '0',
-      uniTokenInContract: '0',
-      purseTokenUpgradableInContract: '0',
-      userInfo:'0',
-      poolInfo:'0',
-      PFXincirculation:'0',
-      pursePerBlock:'0',
-      startBlock:'0',
+      purseTokenTotalSupply: '0',
+      i: '0',
+      n: '0',
       loading: true,
-
+      wallet: true,
+      poolLength: '0',
+      userSegmentInfo: [[]],
+      poolSegmentInfo: [[]],
+      lpTokenSegmentInContract: [[]],
+      lpTokenSegmentBalance: [[]],
+      lpTokenSegmentAsymbol: [[]],
+      lpTokenSegmentBsymbol: [[]],
+      pendingSegmentReward: [[]],
+      totalrewardperblock: '0',
+      totalpendingReward: '0',
+      buttonPopup: false
     }
   }
 
   render() {
     let maincontent
+    let menucontent
     let depositcontent
-    let withdrawcontent
-    let ownercontent
-    if(this.state.loading) {
+    let oneinchcontent
+    if (this.state.loading || this.state.wallet) {
       maincontent =
-      <div class="wrap">
-      <div class="loading">
-        <div class="bounceball"></div>
-        <div class="text">ETHEREUM IS A LITTLE SLOW...</div>
-      </div>
-    </div>
+        <div className="wrap">
+          <div className="loading">
+            <div className="bounceball"></div>
+            <div className="textLoading">NETWORK IS A LITTLE SLOW...</div>
+          </div>
+        </div>
       depositcontent =
-      <div class="wrap">
-      <div class="loading">
-        <div class="bounceball"></div>
-        <div class="text">ETHEREUM IS A LITTLE SLOW...</div>
-      </div>
-    </div>
+        <div className="textLoadingSmall">Loading...</div>
+      menucontent =
+        <div className="wrap">
+          <div className="loading">
+            <div className="bounceball"></div>
+            <div className="textLoading">NETWORK IS A LITTLE SLOW...</div>
+          </div>
+        </div>
     } else {
       maincontent = <Main
-        uniTokenBalance={this.state.uniTokenBalance}
+        lpTokenBalance={this.state.lpTokenBalance}
+        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+        poolLength={this.state.poolLength}
+        deposit={this.deposit}
+        withdraw={this.withdraw}
+        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+        lpTokenInContract={this.state.lpTokenInContract}
+        totalrewardperblock={this.state.totalrewardperblock}
+      />
+      menucontent = <Menu
+        lpTokenBalance={this.state.lpTokenBalance}
         purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
         deposit={this.deposit}
         withdraw={this.withdraw}
-        uniTokenInContract={this.state.uniTokenInContract}
-        purseTokenUpgradableInContract={this.state.purseTokenUpgradableInContract}
-        userInfo={this.state.userInfo}
-        poolInfo={this.state.poolInfo}
-        pursePerBlock={this.state.pursePerBlock}
-        startBlock={this.state.startBlock}
+        setI={this.setI}
+        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+        totalpendingReward={this.state.totalpendingReward}
+        totalrewardperblock={this.state.totalrewardperblock}
+        userSegmentInfo={this.state.userSegmentInfo}
+        poolSegmentInfo={this.state.poolSegmentInfo}
+        lpTokenSegmentInContract={this.state.lpTokenSegmentInContract}
+        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
+        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
+        pendingSegmentReward={this.state.pendingSegmentReward}
+        buttonPopup={this.state.buttonPopup}
+        setTrigger={this.setTrigger}
       />
       depositcontent = <Deposit
-        uniTokenBalance={this.state.uniTokenBalance}
+        lpTokenBalance={this.state.lpTokenBalance}
         purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
         deposit={this.deposit}
         withdraw={this.withdraw}
-        uniTokenInContract={this.state.uniTokenInContract}
-        purseTokenUpgradableInContract={this.state.purseTokenUpgradableInContract}
-        userInfo={this.state.userInfo}
-        poolInfo={this.state.poolInfo}
-        pursePerBlock={this.state.pursePerBlock}
-        startBlock={this.state.startBlock}
+        i={this.state.i}
+        n={this.state.n}
+        userSegmentInfo={this.state.userSegmentInfo}
+        poolSegmentInfo={this.state.poolSegmentInfo}
+        lpTokenSegmentInContract={this.state.lpTokenSegmentInContract}
+        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
+        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
+        pendingSegmentReward={this.state.pendingSegmentReward}
       />
-      withdrawcontent = <Withdraw
-        uniTokenBalance={this.state.uniTokenBalance}
+      oneinchcontent = <Oneinch
+        lpTokenBalance={this.state.lpTokenBalance}
         purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
         deposit={this.deposit}
         withdraw={this.withdraw}
-        uniTokenInContract={this.state.uniTokenInContract}
-        purseTokenUpgradableInContract={this.state.purseTokenUpgradableInContract}
-        userInfo={this.state.userInfo}
-        poolInfo={this.state.poolInfo}
-        pursePerBlock={this.state.pursePerBlock}
-        startBlock={this.state.startBlock}
+        setI={this.setI}
+        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+        totalpendingReward={this.state.totalpendingReward}
+        totalrewardperblock={this.state.totalrewardperblock}
+        userSegmentInfo={this.state.userSegmentInfo}
+        poolSegmentInfo={this.state.poolSegmentInfo}
+        lpTokenSegmentInContract={this.state.lpTokenSegmentInContract}
+        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
+        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
+        pendingSegmentReward={this.state.pendingSegmentReward}
+        buttonPopup={this.state.buttonPopup}
+        setTrigger={this.setTrigger}
       />
-      ownercontent = <Owner
-        uniTokenBalance={this.state.uniTokenBalance}
-        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        uniTokenInContract={this.state.uniTokenInContract}
-        purseTokenUpgradableInContract={this.state.purseTokenUpgradableInContract}
-        userInfo={this.state.userInfo}
-        poolInfo={this.state.poolInfo}
-        pursePerBlock={this.state.pursePerBlock}
-        startBlock={this.state.startBlock}
-      />
-
-
-      
     }
 
     return (
       <Router>
-      <div>
-        
-        <Navbar account={this.state.account} />
-        <div className="container-fluid mt-5">
-          <div className="row">
-
-            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
-              <div className="content mr-auto ml-auto">
-                <a
-                  href="https://www.pundix.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                </a>
-                  {/* {content} */}
+        <div>
+          <Navb
+            account={this.state.account}
+            first4Account={this.state.first4Account}
+            last4Account={this.state.last4Account}
+          />
+          <div className="container-fluid mt-5">
+            <div className="row">
+              <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '800px' }}>
+                <div className="content mr-auto ml-auto">
                   <Switch>
-                    {/* <Route path="/" exact > {content} </Route> */}
                     <Route path="/" exact > {maincontent} </Route>
-                    <Route path="/deposit/" exact > {depositcontent} </Route>
-                    <Route path="/withdraw/" exact > {withdrawcontent} </Route>
-                    <Route path="/owner/" exact > {ownercontent} </Route>
-                    {/* <Route path="/PRTokenDistribution/NPXSXEMigration/" exact > {content2} </Route>
-                    <Route path="/PRTokenDistribution/PurseDistribution/" exact > {content3} </Route> */}
+                    <Route path="/home" exact > {maincontent} </Route>
+                    <Route path="/menu" exact > {menucontent} </Route>
+                    <Route path="/deposit" exact > {depositcontent} </Route>
+                    <Route path="/oneinch/" exact > {oneinchcontent} </Route>
                   </Switch>
-              </div>
-            </main>
+                </div>
+              </main>
+              <Popup trigger={this.state.buttonPopup} setTrigger={this.setTrigger}>
+                {depositcontent}
+              </Popup>
+            </div>
           </div>
         </div>
-
-        
-      </div>
       </Router>
     );
   }

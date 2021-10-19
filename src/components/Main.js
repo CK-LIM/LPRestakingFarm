@@ -7,23 +7,24 @@ class Main extends Component {
     return (
       <div id="content" className="mt-3">
 
-        
 
-        <label className="center"><b>Pool Info</b></label>
+
+        <label className="center"><b>Farm Info</b></label><br />
+        <div className="center" style={{ color: 'grey' }}>&nbsp;Stake <b>&nbsp;Pancakeswap or 1Inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+        <br /><br /><br />
         <table className="table table-borderless text-muted text-center">
           <thead>
             <tr>
-              <th scope="col">Total Uni Staked In Pool</th>
-              <th scope="col">Total Purse Pool</th>
-              <th scope="col">{window.web3.utils.fromWei(this.props.pursePerBlock, 'Ether')}</th>
+              <th scope="col">Total Farm</th>
+              <th scope="col">PURSE Token Total Supply</th>
+              <th scope="col">Total New PURSE Reward per block</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{window.web3.utils.fromWei(this.props.uniTokenInContract, 'Ether')} mUni</td>
-              <td>{window.web3.utils.fromWei(this.props.purseTokenUpgradableInContract, 'Ether')} Purse</td>
-              <td>Purse Per Block</td>
-              
+              <td>{this.props.poolLength} mLp</td>
+              <td>{window.web3.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')}</td>
+              <td>{window.web3.utils.fromWei(this.props.totalrewardperblock, 'Ether')}</td>
 
             </tr>
           </tbody>
@@ -31,26 +32,23 @@ class Main extends Component {
         <table className="table table-borderless text-muted text-center">
           <thead>
             <tr>
-              <th scope="col">Start Block</th>
-              <th scope="col">Last Reward Block</th>
-              <th scope="col">{(window.web3.utils.fromWei(this.props.poolInfo.accPursePerShare, 'Ether'))}</th>
+              {/* <th scope="col">Total New PURSE Reward per block</th> */}
+
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{(this.props.startBlock)}</td>
-              <td>{this.props.poolInfo.lastRewardBlock}</td>
-              <td>APY</td>
               
+
 
             </tr>
           </tbody>
         </table>
 
 
-              
+
       </div>
-      
+
     );
   }
 }

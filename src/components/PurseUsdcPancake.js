@@ -7,7 +7,7 @@ import pancake from '../pancakeswap.png'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
 
-class Deposit extends Component {
+class PurseUsdcPancake extends Component {
 
   constructor(props) {
     super(props)
@@ -82,17 +82,17 @@ class Deposit extends Component {
     return (
       <div id="content" className="mt-3">
         <div className="text-center">
-          {/* <ButtonGroup>
-            <Button variant="contained" color="default" >pancakeswap</Button>
-            <Button variant="outlined" color="default" >1inch</Button>
-          </ButtonGroup> */}
+          <ButtonGroup>
+            <Button variant="contained" color="default" component={Link} to="/menu/">pancakeswap</Button>
+            <Button variant="outlined" color="default" component={Link} to="/oneinch/">1inch</Button>
+          </ButtonGroup>
         </div>
         <br /><br />
 
-        <h2 className="center"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} Farm</b></h2>
+        <h2 className="center"><b>PURSE-USDC Farm</b></h2>
         <br />
-        <div className="center" style={{ color: 'grey' }}>&nbsp;Deposit <b>&nbsp;{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Token&nbsp;</b> and earn PURSE!!!</div>
-        <div className="center" style={{ color: 'grey' }}>&nbsp;APY :  {(28000 * 365 * this.props.poolSegmentInfo[this.props.n][this.props.i].pursePerBlock / this.props.lpTokenSegmentInContract[this.props.n][this.props.i]) * 100} %</div>
+        <div className="center" style={{ color: 'grey' }}>&nbsp;Deposit <b>&nbsp;PURSE-USDC PANCAKE LP&nbsp;</b> and earn PURSE!!!</div>
+        <div className="center" style={{ color: 'grey' }}>&nbsp;APY :  {(28000 * 365 * this.props.poolInfo[0].pursePerBlock / this.props.lpTokenInContract[0]) * 100} %</div>
         <br />
 
         <div className="card mb-4" >
@@ -108,7 +108,7 @@ class Deposit extends Component {
                 if (this.props.pendingReward <= 0 ) {
                   alert("No token to harvest! Please deposit PURSE-USDC PANCAKE LP to earn PURSE")
                 } else {
-                  this.props.withdraw(this.props.i,0)
+                  this.props.withdraw(0,0)
                 }                
               }}>
               <small>Harvest</small>
@@ -119,7 +119,7 @@ class Deposit extends Component {
 
               <thead>
                 <tr>
-                  <th scope="col">{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Staked</th>
+                  <th scope="col">PURSE-USDC LP Staked</th>
                   <th scope="col">PURSE Earned</th>
                 </tr>
                 <tr>
@@ -129,8 +129,8 @@ class Deposit extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>{window.web3.utils.fromWei(this.props.userSegmentInfo[this.props.n][this.props.i].amount.toString(), 'Ether')}</td> 
-                  <td>{window.web3.utils.fromWei(this.props.pendingSegmentReward[this.props.n][this.props.i], 'Ether')}</td>
+                  <td>{window.web3.utils.fromWei(this.props.userInfo[0].amount.toString(), 'Ether')}</td> 
+                  <td>{window.web3.utils.fromWei(this.props.pendingReward[0], 'Ether')}</td>
                 </tr>
               </tbody>
             </table>
@@ -150,16 +150,16 @@ class Deposit extends Component {
                     console.log(this.state.txDeposit)
                     console.log(this.state.txWithdraw)
                     if (this.state.txDeposit === true && this.state.txWithdraw === false) {
-                      this.props.deposit(this.props.i, amount, this.props.n)
+                      this.props.deposit(0, amount)
                     } else if (this.state.txDeposit === false && this.state.txWithdraw === true)
-                      this.props.withdraw(this.props.i, amount)
+                      this.props.withdraw(0, amount)
                   }
                 }}>
                   <div>
                     <label className="float-left"><b>Deposit</b></label>
                     <span className="float-right text-muted">
                       <span>
-                        LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i], 'Ether')}</span>
+                        LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3.utils.fromWei(this.props.lpTokenBalance[0], 'Ether')}</span>
                       <span><br />
                         PURSE Balance&nbsp;: {window.web3.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}
                       </span>
@@ -214,4 +214,4 @@ class Deposit extends Component {
   }
 }
 
-export default Deposit;
+export default PurseUsdcPancake;

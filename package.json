@@ -1,9 +1,12 @@
 {
-  "name": "fx_wallet",
+  "name": "lp_token_restakingfarm",
   "version": "0.1.0",
   "description": "fx staking wallet for trading",
-  "author": "richardnky",
+  "author": "Cklim",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@openzeppelin/contracts": "^4.0.0-beta.0",
+    "@openzeppelin/contracts-upgradeable": "^4.3.0",
     "@truffle/hdwallet-provider": "^1.5.0",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.7.0",
@@ -42,5 +45,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@openzeppelin/truffle-upgrades": "^1.8.1"
+  }
 }
