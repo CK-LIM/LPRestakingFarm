@@ -13,7 +13,7 @@ interface PurseToken {
 
     function transferFrom(address from, address to, uint tokens) external  returns (bool success);
 
-    function balanceOf(address tokenOwner) external returns (uint balance);
+    function balanceOf(address tokenOwner) external view returns (uint balance);
 
 }
 

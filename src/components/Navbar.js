@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import fx_token from '../fx_token.png'
 import Identicon from 'identicon.js';
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Button from '@material-ui/core/Button';
+import web3connect from 'web3connect';
+
+
 import {
-  Nav,
-  NavLink,
-  Bars,
-  NavMenu,
-  NavBtn
+  // Nav,
+  NavLink
+  // Bars,
+  // NavMenu,
+  // NavBtn
 } from './NavMenu'
 
 
@@ -30,23 +35,33 @@ class Navb extends Component {
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap-small d-none d-sm-none d-sm-block">
               <span className="text-light rowC">
-                <NavLink to='/home' >Home</NavLink>
+                {/* <NavLink to='/home' >Home</NavLink> */}
                 <NavLink to='/menu' >Menu</NavLink>
-                <span> {this.props.first4Account}...{this.props.last4Account}&nbsp;
-                {this.props.account
-                  ? <img
-                    className="ml-2"
-                    width='25'
-                    height='25'
-                    src={`data:image/png;base64,${new Identicon(this.props.account).toString()}`}
-                    alt=""
-                  />
-                  : <span></span>
-                }</span>
+                <span>&nbsp;
+                  <span>
+                    <Button variant="contained" color ="primary" size = "small" onClick={() => {
+                      // this.props.setTrigger(true)
+                      if (this.props.wallet == false) {
+
+                      }
+                    }}> {this.props.first4Account}...{this.props.last4Account}</Button>
+                  </span>
+                  &nbsp;
+                  {/* {this.props.first4Account}...{this.props.last4Account}&nbsp; */}
+                  {this.props.account
+                    ? <img
+                      className="ml-2"
+                      width='25'
+                      height='25'
+                      src={`data:image/png;base64,${new Identicon(this.props.account).toString()}`}
+                      alt=""
+                    />
+                    : <span></span>
+                  }</span>
               </span>
             </li>
           </ul>
-          </span>
+        </span>
       </nav>
     );
   }

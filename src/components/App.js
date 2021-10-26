@@ -15,6 +15,7 @@ import Deposit from './Deposit'
 import Popup from './Popup'
 import './Popup.css'
 import './App.css'
+import { FaWindowClose } from 'react-icons/fa';
 
 class App extends Component {
 
@@ -38,8 +39,19 @@ class App extends Component {
   async loadBlockchainData() {
     const web3 = window.web3
 
+    // console.log(window.ethereum)
+    // if (window.ethereum) {
+    //   const accounts = await web3.eth.getAccounts()
+    //   this.setState({ account: accounts[0] })
+    //   console.log("abc")
+    // } else {
+    //   const accounts = "0x0000000000000000000000000000000000000000"
+    //   this.setState({ account: accounts })
+    // }
+
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
+    console.log("abc")
     const first4Account = this.state.account.substring(0, 4)
     const last4Account = this.state.account.slice(-4)
     this.setState({ first4Account: first4Account })
@@ -317,6 +329,7 @@ class App extends Component {
             account={this.state.account}
             first4Account={this.state.first4Account}
             last4Account={this.state.last4Account}
+            setTrigger={this.setTrigger}
           />
           <div className="container-fluid mt-5">
             <div className="row">
@@ -330,10 +343,10 @@ class App extends Component {
                     <Route path="/oneinch/" exact > {oneinchcontent} </Route>
                   </Switch>
                 </div>
+                <Popup trigger={this.state.buttonPopup} setTrigger={this.setTrigger}>
+                  {depositcontent}
+                </Popup>
               </main>
-              <Popup trigger={this.state.buttonPopup} setTrigger={this.setTrigger}>
-                {depositcontent}
-              </Popup>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
 // 0xF02D596b10297417e9F545DFDa8895F558a728A6    PURSE-mBTC
 
 // ONEINCH LP token pair:
-// 0x3A97a6084b10AA8d9Dd0DE753192E549f0D75bAe
+// 0x3A97a6084b10AA8d9Dd0DE753192E549f0D75bAe    mBTC-PURSE
 
 const RestakingFarm = artifacts.require("RestakingFarm");
 const LpToken = artifacts.require("LpToken");

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import dai from '../uniswap-uni-logo.png'
+// import dai from '../uniswap-uni-logo.png'
 import asterisk from '../asterisk.png'
 import purse from '../pteria.png'
 import pancake from '../pancakeswap.png'
@@ -51,7 +51,15 @@ class Deposit extends Component {
       this.setState({
         txValidAmount: false
       })
-    }
+    } else if (Number(event) > window.web3.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i], 'Ether')) {
+      console.log(Number(event))
+      this.setState({
+        message: 'Not enough Balance'
+      })
+      this.setState({
+        txValidAmount: false
+      })
+    }    
     else {
       this.setState({
         message: ''
@@ -82,10 +90,10 @@ class Deposit extends Component {
     return (
       <div id="content" className="mt-3">
         <div className="text-center">
-          {/* <ButtonGroup>
+          <ButtonGroup>
             <Button variant="contained" color="default" >pancakeswap</Button>
             <Button variant="outlined" color="default" >1inch</Button>
-          </ButtonGroup> */}
+          </ButtonGroup>
         </div>
         <br /><br />
 
