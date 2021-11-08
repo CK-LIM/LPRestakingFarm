@@ -43,6 +43,7 @@ contract RestakingFarm is Ownable{
     struct PoolInfo {
         IERC20 lpToken;           // Address of LP token contract.
         uint256 pursePerBlock;
+        uint256 bonusMultiplier;
         uint256 lastRewardBlock;  // Last block number that PURSEs distribution occurs.
         uint256 accPursePerShare; // Accumulated PURSEs per share, times 1e12. See below.
         uint256 startBlock;
@@ -60,8 +61,8 @@ contract RestakingFarm is Ownable{
 
     event Deposit(address indexed user, uint256 amount);
     event Withdraw(address indexed user, uint256 amount);
-    event AddNewPool(address indexed owner, IERC20 indexed _lpToken, uint256 _pursePerBlock, bool _withUpdate, uint256 _startBlock);
-    event UpdatePoolReward(address indexed owner, uint256 indexed _pid, uint256 _pursePerBlock, bool _withUpdate);
+    event AddNewPool(address indexed owner, IERC20 indexed _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate, uint256 _startBlock);
+    event UpdatePoolReward(address indexed owner, uint256 indexed _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate);
     event ClaimReward(address indexed user, uint256 amount);
 
     constructor(
@@ -77,8 +78,7 @@ contract RestakingFarm is Ownable{
         return poolInfo.length;
     }
     // Add a new lp to the pool. Can only be called by the owner.
-    // XXX DO NOT add the same LP token more than once. Rewards will be messed up if you do.
-    function add(IERC20 _lpToken, uint256 _pursePerBlock, bool _withUpdate, uint256 _startBlock) public onlyOwner {
+    function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate, uint256 _startBlock) public onlyOwner {
         require(poolId[address(_lpToken)] == 0, "Farmer::add: lp is already in pool");
         if (_withUpdate) {
             massUpdatePools();
@@ -88,20 +88,22 @@ contract RestakingFarm is Ownable{
         poolInfo.push(PoolInfo({
             lpToken: _lpToken,
             pursePerBlock : _pursePerBlock,
+            bonusMultiplier: _bonusMultiplier,
             lastRewardBlock: lastRewardBlock,
             accPursePerShare: 0,
             startBlock: _startBlock
         }));
-        emit AddNewPool(msg.sender, _lpToken, _pursePerBlock, _withUpdate, _startBlock);
+        emit AddNewPool(msg.sender, _lpToken, _pursePerBlock, _bonusMultiplier, _withUpdate, _startBlock);
     }
 
     // Update the given pool's PURSE _pursePerBlock. Can only be called by the owner.
-    function set(uint256 _pid, uint256 _pursePerBlock, bool _withUpdate) public onlyOwner {
+    function set(uint256 _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate) public onlyOwner {
         if (_withUpdate) {
             massUpdatePools();
         }
         poolInfo[_pid].pursePerBlock = _pursePerBlock;
-        emit UpdatePoolReward(msg.sender, _pid, _pursePerBlock, _withUpdate);
+        poolInfo[_pid].bonusMultiplier= _bonusMultiplier;
+        emit UpdatePoolReward(msg.sender, _pid, _pursePerBlock, _bonusMultiplier ,_withUpdate);
     }
 
 
@@ -130,7 +132,7 @@ contract RestakingFarm is Ownable{
             return;
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-        uint256 purseReward = multiplier*pool.pursePerBlock;
+        uint256 purseReward = multiplier*pool.pursePerBlock*pool.bonusMultiplier;
         if (totalMintToken < capMintToken) {
             if (totalMintToken + purseReward >= capMintToken) {
                 uint256 PurseCanMint = capMintToken-totalMintToken;
@@ -233,7 +235,7 @@ contract RestakingFarm is Ownable{
         uint256 multiplier;
         if (block.number > pool.lastRewardBlock && lpSupply != 0) {
             multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-            uint256 purseReward = multiplier*pool.pursePerBlock;
+            uint256 purseReward = multiplier*pool.pursePerBlock*pool.bonusMultiplier;
             accPursePerShare = accPursePerShare+(purseReward*(1e12)/lpSupply);
         }
         return (user.amount*(accPursePerShare)/(1e12)-(user.rewardDebt));
