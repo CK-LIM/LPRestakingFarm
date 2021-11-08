@@ -51,6 +51,8 @@ contract RestakingFarm is Ownable{
     // The PURSE TOKEN!
     PurseToken public purseToken;
     PoolInfo[] public poolInfo;
+    uint256 public totalMintToken;    
+    uint256 public capMintToken;
     mapping(address => uint256) public poolId;  // poolId count from 1, need to subtract by 1 before using with variable poolInfo
 
     // Info of each user that stakes LP tokens.
@@ -60,12 +62,14 @@ contract RestakingFarm is Ownable{
     event Withdraw(address indexed user, uint256 amount);
     event AddNewPool(address indexed owner, IERC20 indexed _lpToken, uint256 _pursePerBlock, bool _withUpdate, uint256 _startBlock);
     event UpdatePoolReward(address indexed owner, uint256 indexed _pid, uint256 _pursePerBlock, bool _withUpdate);
-
+    event ClaimReward(address indexed user, uint256 amount);
 
     constructor(
-        PurseToken _purseToken
+        PurseToken _purseToken,
+        uint256 _capMintToken
     ) {
         purseToken = _purseToken;
+        capMintToken = _capMintToken;
         }
     
 
@@ -109,9 +113,6 @@ contract RestakingFarm is Ownable{
         }
     }
 
-
-
-
     // Return reward multiplier over the given _from to _to block.
     function getMultiplier(uint256 _from, uint256 _to) public pure returns (uint256) {
         return _to-_from;
@@ -130,7 +131,16 @@ contract RestakingFarm is Ownable{
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
         uint256 purseReward = multiplier*pool.pursePerBlock;
-        purseToken.mint(address(this), purseReward);
+        if (totalMintToken < capMintToken) {
+            if (totalMintToken + purseReward >= capMintToken) {
+                uint256 PurseCanMint = capMintToken-totalMintToken;
+                totalMintToken += PurseCanMint;
+                purseToken.mint(address(this), PurseCanMint);
+            } else {
+                totalMintToken += purseReward;
+                purseToken.mint(address(this), purseReward);
+            }
+        }
         pool.accPursePerShare = pool.accPursePerShare+(purseReward*1e12/lpSupply);
         pool.lastRewardBlock = block.number;
     }
@@ -144,6 +154,11 @@ contract RestakingFarm is Ownable{
 
         if (user.amount > 0) {
             uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;
+            uint256 farmBal = purseToken.balanceOf(address(this));
+
+            if (pending > farmBal) {
+                pending = farmBal;
+            }
             if(pending > 0) {
                 purseToken.transfer(msg.sender, pending);
             }
@@ -155,7 +170,8 @@ contract RestakingFarm is Ownable{
         user.rewardDebt = user.amount*pool.accPursePerShare/1e12;
         emit Deposit(msg.sender, _amount);
     }
-        // Withdraw LP tokens from MasterChef.
+
+    // Withdraw LP tokens from MasterChef.
     function withdraw(uint256 _pid, uint256 _amount) public {
 
         PoolInfo storage pool = poolInfo[_pid];
@@ -164,6 +180,12 @@ contract RestakingFarm is Ownable{
 
         updatePool(_pid);
         uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;
+        uint256 farmBal = purseToken.balanceOf(address(this));
+
+        if (pending > farmBal) {
+            pending = farmBal;
+        }
+
         if(pending > 0) {
             purseToken.transfer(msg.sender, pending);
         }
@@ -174,6 +196,33 @@ contract RestakingFarm is Ownable{
         user.rewardDebt = user.amount*pool.accPursePerShare/1e12;
         emit Withdraw(msg.sender, _amount);
     }
+
+    // Harvest reward tokens from pool.
+    function claimReward(uint256 _pid) public {
+
+        PoolInfo storage pool = poolInfo[_pid];
+        UserInfo storage user = userInfo[_pid][msg.sender];
+
+        updatePool(_pid);
+        uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;
+        uint256 farmBal = purseToken.balanceOf(address(this));
+
+        if (pending > farmBal) {
+            pending = farmBal;
+        }
+
+        if(pending > 0) {
+            purseToken.transfer(msg.sender, pending);
+        }
+        user.rewardDebt = user.amount*pool.accPursePerShare/1e12;
+
+        emit ClaimReward(msg.sender, pending);
+    }
+
+    function capMintTokenUpdate (uint256 _newCap) public onlyOwner {
+        capMintToken = _newCap;
+    }
+
 
      // View function to see pending PURSEs on frontend.
     function pendingReward(uint256 _pid, address _user) external view returns (uint256) {

@@ -38,10 +38,11 @@ font-size: 50px;
 }
 
 .textLoadingSmall {
-color: #fbae17;
-display: inline-block;
-margin-left: 5px;
-font-size: 20px;
+  margin-top: 20px;
+  color: #fbae17;
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 20px;
 }
 
 .text {
