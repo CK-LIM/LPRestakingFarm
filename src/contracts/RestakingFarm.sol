@@ -67,7 +67,7 @@ contract RestakingFarm is Ownable{
     event UpdatePoolReward(address indexed owner, uint256 indexed _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier);
     event ClaimReward(address indexed user, uint256 amount);
 
-    modifier poolexist(uint256 _pid) {
+    modifier poolExist(uint256 _pid) {
         require( _pid < poolInfo.length, "Pool not existed");
         _;
     }
@@ -100,7 +100,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Update the given pool's PURSE _pursePerBlock. Can only be called by the owner.
-    function set(uint256 _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier) public onlyOwner poolexist(_pid){
+    function set(uint256 _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier) public onlyOwner poolExist(_pid){
         PoolInfo storage pool = poolInfo[_pid];
         updatePool(_pid);
         pool.pursePerBlock = _pursePerBlock;
@@ -114,7 +114,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Update reward variables of the given pool to be up-to-date.
-    function updatePool(uint256 _pid) public poolexist(_pid){
+    function updatePool(uint256 _pid) public poolExist(_pid){
         PoolInfo storage pool = poolInfo[_pid];
         if (block.number <= pool.lastRewardBlock) {
             return;
@@ -141,7 +141,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Deposit LP tokens to Restaking Pool for Purse allocation.
-    function deposit(uint256 _pid, uint256 _amount) public poolexist(_pid) {        
+    function deposit(uint256 _pid, uint256 _amount) public poolExist(_pid) {        
         PoolInfo storage pool = poolInfo[_pid];
         // require(poolId[address(pool.lpToken)] != 0, "Farmer::deposit: lp not exist");
         UserInfo storage user = userInfo[_pid][msg.sender];
@@ -167,7 +167,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Withdraw LP tokens from MasterChef.
-    function withdraw(uint256 _pid, uint256 _amount) public poolexist(_pid){
+    function withdraw(uint256 _pid, uint256 _amount) public poolExist(_pid){
 
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
@@ -193,7 +193,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Harvest reward tokens from pool.
-    function claimReward(uint256 _pid) public poolexist(_pid){
+    function claimReward(uint256 _pid) public poolExist(_pid){
 
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
@@ -230,7 +230,7 @@ contract RestakingFarm is Ownable{
 
 
      // View function to see pending PURSEs on frontend.
-    function pendingReward(uint256 _pid, address _user) external view poolexist(_pid) returns (uint256) {
+    function pendingReward(uint256 _pid, address _user) external view poolExist(_pid) returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
         uint256 accPursePerShare = pool.accPursePerShare;
