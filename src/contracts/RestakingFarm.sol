@@ -143,7 +143,6 @@ contract RestakingFarm is Ownable{
     // Deposit LP tokens to Restaking Pool for Purse allocation.
     function deposit(uint256 _pid, uint256 _amount) public poolExist(_pid) {        
         PoolInfo storage pool = poolInfo[_pid];
-        // require(poolId[address(pool.lpToken)] != 0, "Farmer::deposit: lp not exist");
         UserInfo storage user = userInfo[_pid][msg.sender];
         updatePool(_pid);
 
