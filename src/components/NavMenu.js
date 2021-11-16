@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export const Nav = styled.nav`
   background: transparent;
-  height: 80px;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc((100vw - 1100px) / 2);
@@ -21,7 +21,30 @@ export const NavLink = styled(Link)`
   cursor: pointer;
 
   &.active {
-    color: #15cdfc;
+    color: #c37aff;
+  }
+  &:hover {
+    text-decoration: none;
+    color: #04f7ff;
+  }
+`;
+
+export const NavLink2 = styled(Link)`
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.2rem;
+  height: 100%;
+  cursor: pointer;
+  color: #c37aff;
+
+  &.active {
+    color: #c37aff;
+  }
+  &:hover {
+    text-decoration: none;
+    color: #04f7ff;
   }
 `;
 

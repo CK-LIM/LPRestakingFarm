@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import purse from '../purse.png'
-import pancake from '../pancakeswap.png'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
+import './App.css';
 
 class Menu extends Component {
 
@@ -13,23 +13,23 @@ class Menu extends Component {
             <div id="content" className="mt-3">
                 <div className="text-center">
                     <ButtonGroup>
-                        <Button variant="contained" color="default" component={Link} to="/menu/" >pancakeswap</Button>
-                        <Button variant="outlined" color="default" component={Link} to="/oneinch/" >1inch</Button>
+                        <Button variant="contained" color="primary" component={Link} to="/menu/" >pancakeswap</Button>
+                        <Button variant="outlined" color="primary" component={Link} to="/oneinch/" >1inch</Button>
                     </ButtonGroup>
                 </div>
                 <br />
-                <div className="center">
-                    <img src={purse} height='90' alt="" />
+                <div className="center img">
+                    <img src={purse} height='100' alt="" />
                 </div><br/>
-                <h1 className="center"><b>LP Restaking Farm</b></h1>
-                <div className="center" style={{ color: 'grey' }}>&nbsp;Stake <b>&nbsp;Pancakeswap LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+                <h1 className="textWhite center"><b>LP Restaking Farm</b></h1>
+                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;Pancakeswap LP Tokens&nbsp;</b> to earn PURSE!!!</div>
                 <br />
 
                 <div className="rowC center">
-                    <div className="card mb-4" style={{ minWidth: '350px' }} >
+                    <div className="card mb-4 cardbody" style={{ minWidth: '350px', color: 'silver' }} >
                         <div className="card-body">
                             <span>
-                                <span className="float-left text-muted">
+                                <span className="float-left">
                                     Your PURSE Balance<br /><b>{window.web3.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}</b>
                                     <div>
                                     </div>
@@ -37,8 +37,8 @@ class Menu extends Component {
                             </span>
                             <span>
                                 <small>
-                                    <span className="float-left text-muted">Pending harvest</span>
-                                    <span className="float-right text-muted">
+                                    <span className="float-left">Pending harvest</span>
+                                    <span className="float-right">
                                         <span>
                                             {window.web3.utils.fromWei(this.props.totalpendingReward, 'Ether')}&nbsp;PURSE
                                         </span>
@@ -48,18 +48,18 @@ class Menu extends Component {
                         </div>
                     </div> &nbsp;&nbsp;&nbsp;
 
-                    <div className="card mb-4" >
-                        <div className="card-body" style={{ minWidth: '350px' }}>
+                    <div className="card mb-4 cardbody" >
+                        <div className="card-body " style={{ minWidth: '350px', color: 'silver' }}>
                             <span>
-                                <span className="float-left text-muted">
+                                <span className="float-left">
                                     Total PURSE Supply<br /><b>{window.web3.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')}</b>
                                     <div>
                                     </div>
                                 </span><br /><br /><br />
                                 <span>
                                     <small>
-                                        <span className="float-left text-muted">Total Reward/block</span>
-                                        <span className="float-right text-muted">
+                                        <span className="float-left ">Total Reward/block</span>
+                                        <span className="float-right ">
                                             <span>
                                                 {window.web3.utils.fromWei(this.props.totalrewardperblock, 'Ether')}&nbsp;PURSE
                                             </span>
@@ -74,7 +74,7 @@ class Menu extends Component {
 
 
                 <br />
-                <div className="center" style={{ color: 'grey' }}><b><big>Select Your Favourite pool entrees!</big></b></div>
+                <div className="center" style={{ color: 'white' }}><b><big>Select Your Favourite pool entrees!</big></b></div>
                 <div className="center" style={{ color: 'grey' }}><small>&nbsp;! Attention:&nbsp;Be sure to familiar with protocol risks and fees before using the farms!</small></div>
                 <br />
 
@@ -130,19 +130,19 @@ class Menu extends Component {
                         return (
                             <div key={key}>
                                 <div className="col">
-                                    <div className="card mb-4 card-body text-center" style={{ maxWidth: '230px' }}>
-                                        <span className="text">
+                                    <div className="card mb-4 cardbody card-body text-center" style={{ maxWidth: '230px', color: 'silver' }}>
+                                        <span>
                                             <img src={purse} height='30' alt="" /><br/><br/>
-                                            <b>{this.props.lpTokenSegmentAsymbol[0][i]}-{this.props.lpTokenSegmentBsymbol[0][i]}</b>
+                                            <b  className="text">{this.props.lpTokenSegmentAsymbol[0][i]}-{this.props.lpTokenSegmentBsymbol[0][i]}</b>
                                             <div>
-                                                <span className=" text-muted"><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[0][i]}-{this.props.lpTokenSegmentBsymbol[0][i]} PANCAKE LP</small> to Earn PURSE</small></span><br /><br />
-                                                <span className=" text-muted"><small>APR:  {(28000 * 365 * this.props.poolSegmentInfo[0][i].pursePerBlock / this.props.lpTokenSegmentInContract[0][i]) * 100} % </small></span><br />
-                                                <span className=" text-muted"><small>LP Staked: {window.web3.utils.fromWei(this.props.userSegmentInfo[0][i].amount, 'Ether')}</small></span><br />
-                                                <span className=" text-muted"><small>Purse Earned: {this.props.pendingSegmentReward[0][i]}</small></span><br />
-                                                <span className=" text-muted"><small>TVL: </small></span>
+                                                <span className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[0][i]}-{this.props.lpTokenSegmentBsymbol[0][i]} PANCAKE LP</small> to Earn PURSE</small></span><br /><br />
+                                                <span className=" "><small>APR:  {this.props.apr[0][i]} % </small></span><br />
+                                                <span className=" "><small>LP Staked: {this.props.userSegmentInfo[0][i]}</small></span><br />
+                                                <span className=" "><small>Purse Earned: {this.props.pendingSegmentReward[0][i]}</small></span><br />
+                                                <span className=" "><small>TVL: $ {this.props.tvl[0][i]}</small></span>
                                                 <br />
                                                 {/* <Button variant="outlined" color="default" component={Link} onClick={(event) => { this.props.setI(0, i) }} to="/deposit">Select</Button> */}
-                                                <Buttons variant="outline-secondary" size="sm" style={{ minWidth: '80px' }} className="mb-2" onClick={() => {
+                                                <Buttons variant="outline-info" size="sm" style={{ minWidth: '80px' }} className="mb-2" onClick={() => {
                                                     this.props.setTrigger(true)
                                                     this.props.setI(0, i)
                                                 }}>Select</Buttons>

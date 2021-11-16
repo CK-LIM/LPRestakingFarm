@@ -67,40 +67,40 @@
     "absolutePath": "/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/PurseTokenUpgradable.sol",
     "exportedSymbols": {
       "AddressUpgradeable": [
-        4295
+        4352
       ],
       "ContextUpgradeable": [
-        4339
+        4396
       ],
       "ERC1967UpgradeUpgradeable": [
-        3770
+        3827
       ],
       "ERC20Interface": [
         539
       ],
       "IBeaconUpgradeable": [
-        3780
+        3837
       ],
       "IERC20": [
-        4581
+        4638
       ],
       "Initializable": [
-        3826
+        3883
       ],
       "OwnableUpgradeable": [
-        3372
+        3429
       ],
       "PausableUpgradeable": [
-        4050
+        4107
       ],
       "PurseTokenUpgradable": [
         2362
       ],
       "StorageSlotUpgradeable": [
-        4399
+        4456
       ],
       "UUPSUpgradeable": [
-        3937
+        3994
       ]
     },
     "id": 2363,
@@ -125,7 +125,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 3827,
+        "sourceUnit": 3884,
         "src": "69:75:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -137,7 +137,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 3938,
+        "sourceUnit": 3995,
         "src": "146:77:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -149,7 +149,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 4051,
+        "sourceUnit": 4108,
         "src": "225:78:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -161,7 +161,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 3373,
+        "sourceUnit": 3430,
         "src": "305:75:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -173,7 +173,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 4582,
+        "sourceUnit": 4639,
         "src": "382:56:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -455,7 +455,7 @@
               "id": 540,
               "name": "Initializable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3826,
+              "referencedDeclaration": 3883,
               "src": "714:13:4"
             },
             "id": 541,
@@ -467,7 +467,7 @@
               "id": 542,
               "name": "UUPSUpgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3937,
+              "referencedDeclaration": 3994,
               "src": "729:15:4"
             },
             "id": 543,
@@ -479,7 +479,7 @@
               "id": 544,
               "name": "PausableUpgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 4050,
+              "referencedDeclaration": 4107,
               "src": "746:19:4"
             },
             "id": 545,
@@ -491,7 +491,7 @@
               "id": 546,
               "name": "OwnableUpgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3372,
+              "referencedDeclaration": 3429,
               "src": "767:18:4"
             },
             "id": 547,
@@ -505,12 +505,12 @@
         "id": 2362,
         "linearizedBaseContracts": [
           2362,
-          3372,
-          4050,
-          4339,
-          3937,
-          3770,
-          3826
+          3429,
+          4107,
+          4396,
+          3994,
+          3827,
+          3883
         ],
         "name": "PurseTokenUpgradable",
         "nameLocation": "690:20:4",
@@ -3090,7 +3090,7 @@
                   "id": 668,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "2364:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -3450,7 +3450,7 @@
                   "id": 765,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "3252:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -4947,7 +4947,7 @@
                   "id": 797,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "3510:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -5558,7 +5558,7 @@
                   "id": 916,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "4507:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -6205,7 +6205,7 @@
                   "id": 959,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "4812:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -13086,7 +13086,7 @@
                   "id": 1461,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "9809:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -17524,7 +17524,7 @@
                   "id": 1860,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "13516:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -17750,7 +17750,7 @@
                   "id": 1879,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "13694:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -18556,7 +18556,7 @@
                   "id": 1902,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "13929:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -18941,7 +18941,7 @@
                   "id": 1960,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "14403:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -19763,7 +19763,7 @@
                   "id": 1988,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "14587:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -20429,7 +20429,7 @@
                   "id": 2062,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "15093:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -20442,7 +20442,7 @@
                   "id": 2064,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15107:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -20569,7 +20569,7 @@
                       "name": "_pause",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4029,
+                      "referencedDeclaration": 4086,
                       "src": "15479:6:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -20609,7 +20609,7 @@
                   "id": 2109,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "15444:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -20622,7 +20622,7 @@
                   "id": 2111,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15458:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -20665,7 +20665,7 @@
                       "name": "_unpause",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4045,
+                      "referencedDeclaration": 4102,
                       "src": "15561:8:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -20705,7 +20705,7 @@
                   "id": 2120,
                   "name": "whenPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4013,
+                  "referencedDeclaration": 4070,
                   "src": "15529:10:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -20718,7 +20718,7 @@
                   "id": 2122,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15540:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -20954,7 +20954,7 @@
                   "id": 2133,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15646:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -21204,7 +21204,7 @@
                   "id": 2155,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15850:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -21469,7 +21469,7 @@
                   "id": 2176,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "16057:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -21719,7 +21719,7 @@
                   "id": 2198,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "16267:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -21778,7 +21778,7 @@
           },
           {
             "baseFunctions": [
-              3932
+              3989
             ],
             "body": {
               "id": 2223,
@@ -21797,7 +21797,7 @@
                   "id": 2220,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "16475:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -23126,7 +23126,7 @@
                       "name": "__Pausable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3971,
+                      "referencedDeclaration": 4028,
                       "src": "17402:15:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -23161,7 +23161,7 @@
                       "name": "__Ownable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3277,
+                      "referencedDeclaration": 3334,
                       "src": "17430:14:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -23196,7 +23196,7 @@
                       "name": "__UUPSUpgradeable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3847,
+                      "referencedDeclaration": 3904,
                       "src": "17457:22:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -23490,7 +23490,7 @@
                   "id": 2236,
                   "name": "initializer",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3825,
+                  "referencedDeclaration": 3882,
                   "src": "16667:11:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -23668,40 +23668,40 @@
     "absolutePath": "/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/PurseTokenUpgradable.sol",
     "exportedSymbols": {
       "AddressUpgradeable": [
-        4295
+        4352
       ],
       "ContextUpgradeable": [
-        4339
+        4396
       ],
       "ERC1967UpgradeUpgradeable": [
-        3770
+        3827
       ],
       "ERC20Interface": [
         539
       ],
       "IBeaconUpgradeable": [
-        3780
+        3837
       ],
       "IERC20": [
-        4581
+        4638
       ],
       "Initializable": [
-        3826
+        3883
       ],
       "OwnableUpgradeable": [
-        3372
+        3429
       ],
       "PausableUpgradeable": [
-        4050
+        4107
       ],
       "PurseTokenUpgradable": [
         2362
       ],
       "StorageSlotUpgradeable": [
-        4399
+        4456
       ],
       "UUPSUpgradeable": [
-        3937
+        3994
       ]
     },
     "id": 2363,
@@ -23726,7 +23726,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 3827,
+        "sourceUnit": 3884,
         "src": "69:75:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -23738,7 +23738,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 3938,
+        "sourceUnit": 3995,
         "src": "146:77:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -23750,7 +23750,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 4051,
+        "sourceUnit": 4108,
         "src": "225:78:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -23762,7 +23762,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 3373,
+        "sourceUnit": 3430,
         "src": "305:75:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -23774,7 +23774,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 2363,
-        "sourceUnit": 4582,
+        "sourceUnit": 4639,
         "src": "382:56:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -24056,7 +24056,7 @@
               "id": 540,
               "name": "Initializable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3826,
+              "referencedDeclaration": 3883,
               "src": "714:13:4"
             },
             "id": 541,
@@ -24068,7 +24068,7 @@
               "id": 542,
               "name": "UUPSUpgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3937,
+              "referencedDeclaration": 3994,
               "src": "729:15:4"
             },
             "id": 543,
@@ -24080,7 +24080,7 @@
               "id": 544,
               "name": "PausableUpgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 4050,
+              "referencedDeclaration": 4107,
               "src": "746:19:4"
             },
             "id": 545,
@@ -24092,7 +24092,7 @@
               "id": 546,
               "name": "OwnableUpgradeable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 3372,
+              "referencedDeclaration": 3429,
               "src": "767:18:4"
             },
             "id": 547,
@@ -24106,12 +24106,12 @@
         "id": 2362,
         "linearizedBaseContracts": [
           2362,
-          3372,
-          4050,
-          4339,
-          3937,
-          3770,
-          3826
+          3429,
+          4107,
+          4396,
+          3994,
+          3827,
+          3883
         ],
         "name": "PurseTokenUpgradable",
         "nameLocation": "690:20:4",
@@ -26691,7 +26691,7 @@
                   "id": 668,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "2364:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -27051,7 +27051,7 @@
                   "id": 765,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "3252:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -28548,7 +28548,7 @@
                   "id": 797,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "3510:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -29159,7 +29159,7 @@
                   "id": 916,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "4507:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -29806,7 +29806,7 @@
                   "id": 959,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "4812:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -36687,7 +36687,7 @@
                   "id": 1461,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "9809:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -41125,7 +41125,7 @@
                   "id": 1860,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "13516:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -41351,7 +41351,7 @@
                   "id": 1879,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "13694:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -42157,7 +42157,7 @@
                   "id": 1902,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "13929:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -42542,7 +42542,7 @@
                   "id": 1960,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "14403:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -43364,7 +43364,7 @@
                   "id": 1988,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "14587:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44030,7 +44030,7 @@
                   "id": 2062,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "15093:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44043,7 +44043,7 @@
                   "id": 2064,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15107:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44170,7 +44170,7 @@
                       "name": "_pause",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4029,
+                      "referencedDeclaration": 4086,
                       "src": "15479:6:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -44210,7 +44210,7 @@
                   "id": 2109,
                   "name": "whenNotPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4002,
+                  "referencedDeclaration": 4059,
                   "src": "15444:13:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44223,7 +44223,7 @@
                   "id": 2111,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15458:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44266,7 +44266,7 @@
                       "name": "_unpause",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4045,
+                      "referencedDeclaration": 4102,
                       "src": "15561:8:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -44306,7 +44306,7 @@
                   "id": 2120,
                   "name": "whenPaused",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4013,
+                  "referencedDeclaration": 4070,
                   "src": "15529:10:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44319,7 +44319,7 @@
                   "id": 2122,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15540:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44555,7 +44555,7 @@
                   "id": 2133,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15646:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -44805,7 +44805,7 @@
                   "id": 2155,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "15850:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -45070,7 +45070,7 @@
                   "id": 2176,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "16057:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -45320,7 +45320,7 @@
                   "id": 2198,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "16267:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -45379,7 +45379,7 @@
           },
           {
             "baseFunctions": [
-              3932
+              3989
             ],
             "body": {
               "id": 2223,
@@ -45398,7 +45398,7 @@
                   "id": 2220,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3311,
+                  "referencedDeclaration": 3368,
                   "src": "16475:9:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -46727,7 +46727,7 @@
                       "name": "__Pausable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3971,
+                      "referencedDeclaration": 4028,
                       "src": "17402:15:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -46762,7 +46762,7 @@
                       "name": "__Ownable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3277,
+                      "referencedDeclaration": 3334,
                       "src": "17430:14:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -46797,7 +46797,7 @@
                       "name": "__UUPSUpgradeable_init",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3847,
+                      "referencedDeclaration": 3904,
                       "src": "17457:22:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
@@ -47091,7 +47091,7 @@
                   "id": 2236,
                   "name": "initializer",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 3825,
+                  "referencedDeclaration": 3882,
                   "src": "16667:11:4"
                 },
                 "nodeType": "ModifierInvocation",
@@ -47271,7 +47271,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2021-11-03T04:05:33.750Z",
+  "updatedAt": "2021-11-16T13:27:42.709Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

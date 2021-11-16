@@ -9,13 +9,13 @@ class Main extends Component {
 
 
 
-        <label className="center"><big><b>Farm Info</b></big></label>
+        <label className="textWhite center" style={{ fontSize : '40px' }}><big><b>Farm Info</b></big></label>
 
-        <div className="center" style={{ color: 'grey' }}>&nbsp;Stake <b>&nbsp;Pancakeswap or 1Inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+        <div className="center" style={{ color: 'white' }}>&nbsp;Stake <b>&nbsp;Pancakeswap or 1Inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
         <br /><br />
-        <div className="card mb-4" style={{ minWidth: '350px' }} >
+        <div className="card mb-4 cardbody" style={{ minWidth: '350px' }} >
           <div className="card-body">
-            <table className="table table-borderless text-muted text-center">
+            <table className="table table-borderless textWhite text-center">
               <thead>
                 <tr>
                   <th scope="col">Total Pool</th>
@@ -32,7 +32,7 @@ class Main extends Component {
               </tbody>
             </table>
             <br />
-            <table className="table table-borderless text-muted text-center">
+            <table className="table table-borderless textWhite text-center">
               <thead>
                 <tr>
                   <th scope="col">Farm Cap Reward Token</th>

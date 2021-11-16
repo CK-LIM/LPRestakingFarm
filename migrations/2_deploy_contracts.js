@@ -31,12 +31,12 @@ module.exports = async function (deployer, network, accounts) {
     // console.log(upgrade.address)
 
   // deploy RestakingFarm and pass in variables taken in in constructor ie the 2 token addresses and the 2 other variables
-  await deployer.deploy(RestakingFarm, purseToken.address, tokens("10000"))
+  await deployer.deploy(RestakingFarm, purseToken.address, tokens("1000000000"))
   const restakingFarm = await RestakingFarm.deployed()
-  await restakingFarm.add("0xF52e1f503FffF3c212d72045839915B11478fAc6", tokens("100"), "false", 5000)
-  await restakingFarm.add("0x58A26F9100f77aa68E19359EffDBd7f7B97320C1", tokens("100"), "false", 5000)
-  await restakingFarm.add("0x38da41759CF77FB897ef237D4116aa50aFb1F743", tokens("100"), "false", 5000)
-  await restakingFarm.add("0x3A97a6084b10AA8d9Dd0DE753192E549f0D75bAe", tokens("100"), "false", 5000)
+  await restakingFarm.add("0xF52e1f503FffF3c212d72045839915B11478fAc6", tokens("100"), 1, 5000)
+  await restakingFarm.add("0x58A26F9100f77aa68E19359EffDBd7f7B97320C1", tokens("100"), 1, 5000)
+  await restakingFarm.add("0x38da41759CF77FB897ef237D4116aa50aFb1F743", tokens("100"), 1, 5000)
+  await restakingFarm.add("0x3A97a6084b10AA8d9Dd0DE753192E549f0D75bAe", tokens("100"), 1, 5000)
   await purseToken.addAdmin(restakingFarm.address)
   console.log("addAdmin")
   await purseToken.setWhitelistedFrom(restakingFarm.address)

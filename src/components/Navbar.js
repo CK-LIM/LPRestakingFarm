@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 // import Navbar from 'react-bootstrap/Navbar'
 import fx_token from '../x.png'
+import purse from '../purse.png'
 import Identicon from 'identicon.js';
-import Button from 'react-bootstrap/Button';
+import Button from '@material-ui/core/Button';
+import Buttons from 'react-bootstrap/Button'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 // import web3connect from 'web3connect';
 
 import {
-  // Nav,
+  NavLink2,
   NavLink
   // Bars,
   // NavMenu,
@@ -26,13 +29,11 @@ class Navb extends Component {
           className="navbar-brand col-sm-3 col-md-2 mr-0"
           href="https://www.pundix.com/"
           target="_blank"
-          // rel="noopener noreferrer"
+        // rel="noopener noreferrer"
         >
           <img src={fx_token} width="30" height="30" className="d-inline-block align-top" alt="" />
           &nbsp; LP Restaking Farm
         </a>
-
-
 
         <span>
           <ul className="navbar-nav px-3">
@@ -44,13 +45,18 @@ class Navb extends Component {
                 <div>
                   <NavLink to='/menu' >Menu</NavLink>
                 </div>&nbsp;&nbsp;
+                <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;
                 <div>
-                  <Button variant="info" size="sm" onClick={() => {
-                  }}>{this.props.networkName}
-                  </Button>
+                  <NavLink2 to='/menu' onClick={() => {
+                    window.open(`https://pancakeswap.finance/swap`, '_blank')
+                  }}> ${this.props.PURSEPrice}
+                  </NavLink2>
                 </div>&nbsp;
-
-
+                <div>
+                  <Buttons variant="info" size="sm" onClick={() => {
+                  }}>{this.props.networkName}
+                  </Buttons>
+                </div>&nbsp;
                 <div>
                   {this.props.wallet ?
                     <DropdownButton
@@ -60,7 +66,8 @@ class Navb extends Component {
                       align="end"
                       title={`${this.props.first4Account}...${this.props.last4Account}`}
                     >
-                      <Dropdown.Item onClick={() => {window.open(`https://testnet.bscscan.com/address/${this.props.account}`,'_blank')
+                      <Dropdown.Item onClick={() => {
+                        window.open(`https://testnet.bscscan.com/address/${this.props.account}`, '_blank')
                       }}
                       >Wallet</Dropdown.Item>
                       <Dropdown.Divider />

@@ -5,7 +5,7 @@ import asterisk from '../asterisk.png'
 import purse from '../purse.png'
 import pancake from '../pancakeswap.png'
 import bigInt from 'big-integer'
-
+import './App.css';
 
 class Deposit extends Component {
 
@@ -98,13 +98,13 @@ class Deposit extends Component {
         </div>
         <br /><br />
 
-        <h2 className="center"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} Farm</b></h2>
+        <h2 className="center textWhite"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} Farm</b></h2>
         <br />
-        <div className="center" style={{ color: 'grey' }}>&nbsp;Deposit <b>&nbsp;{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Token&nbsp;</b> and earn PURSE!!!</div>
-        <div className="center" style={{ color: 'grey' }}>&nbsp;APY :  {(28000 * 365 * this.props.poolSegmentInfo[this.props.n][this.props.i].pursePerBlock / this.props.lpTokenSegmentInContract[this.props.n][this.props.i]) * 100} %</div>
+        <div className="center" style={{ color: 'silver' }}>&nbsp;Deposit <b>&nbsp;{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Token&nbsp;</b> and earn PURSE!!!</div>
+        <div className="center" style={{ color: 'silver' }}>&nbsp;APY :  {(28000 * 365 * this.props.poolSegmentInfo[this.props.n][this.props.i].pursePerBlock / this.props.lpTokenSegmentInContract[this.props.n][this.props.i]) * 100} %</div>
         <br />
 
-        <div className="card mb-4" >
+        <div className="card mb-4 cardbody" >
           <div className="card-body">
 
 
@@ -126,8 +126,7 @@ class Deposit extends Component {
 
             </button>
 
-            <table className="table table-borderless text-muted text-center">
-
+            <table className="table table-borderless text-center" style={{ color: 'silver' }}>
               <thead>
                 <tr>
                   <th scope="col">{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Staked</th>
@@ -140,7 +139,7 @@ class Deposit extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>{window.web3.utils.fromWei(this.props.userSegmentInfo[this.props.n][this.props.i].amount.toString(), 'Ether')}</td>
+                  <td>{this.props.userSegmentInfo[this.props.n][this.props.i]}</td>
                   <td>{this.props.pendingSegmentReward[this.props.n][this.props.i]}</td>
                 </tr>
               </tbody>
@@ -148,7 +147,7 @@ class Deposit extends Component {
 
 
 
-            <div className="card mb-4" >
+            <div className="card mb-4 cardbody" >
               <div className="card-body">
                 {this.props.wallet ?
 
@@ -169,9 +168,13 @@ class Deposit extends Component {
                           this.props.deposit(this.props.i, amount, this.props.n)
                         }
                       } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
-                        if (bigInt(amount).value > this.props.userSegmentInfo[this.props.n][this.props.i].amount) {
+                        if ((this.input.value) > parseInt(this.props.userSegmentInfo[this.props.n][this.props.i])) {
+                          console.log((this.input.value))
+                          console.log(parseInt(this.props.userSegmentInfo[this.props.n][this.props.i]))
                           alert("Withdraw tokens more than deposit LP tokens")   
                         } else {
+                          console.log((this.input.value))
+                          console.log(parseInt(this.props.userSegmentInfo[this.props.n][this.props.i]))
                           this.props.withdraw(this.props.i, amount)
                         }
                       }
@@ -179,7 +182,7 @@ class Deposit extends Component {
                   }}>
                     <div>
                       <label className="float-left"><b>Deposit</b></label>
-                      <span className="float-right text-muted">
+                      <span className="float-right"  style={{ color: 'silver' }}>
                         <span>
                           LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}</span>
                         <span><br />
@@ -195,7 +198,7 @@ class Deposit extends Component {
                           <input
                             type="text"
                             ref={(input) => { this.input = input }}
-                            className="form-control form-control-lg"
+                            className="form-control form-control-lg cardbody"
                             placeholder="0"
                             onChange={(e) => {
                               const value = e.target.value;
@@ -204,7 +207,7 @@ class Deposit extends Component {
                             }}
                             required />
                           <div className="input-group-append">
-                            <div className="input-group-text">
+                            <div className="input-group-text cardbody" style={{ color: 'silver' }}>
                               <img src={pancake} height='25' alt="" />
                               &nbsp;&nbsp;&nbsp; LP
                             </div>

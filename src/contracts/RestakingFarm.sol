@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
  
 interface PurseToken {
 
@@ -18,6 +19,7 @@ interface PurseToken {
 }
 
 contract RestakingFarm is Ownable{
+    using SafeERC20 for IERC20;
 
     // ---Contract Variables---
     string public name = "RestakingFarm";
@@ -61,9 +63,14 @@ contract RestakingFarm is Ownable{
 
     event Deposit(address indexed user, uint256 amount);
     event Withdraw(address indexed user, uint256 amount);
-    event AddNewPool(address indexed owner, IERC20 indexed _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate, uint256 _startBlock);
-    event UpdatePoolReward(address indexed owner, uint256 indexed _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate);
+    event AddNewPool(address indexed owner, IERC20 indexed _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock);
+    event UpdatePoolReward(address indexed owner, uint256 indexed _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier);
     event ClaimReward(address indexed user, uint256 amount);
+
+    modifier poolexist(uint256 _pid) {
+        require( _pid < poolInfo.length, "Pool not existed");
+        _;
+    }
 
     constructor(
         PurseToken _purseToken,
@@ -71,18 +78,14 @@ contract RestakingFarm is Ownable{
     ) {
         purseToken = _purseToken;
         capMintToken = _capMintToken;
-        }
-    
+        }    
 
     function poolLength() external view returns (uint256) {
         return poolInfo.length;
     }
     // Add a new lp to the pool. Can only be called by the owner.
-    function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate, uint256 _startBlock) public onlyOwner {
+    function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock) public onlyOwner {
         require(poolId[address(_lpToken)] == 0, "Farmer::add: lp is already in pool");
-        if (_withUpdate) {
-            massUpdatePools();
-        }
         uint256 lastRewardBlock = block.number > _startBlock ? block.number : _startBlock;
         poolId[address(_lpToken)] = poolInfo.length + 1;
         poolInfo.push(PoolInfo({
@@ -93,26 +96,16 @@ contract RestakingFarm is Ownable{
             accPursePerShare: 0,
             startBlock: _startBlock
         }));
-        emit AddNewPool(msg.sender, _lpToken, _pursePerBlock, _bonusMultiplier, _withUpdate, _startBlock);
+        emit AddNewPool(msg.sender, _lpToken, _pursePerBlock, _bonusMultiplier, _startBlock);
     }
 
     // Update the given pool's PURSE _pursePerBlock. Can only be called by the owner.
-    function set(uint256 _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier, bool _withUpdate) public onlyOwner {
-        if (_withUpdate) {
-            massUpdatePools();
-        }
-        poolInfo[_pid].pursePerBlock = _pursePerBlock;
-        poolInfo[_pid].bonusMultiplier= _bonusMultiplier;
-        emit UpdatePoolReward(msg.sender, _pid, _pursePerBlock, _bonusMultiplier ,_withUpdate);
-    }
-
-
-    // Update reward variables for all pools. Be careful of gas spending!
-    function massUpdatePools() public {
-        uint256 length = poolInfo.length;
-        for (uint256 pid = 0; pid < length; ++pid) {
-            updatePool(pid);
-        }
+    function set(uint256 _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier) public onlyOwner poolexist(_pid){
+        PoolInfo storage pool = poolInfo[_pid];
+        updatePool(_pid);
+        pool.pursePerBlock = _pursePerBlock;
+        pool.bonusMultiplier= _bonusMultiplier;
+        emit UpdatePoolReward(msg.sender, _pid, _pursePerBlock, _bonusMultiplier );
     }
 
     // Return reward multiplier over the given _from to _to block.
@@ -121,7 +114,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Update reward variables of the given pool to be up-to-date.
-    function updatePool(uint256 _pid) public {
+    function updatePool(uint256 _pid) public poolexist(_pid){
         PoolInfo storage pool = poolInfo[_pid];
         if (block.number <= pool.lastRewardBlock) {
             return;
@@ -148,9 +141,9 @@ contract RestakingFarm is Ownable{
     }
 
     // Deposit LP tokens to Restaking Pool for Purse allocation.
-    function deposit(uint256 _pid, uint256 _amount) public {
-
+    function deposit(uint256 _pid, uint256 _amount) public poolexist(_pid) {        
         PoolInfo storage pool = poolInfo[_pid];
+        // require(poolId[address(pool.lpToken)] != 0, "Farmer::deposit: lp not exist");
         UserInfo storage user = userInfo[_pid][msg.sender];
         updatePool(_pid);
 
@@ -162,11 +155,11 @@ contract RestakingFarm is Ownable{
                 pending = farmBal;
             }
             if(pending > 0) {
-                purseToken.transfer(msg.sender, pending);
+                safePurseTransfer(msg.sender, pending);
             }
         }
         if (_amount > 0) {
-            pool.lpToken.transferFrom(address(msg.sender), address(this), _amount);
+            pool.lpToken.safeTransferFrom(address(msg.sender), address(this), _amount);
             user.amount = user.amount+_amount;
         }
         user.rewardDebt = user.amount*pool.accPursePerShare/1e12;
@@ -174,7 +167,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Withdraw LP tokens from MasterChef.
-    function withdraw(uint256 _pid, uint256 _amount) public {
+    function withdraw(uint256 _pid, uint256 _amount) public poolexist(_pid){
 
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
@@ -189,18 +182,18 @@ contract RestakingFarm is Ownable{
         }
 
         if(pending > 0) {
-            purseToken.transfer(msg.sender, pending);
+            safePurseTransfer(msg.sender, pending);
         }
         if(_amount > 0) {
             user.amount = user.amount-_amount;
-            pool.lpToken.transfer(address(msg.sender), _amount);
+            pool.lpToken.safeTransfer(address(msg.sender), _amount);
         }
         user.rewardDebt = user.amount*pool.accPursePerShare/1e12;
         emit Withdraw(msg.sender, _amount);
     }
 
     // Harvest reward tokens from pool.
-    function claimReward(uint256 _pid) public {
+    function claimReward(uint256 _pid) public poolexist(_pid){
 
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
@@ -214,7 +207,7 @@ contract RestakingFarm is Ownable{
         }
 
         if(pending > 0) {
-            purseToken.transfer(msg.sender, pending);
+            safePurseTransfer(msg.sender, pending);
         }
         user.rewardDebt = user.amount*pool.accPursePerShare/1e12;
 
@@ -225,9 +218,19 @@ contract RestakingFarm is Ownable{
         capMintToken = _newCap;
     }
 
+    // Safe purse transfer function, just in case if rounding error causes pool to not have enough PURSEs.
+    function safePurseTransfer(address _to, uint256 _amount) internal {
+        uint256 purseBal = purseToken.balanceOf(address(this));
+        if (_amount > purseBal) {
+            purseToken.transfer(_to, purseBal);
+        } else {
+            purseToken.transfer(_to, _amount);
+        }
+    }
+
 
      // View function to see pending PURSEs on frontend.
-    function pendingReward(uint256 _pid, address _user) external view returns (uint256) {
+    function pendingReward(uint256 _pid, address _user) external view poolexist(_pid) returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
         uint256 accPursePerShare = pool.accPursePerShare;
