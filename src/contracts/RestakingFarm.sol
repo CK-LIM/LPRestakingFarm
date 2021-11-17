@@ -87,6 +87,7 @@ contract RestakingFarm is Ownable{
 
     // Add a new lp to the pool. Can only be called by the owner.
     function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock) public onlyOwner {
+        require(_lpToken != IERC20(address(0)), "Farmer::add: invalid lp token");
         require(poolInfo[(_lpToken)].lpToken == IERC20(address(0)), "Farmer::add: lp is already in pool");
         uint256 lastRewardBlock = block.number > _startBlock ? block.number : _startBlock;
         poolInfo[(_lpToken)] = PoolInfo({
@@ -230,7 +231,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Withdraw without caring about rewards. EMERGENCY ONLY.
-    function emergencyWithdraw(IERC20 _lpToken) public {
+    function emergencyWithdraw(IERC20 _lpToken) public poolExist(_lpToken) {
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
         uint256 amount = user.amount;
