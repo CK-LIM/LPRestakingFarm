@@ -63,9 +63,10 @@ contract RestakingFarm is Ownable{
 
     event Deposit(address indexed user, uint256 amount);
     event Withdraw(address indexed user, uint256 amount);
-    event AddNewPool(address indexed owner, IERC20 indexed _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock);
-    event UpdatePoolReward(address indexed owner, uint256 indexed _pid, uint256 _pursePerBlock, uint256 _bonusMultiplier);
+    event AddNewPool(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock, uint256 bonusMultiplier, uint256 startBlock);
+    event UpdatePoolReward(address indexed owner, uint256 indexed pid, uint256 pursePerBlock, uint256 bonusMultiplier);
     event ClaimReward(address indexed user, uint256 amount);
+    event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
 
     modifier poolExist(uint256 _pid) {
         require( _pid < poolInfo.length, "Pool not existed");
@@ -227,6 +228,22 @@ contract RestakingFarm is Ownable{
         }
     }
 
+    // Withdraw without caring about rewards. EMERGENCY ONLY.
+    function emergencyWithdraw(uint256 _pid) public {
+        PoolInfo storage pool = poolInfo[_pid];
+        UserInfo storage user = userInfo[_pid][msg.sender];
+        uint256 amount = user.amount;
+        user.amount = 0;
+        user.rewardDebt = 0;
+        pool.lpToken.safeTransfer(address(msg.sender), amount);
+        emit EmergencyWithdraw(msg.sender, _pid, amount);
+    }
+
+    // Return any token function, just in case if any user transfer token into the smart contract. 
+    function returnAnyToken(address token, uint256 amount, address _to) public onlyOwner{
+        require(_to != address(0), "send to the zero address");
+        IERC20(token).safeTransfer(_to, amount);
+    }
 
      // View function to see pending PURSEs on frontend.
     function pendingReward(uint256 _pid, address _user) external view poolExist(_pid) returns (uint256) {
