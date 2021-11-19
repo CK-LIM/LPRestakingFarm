@@ -64,7 +64,8 @@ contract RestakingFarm is Ownable{
     event Deposit(address indexed user, uint256 amount);
     event Withdraw(address indexed user, uint256 amount);
     event AddNewPool(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock, uint256 bonusMultiplier, uint256 startBlock);
-    event UpdatePoolReward(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock, uint256 bonusMultiplier);
+    event UpdatePoolReward(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock);
+    event UpdatePoolMultiplier(address indexed owner, IERC20 indexed lpToken, uint256 bonusMultiplier);
     event ClaimReward(address indexed user, uint256 amount);
     event EmergencyWithdraw(address indexed user, IERC20 indexed lpToken, uint256 amount);
 
@@ -103,12 +104,21 @@ contract RestakingFarm is Ownable{
     }
 
     // Update the given pool's PURSE _pursePerBlock. Can only be called by the owner.
-    function set(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier) public onlyOwner poolExist(_lpToken){
+    function setPurseReward(IERC20 _lpToken, uint256 _pursePerBlock) public onlyOwner poolExist(_lpToken){        
         PoolInfo storage pool = poolInfo[_lpToken];
+        require(pool.pursePerBlock != _pursePerBlock, "Same Purse Reward");
         updatePool(_lpToken);
         pool.pursePerBlock = _pursePerBlock;
+        emit UpdatePoolReward(msg.sender, _lpToken, _pursePerBlock);
+    }
+
+    // Update the given pool's PURSE _bonusMultiplier. Can only be called by the owner.
+    function setBonusMultiplier(IERC20 _lpToken, uint256 _bonusMultiplier) public onlyOwner poolExist(_lpToken){        
+        PoolInfo storage pool = poolInfo[_lpToken];
+        require(pool.bonusMultiplier != _bonusMultiplier, "Same bonus multiplier");
+        updatePool(_lpToken);
         pool.bonusMultiplier= _bonusMultiplier;
-        emit UpdatePoolReward(msg.sender, _lpToken, _pursePerBlock, _bonusMultiplier );
+        emit UpdatePoolMultiplier(msg.sender, _lpToken, _bonusMultiplier );
     }
 
     // Return reward multiplier over the given _from to _to block.
@@ -151,11 +161,7 @@ contract RestakingFarm is Ownable{
 
         if (user.amount > 0) {
             uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;
-            uint256 farmBal = purseToken.balanceOf(address(this));
 
-            if (pending > farmBal) {
-                pending = farmBal;
-            }
             if(pending > 0) {
                 safePurseTransfer(msg.sender, pending);
             }
@@ -177,11 +183,6 @@ contract RestakingFarm is Ownable{
 
         updatePool(_lpToken);
         uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;
-        uint256 farmBal = purseToken.balanceOf(address(this));
-
-        if (pending > farmBal) {
-            pending = farmBal;
-        }
 
         if(pending > 0) {
             safePurseTransfer(msg.sender, pending);
@@ -202,11 +203,6 @@ contract RestakingFarm is Ownable{
 
         updatePool(_lpToken);
         uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;
-        uint256 farmBal = purseToken.balanceOf(address(this));
-
-        if (pending > farmBal) {
-            pending = farmBal;
-        }
 
         if(pending > 0) {
             safePurseTransfer(msg.sender, pending);
