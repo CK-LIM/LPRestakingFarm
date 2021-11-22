@@ -248,8 +248,8 @@ contract RestakingFarm is Ownable{
 
      // View function to see pending PURSEs on frontend.
     function pendingReward(IERC20 _lpToken, address _user) external view poolExist(_lpToken) returns (uint256) {
-        PoolInfo storage pool = poolInfo[_lpToken];
-        UserInfo storage user = userInfo[_lpToken][_user];
+        PoolInfo memory pool = poolInfo[_lpToken];
+        UserInfo memory user = userInfo[_lpToken][_user];
         uint256 accPursePerShare = pool.accPursePerShare;
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
         uint256 purseBal = purseToken.balanceOf(address(this));
