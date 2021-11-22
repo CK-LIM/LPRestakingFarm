@@ -252,12 +252,22 @@ contract RestakingFarm is Ownable{
         UserInfo storage user = userInfo[_lpToken][_user];
         uint256 accPursePerShare = pool.accPursePerShare;
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
+        uint256 purseBal = purseToken.balanceOf(address(this));
+        uint256 pendingPurseMint = capMintToken - totalMintToken;
+        uint256 totalpurseSupply = purseBal + pendingPurseMint;
         uint256 multiplier;
         if (block.number > pool.lastRewardBlock && lpSupply != 0) {
             multiplier = getMultiplier(pool.lastRewardBlock, block.number);
             uint256 purseReward = multiplier*pool.pursePerBlock*pool.bonusMultiplier;
             accPursePerShare = accPursePerShare+(purseReward*(1e12)/lpSupply);
         }
-        return (user.amount*(accPursePerShare)/(1e12)-(user.rewardDebt));
+        uint256 pending = user.amount*(accPursePerShare)/(1e12)-(user.rewardDebt);
+
+        if (pending > totalpurseSupply) {
+            pending = totalpurseSupply;
+        }
+
+
+        return (pending);
     }
 }
