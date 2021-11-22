@@ -92,7 +92,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.7+commit.e28d00a7\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenOwner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/RestakingFarm.sol\":\"PurseToken\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/RestakingFarm.sol\":{\"keccak256\":\"0xed956ad62bc78053dabb5c19a42ed063f7232935dda9e6de0c0e23dbec240676\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://2f6608d8134673148b069b0acfaba206326d884d4b8f41eaaf626c9481c12c6a\",\"dweb:/ipfs/QmQBT5itaZKfLVjxWXor2CQghbhnaLP7guVFzybYV3m7VD\"]},\"@openzeppelin/contracts/access/Ownable.sol\":{\"keccak256\":\"0x6bb804a310218875e89d12c053e94a13a4607cdf7cc2052f3e52bd32a0dc50a1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2ebbbe6d0011175bd9e7268b83de3f9c2f9d8d4cbfbaef12aff977d7d727163\",\"dweb:/ipfs/Qmd5c7Vxtis9wzkDNhxwc6A2QT5H9xn9kfjhx7qx44vpro\"]},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x027b891937d20ccf213fdb9c31531574256de774bda99d3a70ecef6e1913ed2a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://087318b21c528119f649899f5b5580566dd8d7b0303d4904bd0e8580c3545f14\",\"dweb:/ipfs/Qmbn5Mj7aUn8hJuQ8VrQjjEXRsXyJKykgnjR9p4C3nfLtL\"]},\"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\":{\"keccak256\":\"0x02348b2e4b9f3200c7e3907c5c2661643a6d8520e9f79939fbb9b4005a54894d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d41d627f4ef9c6006df8c2d01227d3cf4a6c3359b5704c629d88933272eecadd\",\"dweb:/ipfs/QmYDo7MvMsvuDxuJZ9RC9zFganS3Tm8RYzSmBP5qSmJfuY\"]},\"@openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0x3336baae5cf23e94274d75336e2d412193be508504aee185e61dc7d58cd05c8a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://39a05eec7083dfa0cc7e0cbfe6cd1bd085a340af1ede93fdff3ad047c5fb3d8e\",\"dweb:/ipfs/QmVApz5fCUq2QC8gKTsNNdCmcedJ3ETHp68zR5N3WUKS4r\"]},\"@openzeppelin/contracts/utils/Context.sol\":{\"keccak256\":\"0x90565a39ae45c80f0468dc96c7b20d0afc3055f344c8203a0c9258239f350b9f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://26e8b38a7ac8e7b4463af00cf7fff1bf48ae9875765bf4f7751e100124d0bc8c\",\"dweb:/ipfs/QmWcsmkVr24xmmjfnBQZoemFniXjj3vwT78Cz6uqZW1Hux\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.7+commit.e28d00a7\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenOwner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/RestakingFarm.sol\":\"PurseToken\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/RestakingFarm.sol\":{\"keccak256\":\"0x5c5f7f81ab27b14fc0a45a3277df12a3ef936765d5c6eaa5f711da6eecc4cc8b\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://87346bf82878370f335b368bf8051d0eb87ac01f279460e8ed8b167c6ed79260\",\"dweb:/ipfs/QmYY7mjuZhswcHfLqSVF5ekgtKD3SG6JAjYSTwPkV6rdLq\"]},\"@openzeppelin/contracts/access/Ownable.sol\":{\"keccak256\":\"0x6bb804a310218875e89d12c053e94a13a4607cdf7cc2052f3e52bd32a0dc50a1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2ebbbe6d0011175bd9e7268b83de3f9c2f9d8d4cbfbaef12aff977d7d727163\",\"dweb:/ipfs/Qmd5c7Vxtis9wzkDNhxwc6A2QT5H9xn9kfjhx7qx44vpro\"]},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x027b891937d20ccf213fdb9c31531574256de774bda99d3a70ecef6e1913ed2a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://087318b21c528119f649899f5b5580566dd8d7b0303d4904bd0e8580c3545f14\",\"dweb:/ipfs/Qmbn5Mj7aUn8hJuQ8VrQjjEXRsXyJKykgnjR9p4C3nfLtL\"]},\"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\":{\"keccak256\":\"0x02348b2e4b9f3200c7e3907c5c2661643a6d8520e9f79939fbb9b4005a54894d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d41d627f4ef9c6006df8c2d01227d3cf4a6c3359b5704c629d88933272eecadd\",\"dweb:/ipfs/QmYDo7MvMsvuDxuJZ9RC9zFganS3Tm8RYzSmBP5qSmJfuY\"]},\"@openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0x3336baae5cf23e94274d75336e2d412193be508504aee185e61dc7d58cd05c8a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://39a05eec7083dfa0cc7e0cbfe6cd1bd085a340af1ede93fdff3ad047c5fb3d8e\",\"dweb:/ipfs/QmVApz5fCUq2QC8gKTsNNdCmcedJ3ETHp68zR5N3WUKS4r\"]},\"@openzeppelin/contracts/utils/Context.sol\":{\"keccak256\":\"0x90565a39ae45c80f0468dc96c7b20d0afc3055f344c8203a0c9258239f350b9f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://26e8b38a7ac8e7b4463af00cf7fff1bf48ae9875765bf4f7751e100124d0bc8c\",\"dweb:/ipfs/QmWcsmkVr24xmmjfnBQZoemFniXjj3vwT78Cz6uqZW1Hux\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -100,7 +100,7 @@
   "deployedGeneratedSources": [],
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: UNLICENSED\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"@openzeppelin/contracts/access/Ownable.sol\";\r\nimport \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\r\nimport \"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\";\r\n \r\ninterface PurseToken {\r\n\r\n    function transfer(address to, uint tokens) external  returns (bool success);\r\n\r\n    function mint(address to, uint tokens) external;\r\n\r\n    function transferFrom(address from, address to, uint tokens) external  returns (bool success);\r\n\r\n    function balanceOf(address tokenOwner) external view returns (uint balance);\r\n\r\n}\r\n\r\ncontract RestakingFarm is Ownable{\r\n    using SafeERC20 for IERC20;\r\n\r\n    // ---Contract Variables---\r\n    string public name = \"RestakingFarm\";\r\n\r\n    // Userinfo\r\n    struct UserInfo {\r\n        uint256 amount;     // How many LP tokens the user has provided.\r\n        uint256 rewardDebt; // Reward debt. See explanation below.\r\n        //\r\n        // We do some fancy math here. Basically, any point in time, the amount of PURSEs\r\n        // entitled to a user but is pending to be distributed is:\r\n        //\r\n        //   pending reward = (user.amount * pool.accPursePerShare) - user.rewardDebt\r\n        //\r\n        // Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:\r\n        //   1. The pool's `accPursePerShare` (and `lastRewardBlock`) gets updated.\r\n        //   2. User receives the pending reward sent to his/her address.\r\n        //   3. User's `amount` gets updated.\r\n        //   4. User's `rewardDebt` gets updated.\r\n    }\r\n    \r\n    // Info of each pool.\r\n    struct PoolInfo {\r\n        IERC20 lpToken;           // Address of LP token contract.\r\n        uint256 pursePerBlock;\r\n        uint256 bonusMultiplier;\r\n        uint256 lastRewardBlock;  // Last block number that PURSEs distribution occurs.\r\n        uint256 accPursePerShare; // Accumulated PURSEs per share, times 1e12. See below.\r\n        uint256 startBlock;\r\n    }\r\n\r\n    // The PURSE TOKEN!\r\n    PurseToken public purseToken;\r\n    uint256 public totalMintToken;    \r\n    uint256 public capMintToken;\r\n    IERC20[] public poolTokenList;\r\n    mapping(IERC20 => PoolInfo) public poolInfo;\r\n\r\n    // Info of each user that stakes LP tokens.\r\n    mapping (IERC20 => mapping (address => UserInfo)) public userInfo;\r\n\r\n    event Deposit(address indexed user, uint256 amount);\r\n    event Withdraw(address indexed user, uint256 amount);\r\n    event AddNewPool(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock, uint256 bonusMultiplier, uint256 startBlock);\r\n    event UpdatePoolReward(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock);\r\n    event UpdatePoolMultiplier(address indexed owner, IERC20 indexed lpToken, uint256 bonusMultiplier);\r\n    event ClaimReward(address indexed user, uint256 amount);\r\n    event EmergencyWithdraw(address indexed user, IERC20 indexed lpToken, uint256 amount);\r\n\r\n    modifier poolExist(IERC20 _lpToken) {\r\n        require( poolInfo[(_lpToken)].lpToken != IERC20(address(0)), \"Pool not exist\");\r\n        _;\r\n    }\r\n\r\n    constructor(\r\n        PurseToken _purseToken,\r\n        uint256 _capMintToken\r\n    ) {\r\n        purseToken = _purseToken;\r\n        capMintToken = _capMintToken;\r\n        }    \r\n\r\n    function poolLength() external view returns (uint256) {\r\n        return poolTokenList.length;\r\n    }\r\n\r\n    // Add a new lp to the pool. Can only be called by the owner.\r\n    function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock) public onlyOwner {\r\n        require(_lpToken != IERC20(address(0)), \"Farmer::add: invalid lp token\");\r\n        require(poolInfo[_lpToken].lpToken == IERC20(address(0)), \"Farmer::add: lp is already in pool\");\r\n        uint256 lastRewardBlock = block.number > _startBlock ? block.number : _startBlock;\r\n        poolInfo[(_lpToken)] = PoolInfo({\r\n            lpToken: _lpToken,\r\n            pursePerBlock : _pursePerBlock,\r\n            bonusMultiplier: _bonusMultiplier,\r\n            lastRewardBlock: lastRewardBlock,\r\n            accPursePerShare: 0,\r\n            startBlock: _startBlock\r\n        });\r\n        poolTokenList.push(_lpToken);\r\n        emit AddNewPool(msg.sender, _lpToken, _pursePerBlock, _bonusMultiplier, _startBlock);\r\n    }\r\n\r\n    // Update the given pool's PURSE _pursePerBlock. Can only be called by the owner.\r\n    function setPurseReward(IERC20 _lpToken, uint256 _pursePerBlock) public onlyOwner poolExist(_lpToken){        \r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        require(pool.pursePerBlock != _pursePerBlock, \"Same Purse Reward\");\r\n        updatePool(_lpToken);\r\n        pool.pursePerBlock = _pursePerBlock;\r\n        emit UpdatePoolReward(msg.sender, _lpToken, _pursePerBlock);\r\n    }\r\n\r\n    // Update the given pool's PURSE _bonusMultiplier. Can only be called by the owner.\r\n    function setBonusMultiplier(IERC20 _lpToken, uint256 _bonusMultiplier) public onlyOwner poolExist(_lpToken){        \r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        require(pool.bonusMultiplier != _bonusMultiplier, \"Same bonus multiplier\");\r\n        updatePool(_lpToken);\r\n        pool.bonusMultiplier= _bonusMultiplier;\r\n        emit UpdatePoolMultiplier(msg.sender, _lpToken, _bonusMultiplier );\r\n    }\r\n\r\n    // Return reward multiplier over the given _from to _to block.\r\n    function getMultiplier(uint256 _from, uint256 _to) public pure returns (uint256) {\r\n        return _to-_from;\r\n    }\r\n\r\n    // Update reward variables of the given pool to be up-to-date.\r\n    function updatePool(IERC20 _lpToken) public poolExist(_lpToken){\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        if (block.number <= pool.lastRewardBlock) {\r\n            return;\r\n        }\r\n        uint256 lpSupply = pool.lpToken.balanceOf(address(this));\r\n        if (lpSupply == 0) {\r\n            pool.lastRewardBlock = block.number;\r\n            return;\r\n        }\r\n        uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);\r\n        uint256 purseReward = multiplier*pool.pursePerBlock*pool.bonusMultiplier;\r\n        if (totalMintToken < capMintToken) {\r\n            if (totalMintToken + purseReward >= capMintToken) {\r\n                uint256 PurseCanMint = capMintToken-totalMintToken;\r\n                totalMintToken += PurseCanMint;\r\n                purseToken.mint(address(this), PurseCanMint);\r\n            } else {\r\n                totalMintToken += purseReward;\r\n                purseToken.mint(address(this), purseReward);\r\n            }\r\n        }\r\n        pool.accPursePerShare = pool.accPursePerShare+(purseReward*1e12/lpSupply);\r\n        pool.lastRewardBlock = block.number;\r\n    }\r\n\r\n    // Deposit LP tokens to Restaking Pool for Purse allocation.\r\n    function deposit(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken) {     \r\n        require(_amount > 0, \"Deposit: not good\");\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        updatePool(_lpToken);\r\n\r\n        if (user.amount > 0) {\r\n            uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;\r\n\r\n            if(pending > 0) {\r\n                safePurseTransfer(msg.sender, pending);\r\n            }\r\n        }\r\n        if (_amount > 0) {\r\n            pool.lpToken.safeTransferFrom(address(msg.sender), address(this), _amount);\r\n            user.amount = user.amount+_amount;\r\n        }\r\n        user.rewardDebt = user.amount*pool.accPursePerShare/1e12;\r\n        emit Deposit(msg.sender, _amount);\r\n    }\r\n\r\n    // Withdraw LP tokens from MasterChef.\r\n    function withdraw(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken){\r\n\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        require(user.amount >= _amount, \"withdraw: not good\");\r\n\r\n        updatePool(_lpToken);\r\n        uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;\r\n\r\n        if(pending > 0) {\r\n            safePurseTransfer(msg.sender, pending);\r\n        }\r\n        if(_amount > 0) {\r\n            user.amount = user.amount-_amount;\r\n            pool.lpToken.safeTransfer(address(msg.sender), _amount);\r\n        }\r\n        user.rewardDebt = user.amount*pool.accPursePerShare/1e12;\r\n        emit Withdraw(msg.sender, _amount);\r\n    }\r\n\r\n    // Harvest reward tokens from pool.\r\n    function claimReward(IERC20 _lpToken) public poolExist(_lpToken){\r\n\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        require(user.amount > 0, \"Claim: not good\");\r\n\r\n        updatePool(_lpToken);\r\n        uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;\r\n\r\n        if(pending > 0) {\r\n            safePurseTransfer(msg.sender, pending);\r\n        }\r\n        user.rewardDebt = user.amount*pool.accPursePerShare/1e12;\r\n\r\n        emit ClaimReward(msg.sender, pending);\r\n    }\r\n\r\n    function capMintTokenUpdate (uint256 _newCap) public onlyOwner {\r\n        capMintToken = _newCap;\r\n    }\r\n\r\n    // Safe purse transfer function, just in case if rounding error causes pool to not have enough PURSEs.\r\n    function safePurseTransfer(address _to, uint256 _amount) internal {\r\n        uint256 purseBal = purseToken.balanceOf(address(this));\r\n        if (_amount > purseBal) {\r\n            purseToken.transfer(_to, purseBal);\r\n        } else {\r\n            purseToken.transfer(_to, _amount);\r\n        }\r\n    }\r\n\r\n    // Withdraw without caring about rewards. EMERGENCY ONLY.\r\n    function emergencyWithdraw(IERC20 _lpToken) public poolExist(_lpToken) {\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        require(user.amount > 0, \"Emergency Withdraw: not good\");\r\n        uint256 amount = user.amount;\r\n        user.amount = 0;\r\n        user.rewardDebt = 0;\r\n        pool.lpToken.safeTransfer(address(msg.sender), amount);\r\n        emit EmergencyWithdraw(msg.sender, _lpToken, amount);\r\n    }\r\n\r\n    // Return any token function, just in case if any user transfer token into the smart contract. \r\n    function returnAnyToken(address token, uint256 amount, address _to) public onlyOwner{\r\n        require(_to != address(0), \"send to the zero address\");\r\n        IERC20(token).safeTransfer(_to, amount);\r\n    }\r\n\r\n     // View function to see pending PURSEs on frontend.\r\n    function pendingReward(IERC20 _lpToken, address _user) external view poolExist(_lpToken) returns (uint256) {\r\n        PoolInfo memory pool = poolInfo[_lpToken];\r\n        UserInfo memory user = userInfo[_lpToken][_user];\r\n        uint256 accPursePerShare = pool.accPursePerShare;\r\n        uint256 lpSupply = pool.lpToken.balanceOf(address(this));\r\n        uint256 purseBal = purseToken.balanceOf(address(this));\r\n        uint256 pendingPurseMint = capMintToken - totalMintToken;\r\n        uint256 totalpurseSupply = purseBal + pendingPurseMint;\r\n        uint256 multiplier;\r\n        if (block.number > pool.lastRewardBlock && lpSupply != 0) {\r\n            multiplier = getMultiplier(pool.lastRewardBlock, block.number);\r\n            uint256 purseReward = multiplier*pool.pursePerBlock*pool.bonusMultiplier;\r\n            accPursePerShare = accPursePerShare+(purseReward*(1e12)/lpSupply);\r\n        }\r\n        uint256 pending = user.amount*(accPursePerShare)/(1e12)-(user.rewardDebt);\r\n\r\n        if (pending > totalpurseSupply) {\r\n            pending = totalpurseSupply;\r\n        }\r\n\r\n\r\n        return (pending);\r\n    }\r\n}",
+  "source": "// SPDX-License-Identifier: UNLICENSED\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"@openzeppelin/contracts/access/Ownable.sol\";\r\nimport \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\r\nimport \"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\";\r\n \r\ninterface PurseToken {\r\n\r\n    function transfer(address to, uint tokens) external  returns (bool success);\r\n\r\n    function mint(address to, uint tokens) external;\r\n\r\n    function transferFrom(address from, address to, uint tokens) external  returns (bool success);\r\n\r\n    function balanceOf(address tokenOwner) external view returns (uint balance);\r\n\r\n}\r\n\r\ncontract RestakingFarm is Ownable{\r\n    using SafeERC20 for IERC20;\r\n\r\n    // ---Contract Variables---\r\n    string public name = \"RestakingFarm\";\r\n\r\n    // Userinfo\r\n    struct UserInfo {\r\n        uint256 amount;     // How many LP tokens the user has provided.\r\n        uint256 rewardDebt; // Reward debt. See explanation below.\r\n        //\r\n        // We do some fancy math here. Basically, any point in time, the amount of PURSEs\r\n        // entitled to a user but is pending to be distributed is:\r\n        //\r\n        //   pending reward = (user.amount * pool.accPursePerShare) - user.rewardDebt\r\n        //\r\n        // Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:\r\n        //   1. The pool's `accPursePerShare` (and `lastRewardBlock`) gets updated.\r\n        //   2. User receives the pending reward sent to his/her address.\r\n        //   3. User's `amount` gets updated.\r\n        //   4. User's `rewardDebt` gets updated.\r\n    }\r\n    \r\n    // Info of each pool.\r\n    struct PoolInfo {\r\n        IERC20 lpToken;           // Address of LP token contract.\r\n        uint256 pursePerBlock;\r\n        uint256 bonusMultiplier;\r\n        uint256 lastRewardBlock;  // Last block number that PURSEs distribution occurs.\r\n        uint256 accPursePerShare; // Accumulated PURSEs per share, times 1e12. See below.\r\n        uint256 startBlock;\r\n    }\r\n\r\n    // The PURSE TOKEN!\r\n    PurseToken public purseToken;\r\n    uint256 public totalMintToken;    \r\n    uint256 public capMintToken;\r\n    IERC20[] public poolTokenList;\r\n    mapping(IERC20 => PoolInfo) public poolInfo;\r\n\r\n    // Info of each user that stakes LP tokens.\r\n    mapping (IERC20 => mapping (address => UserInfo)) public userInfo;\r\n\r\n    event Deposit(address indexed user, uint256 amount);\r\n    event Withdraw(address indexed user, uint256 amount);\r\n    event AddNewPool(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock, uint256 bonusMultiplier, uint256 startBlock);\r\n    event UpdatePoolReward(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock);\r\n    event UpdatePoolMultiplier(address indexed owner, IERC20 indexed lpToken, uint256 bonusMultiplier);\r\n    event ClaimReward(address indexed user, uint256 amount);\r\n    event EmergencyWithdraw(address indexed user, IERC20 indexed lpToken, uint256 amount);\r\n\r\n    modifier poolExist(IERC20 _lpToken) {\r\n        require( poolInfo[(_lpToken)].lpToken != IERC20(address(0)), \"Pool not exist\");\r\n        _;\r\n    }\r\n\r\n    constructor(\r\n        PurseToken _purseToken,\r\n        uint256 _capMintToken\r\n    ) {\r\n        purseToken = _purseToken;\r\n        capMintToken = _capMintToken;\r\n        }    \r\n\r\n    function poolLength() external view returns (uint256) {\r\n        return poolTokenList.length;\r\n    }\r\n\r\n    // Add a new lp to the pool. Can only be called by the owner.\r\n    function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock) public onlyOwner {\r\n        require(_lpToken != IERC20(address(0)), \"Farmer::add: invalid lp token\");\r\n        require(poolInfo[_lpToken].lpToken == IERC20(address(0)), \"Farmer::add: lp is already in pool\");\r\n        uint256 lastRewardBlock = block.number > _startBlock ? block.number : _startBlock;\r\n        poolInfo[(_lpToken)] = PoolInfo({\r\n            lpToken: _lpToken,\r\n            pursePerBlock : _pursePerBlock,\r\n            bonusMultiplier: _bonusMultiplier,\r\n            lastRewardBlock: lastRewardBlock,\r\n            accPursePerShare: 0,\r\n            startBlock: _startBlock\r\n        });\r\n        poolTokenList.push(_lpToken);\r\n        emit AddNewPool(msg.sender, _lpToken, _pursePerBlock, _bonusMultiplier, _startBlock);\r\n    }\r\n\r\n    // Update the given pool's PURSE _pursePerBlock. Can only be called by the owner.\r\n    function setPurseReward(IERC20 _lpToken, uint256 _pursePerBlock) public onlyOwner poolExist(_lpToken){        \r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        require(pool.pursePerBlock != _pursePerBlock, \"Same Purse Reward\");\r\n        updatePool(_lpToken);\r\n        pool.pursePerBlock = _pursePerBlock;\r\n        emit UpdatePoolReward(msg.sender, _lpToken, _pursePerBlock);\r\n    }\r\n\r\n    // Update the given pool's PURSE _bonusMultiplier. Can only be called by the owner.\r\n    function setBonusMultiplier(IERC20 _lpToken, uint256 _bonusMultiplier) public onlyOwner poolExist(_lpToken){        \r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        require(pool.bonusMultiplier != _bonusMultiplier, \"Same bonus multiplier\");\r\n        updatePool(_lpToken);\r\n        pool.bonusMultiplier= _bonusMultiplier;\r\n        emit UpdatePoolMultiplier(msg.sender, _lpToken, _bonusMultiplier );\r\n    }\r\n\r\n    // Return reward multiplier over the given _from to _to block.\r\n    function getMultiplier(uint256 _from, uint256 _to) public pure returns (uint256) {\r\n        return _to-_from;\r\n    }\r\n\r\n    // Update reward variables of the given pool to be up-to-date.\r\n    function updatePool(IERC20 _lpToken) public poolExist(_lpToken){\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        if (block.number <= pool.lastRewardBlock) {\r\n            return;\r\n        }\r\n        uint256 lpSupply = pool.lpToken.balanceOf(address(this));\r\n        if (lpSupply == 0) {\r\n            pool.lastRewardBlock = block.number;\r\n            return;\r\n        }\r\n        uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);\r\n        uint256 purseReward = multiplier*pool.pursePerBlock*pool.bonusMultiplier;\r\n        if (totalMintToken < capMintToken) {\r\n            if (totalMintToken + purseReward >= capMintToken) {\r\n                uint256 PurseCanMint = capMintToken-totalMintToken;\r\n                totalMintToken += PurseCanMint;\r\n                purseToken.mint(address(this), PurseCanMint);\r\n            } else {\r\n                totalMintToken += purseReward;\r\n                purseToken.mint(address(this), purseReward);\r\n            }\r\n        }\r\n        pool.accPursePerShare = pool.accPursePerShare+(purseReward*1e12/lpSupply);\r\n        pool.lastRewardBlock = block.number;\r\n    }\r\n\r\n    // Deposit LP tokens to Restaking Pool for Purse allocation.\r\n    function deposit(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken) {     \r\n        require(_amount > 0, \"Deposit: not good\");\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        updatePool(_lpToken);\r\n\r\n        if (user.amount > 0) {\r\n            uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;\r\n\r\n            if(pending > 0) {\r\n                safePurseTransfer(msg.sender, pending);\r\n            }\r\n        }\r\n        if (_amount > 0) {\r\n            pool.lpToken.safeTransferFrom(address(msg.sender), address(this), _amount);\r\n            user.amount = user.amount+_amount;\r\n        }\r\n        user.rewardDebt = user.amount*pool.accPursePerShare/1e12;\r\n        emit Deposit(msg.sender, _amount);\r\n    }\r\n\r\n    // Withdraw LP tokens from MasterChef.\r\n    function withdraw(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken){\r\n\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        require(user.amount >= _amount, \"withdraw: not good\");\r\n\r\n        updatePool(_lpToken);\r\n        uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;\r\n\r\n        if(pending > 0) {\r\n            safePurseTransfer(msg.sender, pending);\r\n        }\r\n        if(_amount > 0) {\r\n            user.amount = user.amount-_amount;\r\n            pool.lpToken.safeTransfer(address(msg.sender), _amount);\r\n        }\r\n        user.rewardDebt = user.amount*pool.accPursePerShare/1e12;\r\n        emit Withdraw(msg.sender, _amount);\r\n    }\r\n\r\n    // Harvest reward tokens from pool.\r\n    function claimReward(IERC20 _lpToken) public poolExist(_lpToken){\r\n\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        require(user.amount > 0, \"Claim: not good\");\r\n\r\n        updatePool(_lpToken);\r\n        uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;\r\n\r\n        if(pending > 0) {\r\n            safePurseTransfer(msg.sender, pending);\r\n        }\r\n        user.rewardDebt = user.amount*pool.accPursePerShare/1e12;\r\n\r\n        emit ClaimReward(msg.sender, pending);\r\n    }\r\n\r\n    function capMintTokenUpdate (uint256 _newCap) public onlyOwner {\r\n        capMintToken = _newCap;\r\n    }\r\n\r\n    // Safe purse transfer function, just in case if rounding error causes pool to not have enough PURSEs.\r\n    function safePurseTransfer(address _to, uint256 _amount) internal {\r\n        uint256 purseBal = purseToken.balanceOf(address(this));\r\n        if (_amount > purseBal) {\r\n            purseToken.transfer(_to, purseBal);\r\n        } else {\r\n            purseToken.transfer(_to, _amount);\r\n        }\r\n    }\r\n\r\n    // Withdraw without caring about rewards. EMERGENCY ONLY.\r\n    function emergencyWithdraw(IERC20 _lpToken) public poolExist(_lpToken) {\r\n        PoolInfo storage pool = poolInfo[_lpToken];\r\n        UserInfo storage user = userInfo[_lpToken][msg.sender];\r\n        require(user.amount > 0, \"Emergency Withdraw: not good\");\r\n        uint256 amount = user.amount;\r\n        user.amount = 0;\r\n        user.rewardDebt = 0;\r\n        pool.lpToken.safeTransfer(address(msg.sender), amount);\r\n        emit EmergencyWithdraw(msg.sender, _lpToken, amount);\r\n    }\r\n\r\n    // Return any token function, just in case if any user transfer token into the smart contract. \r\n    function returnAnyToken(address token, uint256 amount, address _to) public onlyOwner{\r\n        require(_to != address(0), \"send to the zero address\");\r\n        IERC20(token).safeTransfer(_to, amount);\r\n    }\r\n\r\n     // View function to see pending PURSEs on frontend.\r\n    function pendingReward(IERC20 _lpToken, address _user) external view poolExist(_lpToken) returns (uint256) {\r\n        PoolInfo memory pool = poolInfo[_lpToken];\r\n        UserInfo memory user = userInfo[_lpToken][_user];\r\n        uint256 accPursePerShare = pool.accPursePerShare;\r\n        uint256 lpSupply = pool.lpToken.balanceOf(address(this));\r\n        uint256 purseBal = purseToken.balanceOf(address(this));\r\n        uint256 pendingPurseMint = capMintToken - totalMintToken;\r\n        uint256 totalPurseSupply = purseBal + pendingPurseMint;\r\n        uint256 multiplier;\r\n        if (block.number > pool.lastRewardBlock && lpSupply != 0) {\r\n            multiplier = getMultiplier(pool.lastRewardBlock, block.number);\r\n            uint256 purseReward = multiplier*pool.pursePerBlock*pool.bonusMultiplier;\r\n            accPursePerShare = accPursePerShare+(purseReward*(1e12)/lpSupply);\r\n        }\r\n        uint256 pending = user.amount*(accPursePerShare)/(1e12)-(user.rewardDebt);\r\n\r\n        if (pending > totalPurseSupply) {\r\n            pending = totalPurseSupply;\r\n        }\r\n\r\n        return (pending);\r\n    }\r\n}",
   "sourcePath": "C:/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/RestakingFarm.sol",
   "ast": {
     "absolutePath": "/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/RestakingFarm.sol",
@@ -12356,7 +12356,7 @@
             "body": {
               "id": 1124,
               "nodeType": "Block",
-              "src": "10589:1007:0",
+              "src": "10589:1005:0",
               "statements": [
                 {
                   "assignments": [
@@ -13000,7 +13000,7 @@
                       "constant": false,
                       "id": 1047,
                       "mutability": "mutable",
-                      "name": "totalpurseSupply",
+                      "name": "totalPurseSupply",
                       "nameLocation": "10977:16:0",
                       "nodeType": "VariableDeclaration",
                       "scope": 1124,
@@ -13934,7 +13934,7 @@
                     "operator": ">",
                     "rightExpression": {
                       "id": 1113,
-                      "name": "totalpurseSupply",
+                      "name": "totalPurseSupply",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1047,
@@ -13981,7 +13981,7 @@
                           "operator": "=",
                           "rightHandSide": {
                             "id": 1116,
-                            "name": "totalpurseSupply",
+                            "name": "totalPurseSupply",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1047,
@@ -14013,7 +14013,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1098,
-                        "src": "11580:7:0",
+                        "src": "11578:7:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14027,7 +14027,7 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "11579:9:0",
+                    "src": "11577:9:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -14036,7 +14036,7 @@
                   "functionReturnParameters": 997,
                   "id": 1123,
                   "nodeType": "Return",
-                  "src": "11572:16:0"
+                  "src": "11570:16:0"
                 }
               ]
             },
@@ -14180,18 +14180,18 @@
               "src": "10579:9:0"
             },
             "scope": 1126,
-            "src": "10482:1114:0",
+            "src": "10482:1112:0",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
         "scope": 1127,
-        "src": "608:10991:0",
+        "src": "608:10989:0",
         "usedErrors": []
       }
     ],
-    "src": "42:11557:0"
+    "src": "42:11555:0"
   },
   "legacyAST": {
     "absolutePath": "/C/Users/cheek/Desktop/Developer doc/Visual Studio Code/PundiX/lpTokenRestakingFarm/src/contracts/RestakingFarm.sol",
@@ -26447,7 +26447,7 @@
             "body": {
               "id": 1124,
               "nodeType": "Block",
-              "src": "10589:1007:0",
+              "src": "10589:1005:0",
               "statements": [
                 {
                   "assignments": [
@@ -27091,7 +27091,7 @@
                       "constant": false,
                       "id": 1047,
                       "mutability": "mutable",
-                      "name": "totalpurseSupply",
+                      "name": "totalPurseSupply",
                       "nameLocation": "10977:16:0",
                       "nodeType": "VariableDeclaration",
                       "scope": 1124,
@@ -28025,7 +28025,7 @@
                     "operator": ">",
                     "rightExpression": {
                       "id": 1113,
-                      "name": "totalpurseSupply",
+                      "name": "totalPurseSupply",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1047,
@@ -28072,7 +28072,7 @@
                           "operator": "=",
                           "rightHandSide": {
                             "id": 1116,
-                            "name": "totalpurseSupply",
+                            "name": "totalPurseSupply",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1047,
@@ -28104,7 +28104,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1098,
-                        "src": "11580:7:0",
+                        "src": "11578:7:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -28118,7 +28118,7 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "TupleExpression",
-                    "src": "11579:9:0",
+                    "src": "11577:9:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -28127,7 +28127,7 @@
                   "functionReturnParameters": 997,
                   "id": 1123,
                   "nodeType": "Return",
-                  "src": "11572:16:0"
+                  "src": "11570:16:0"
                 }
               ]
             },
@@ -28271,18 +28271,18 @@
               "src": "10579:9:0"
             },
             "scope": 1126,
-            "src": "10482:1114:0",
+            "src": "10482:1112:0",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
         "scope": 1127,
-        "src": "608:10991:0",
+        "src": "608:10989:0",
         "usedErrors": []
       }
     ],
-    "src": "42:11557:0"
+    "src": "42:11555:0"
   },
   "compiler": {
     "name": "solc",
@@ -28290,7 +28290,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-11-22T09:17:43.815Z",
+  "updatedAt": "2021-11-22T09:28:37.278Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
