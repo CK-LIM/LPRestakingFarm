@@ -119,7 +119,7 @@ class Deposit extends Component {
                 } else {
                   console.log("...")
                   console.log(this.props.pendingSegmentReward[this.props.n][this.props.i])
-                  this.props.harvest(this.props.i)
+                  this.props.harvest(this.props.i, this.props.n)
                 }
               }}>
               <small>Harvest</small>
@@ -175,7 +175,7 @@ class Deposit extends Component {
                         } else {
                           console.log((this.input.value))
                           console.log(parseInt(this.props.userSegmentInfo[this.props.n][this.props.i]))
-                          this.props.withdraw(this.props.i, amount)
+                          this.props.withdraw(this.props.i, amount, this.props.n)
                         }
                       }
                     }

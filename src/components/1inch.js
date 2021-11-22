@@ -22,7 +22,7 @@ class Menu extends Component {
                     <img src={purse} height='100' alt="" />
                 </div><br/>
                 <h1 className="textWhite center"><b>LP Restaking Farm</b></h1>
-                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;Pancakeswap LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;1inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
                 <br />
 
                 <div className="rowC center">
@@ -154,7 +154,7 @@ class Menu extends Component {
                                                         style={{ minWidth: '80px' }}
                                                         onClick={(event) => {
                                                             event.preventDefault()
-                                                            this.props.harvest(i)
+                                                            this.props.harvest(i, "1")
                                                         }}>
                                                         Harvest
                                                     </Buttons>

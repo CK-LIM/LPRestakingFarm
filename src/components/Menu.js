@@ -154,7 +154,7 @@ class Menu extends Component {
                                                         style={{ minWidth: '80px' }}
                                                         onClick={(event) => {
                                                             event.preventDefault()
-                                                            this.props.harvest(i)
+                                                            this.props.harvest(i, "0")
                                                         }}>
                                                         Harvest
                                                     </Buttons>

@@ -89,7 +89,7 @@ contract RestakingFarm is Ownable{
     // Add a new lp to the pool. Can only be called by the owner.
     function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock) public onlyOwner {
         require(_lpToken != IERC20(address(0)), "Farmer::add: invalid lp token");
-        require(poolInfo[(_lpToken)].lpToken == IERC20(address(0)), "Farmer::add: lp is already in pool");
+        require(poolInfo[_lpToken].lpToken == IERC20(address(0)), "Farmer::add: lp is already in pool");
         uint256 lastRewardBlock = block.number > _startBlock ? block.number : _startBlock;
         poolInfo[(_lpToken)] = PoolInfo({
             lpToken: _lpToken,
@@ -154,7 +154,8 @@ contract RestakingFarm is Ownable{
     }
 
     // Deposit LP tokens to Restaking Pool for Purse allocation.
-    function deposit(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken) {        
+    function deposit(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken) {     
+        require(_amount > 0, "Deposit: not good");
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
         updatePool(_lpToken);
@@ -200,6 +201,7 @@ contract RestakingFarm is Ownable{
 
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
+        require(user.amount > 0, "Claim: not good");
 
         updatePool(_lpToken);
         uint256 pending = user.amount*pool.accPursePerShare/1e12-user.rewardDebt;
@@ -230,6 +232,7 @@ contract RestakingFarm is Ownable{
     function emergencyWithdraw(IERC20 _lpToken) public poolExist(_lpToken) {
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
+        require(user.amount > 0, "Emergency Withdraw: not good");
         uint256 amount = user.amount;
         user.amount = 0;
         user.rewardDebt = 0;

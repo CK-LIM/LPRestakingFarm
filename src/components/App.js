@@ -112,10 +112,8 @@ class App extends Component {
         let i = 0
         for (i = 0; i < poolLength; i++) {
 
-          // let userInfo = await restakingFarm.methods.userInfo(i, this.state.account).call()
-          let poolInfo = await restakingFarm.methods.poolInfo(i).call()
-
-          let lpTokenAddress = poolInfo.lpToken
+          let lpTokenAddress = await restakingFarm.methods.poolTokenList(i).call()
+          let poolInfo = await restakingFarm.methods.poolInfo(lpTokenAddress).call()
           let lpTokenPair = new web3Bsc.eth.Contract(IPancakePair.abi, lpTokenAddress)
           let lpTokenPairA = await lpTokenPair.methods.token0().call()
           let lpTokenPairB = await lpTokenPair.methods.token1().call()
@@ -178,7 +176,6 @@ class App extends Component {
             lpTokenValue[0][n] = ((lpTokenABalanceContract * tokenAPrice) + (lpTokenBBalanceContract * tokenBPrice)) / lpTokenTSupply
             tvl[0][n] = lpTokenValue[0][n] * lpTokenInContract
             apr[0][n] = ((28000 * 365 * web3.utils.fromWei(poolInfo.pursePerBlock, 'Ether') * this.state.PURSEPrice) / tvl[0][n]) * 100
-            n += 1
             n += 1
           } else {
             userSegmentInfo[1][n] = "0"
@@ -259,11 +256,10 @@ class App extends Component {
         let n = 0
         let i = 0
         for (i = 0; i < poolLength; i++) {
-
-          let userInfo = await restakingFarm.methods.userInfo(i, this.state.account).call()
-          let poolInfo = await restakingFarm.methods.poolInfo(i).call()
-
-          let lpTokenAddress = poolInfo.lpToken
+          
+          let lpTokenAddress = await restakingFarm.methods.poolTokenList(i).call()
+          let poolInfo = await restakingFarm.methods.poolInfo(lpTokenAddress).call()
+          let userInfo = await restakingFarm.methods.userInfo(lpTokenAddress, this.state.account).call()
           let lpTokenPair = new web3Bsc.eth.Contract(IPancakePair.abi, lpTokenAddress)
           let lpTokenPairA = await lpTokenPair.methods.token0().call()
           let lpTokenPairB = await lpTokenPair.methods.token1().call()
@@ -279,7 +275,7 @@ class App extends Component {
           let lpTokenBsymbol = await lpTokenB.methods.symbol().call()
           let lpTokenABalanceContract = await lpTokenA.methods.balanceOf(lpTokenAddress).call()
           let lpTokenBBalanceContract = await lpTokenB.methods.balanceOf(lpTokenAddress).call()
-          let pendingReward = await restakingFarm.methods.pendingReward(i, this.state.account).call()
+          let pendingReward = await restakingFarm.methods.pendingReward(lpTokenAddress, this.state.account).call()
 
 
           let tokenAPrice = 0
@@ -319,7 +315,6 @@ class App extends Component {
           if (lpTokenPairsymbol == "Cake-LP") {
             
             userSegmentInfo[0][n] = web3.utils.fromWei(userInfo.amount, 'Ether')
-            // console.log(userSegmentInfo[0][n])
             poolSegmentInfo[0][n] = poolInfo
             lpTokenSegmentInContract[0][n] = lpTokenInContract
             lpTokenSegmentBalance[0][n] = lpTokenBalance
@@ -332,7 +327,7 @@ class App extends Component {
             apr[0][n] = ((28000 * 365 * web3.utils.fromWei(poolInfo.pursePerBlock, 'Ether') * this.state.PURSEPrice) / tvl[0][n]) * 100
             n += 1
           } else {
-            userSegmentInfo[1][n] = userInfo.amount
+            userSegmentInfo[1][n] = web3.utils.fromWei(userInfo.amount, 'Ether')
             poolSegmentInfo[1][n] = poolInfo
             lpTokenSegmentInContract[1][n] = lpTokenInContract
             lpTokenSegmentBalance[1][n] = lpTokenBalance
@@ -348,7 +343,7 @@ class App extends Component {
         }
         this.setState({ apr })
         this.setState({ tvl })
-        this.setState({ userSegmentInfo })
+
         
         this.setState({ lpTokenSegmentInContract })
         this.setState({ lpTokenSegmentBalance })
@@ -356,15 +351,13 @@ class App extends Component {
         this.setState({ lpTokenSegmentBsymbol })
         this.setState({ pendingSegmentReward })
         this.setState({ lpTokenSegmentAllowance })
+        this.setState({ userSegmentInfo })
         this.setState({ poolSegmentInfo })
         this.setState({ totalrewardperblock: totalrewardperblock.toString() })
         this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
       }
-      // this.setState({ wallet: true })
-      // console.log(this.state.lpTokenSegmentAllowance)
     }
     this.setState({ loading: true })
-    // console.log(this.state.lpTokenSegmentAllowance)
   }
 
 
@@ -391,7 +384,6 @@ class App extends Component {
     // let purseResponse = await fetch('https://api.pancakeswap.info/api/v2/tokens/0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C')
     // let purseResponse = await fetch('https://api.1inch.exchange/v4.0/56/quote?fromTokenAddress=0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C&toTokenAddress=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&amount=1000000000000')
     const myJson = await response.json();
-    // console.log(myJson)
     // const purseJson = await purseResponse.json();
     let PURSEPrice = myJson["pundi-x-purse"]["usd"]
     console.log(PURSEPrice)
@@ -409,7 +401,6 @@ class App extends Component {
     let BTCPrice = myJson["bitcoin"]["usd"]
     this.setState({ BTCPrice: BTCPrice.toFixed(10) })
     this.setState({ loading: true })
-    // console.log(myJson)
   }
 
   connectWallet = () => {
@@ -420,7 +411,6 @@ class App extends Component {
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
         if (chainId == "0x61") {
           this.setWalletTrigger(true)
-          // console.log("abc")
         }
       })
       .catch((err) => {
@@ -545,9 +535,10 @@ class App extends Component {
 
   deposit = async (i, amount, n) => {
     this.setState({ loading: false })
+    let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
     const restakingFarmData = RestakingFarm.networks[this.state.networkId]
     let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
-    restakingFarm.methods.deposit(i, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+    restakingFarm.methods.deposit(lpTokenAddress, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
       this.setState({ loading: true })
       this.componentWillMount()
     })
@@ -562,28 +553,30 @@ class App extends Component {
     this.setState({ loading: true })
   }
 
-  withdraw = async (i, amount) => {
+  withdraw = async (i, amount, n) => {
     this.setState({ loading: false })
+    let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
     const restakingFarmData = RestakingFarm.networks[this.state.networkId]
     let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
-    restakingFarm.methods.withdraw(i, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+    restakingFarm.methods.withdraw(lpTokenAddress, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
       this.setState({ loading: true })
       this.componentWillMount()
     })
   }
 
-  harvest = async (i) => {
+  harvest = async (i, n) => {
     this.setState({ loading: false })
     const restakingFarmData = RestakingFarm.networks[this.state.networkId]
     let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
+    let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
     if (this.state.wallet === false) {
       alert("Metamask wallet not connected")
     } else {
-      if (this.state.pendingSegmentReward[0][i] <= 0) {
+      if (this.state.pendingSegmentReward[n][i] <= 0) {
         alert("No token to harvest! Please deposit PANCAKE LP to earn PURSE")
       } else {
         this.setState({ loading: true })
-        restakingFarm.methods.claimReward(i).send({ from: this.state.account }).on('transactionHash', (hash) => {
+        restakingFarm.methods.claimReward(lpTokenAddress).send({ from: this.state.account }).on('transactionHash', (hash) => {
           this.setState({ loading: false })
           this.componentWillMount()
         })
