@@ -101,7 +101,7 @@ class Deposit extends Component {
         <h2 className="center textWhite"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} Farm</b></h2>
         <br />
         <div className="center" style={{ color: 'silver' }}>&nbsp;Deposit <b>&nbsp;{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Token&nbsp;</b> and earn PURSE!!!</div>
-        <div className="center" style={{ color: 'silver' }}>&nbsp;APY :  {(28000 * 365 * this.props.poolSegmentInfo[this.props.n][this.props.i].pursePerBlock / this.props.lpTokenSegmentInContract[this.props.n][this.props.i]) * 100} %</div>
+        {/* <div className="center" style={{ color: 'silver' }}>&nbsp;APY :  {(28000 * 365 * this.props.poolSegmentInfo[this.props.n][this.props.i].pursePerBlock / this.props.lpTokenSegmentInContract[this.props.n][this.props.i]) * 100} %</div> */}
         <br />
 
         <div className="card mb-4 cardbody" >

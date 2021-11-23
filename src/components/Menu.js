@@ -4,6 +4,7 @@ import purse from '../purse.png'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
+import bigInt from 'big-integer'
 import './App.css';
 
 class Menu extends Component {

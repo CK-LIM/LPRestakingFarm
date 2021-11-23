@@ -201,7 +201,7 @@ class App extends Component {
         this.setState({ lpTokenSegmentBsymbol })
         this.setState({ pendingSegmentReward })
 
-        this.setState({ totalrewardperblock: totalrewardperblock.toString() })
+        this.setState({ totalrewardperblock: totalrewardperblock.toLocaleString('fullwide', { useGrouping: false }) })
         this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
       }
       // console.log("abcs")
@@ -353,7 +353,7 @@ class App extends Component {
         this.setState({ lpTokenSegmentAllowance })
         this.setState({ userSegmentInfo })
         this.setState({ poolSegmentInfo })
-        this.setState({ totalrewardperblock: totalrewardperblock.toString() })
+        this.setState({ totalrewardperblock: totalrewardperblock.toLocaleString('fullwide', { useGrouping: false }) })
         this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
       }
     }
@@ -365,14 +365,14 @@ class App extends Component {
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
-      window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s2.binance.org:8545/`);
+      window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s3.binance.org:8545/`);
       // await window.ethereum.enable()
       this.setState({ metamask: true })
       // console.log(window.ethereum.isConnected())
     }
     else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider)
-      window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s2.binance.org:8545/`);
+      window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s3.binance.org:8545/`);
       this.setState({ metamask: true })
     }
     else {
@@ -440,7 +440,7 @@ class App extends Component {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: '0x61', rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'], chainName: 'BSC Testnet',
+              chainId: '0x61', rpcUrls: ['https://data-seed-prebsc-1-s3.binance.org:8545'], chainName: 'BSC Testnet',
               nativeCurrency: {
                 name: 'BNB',
                 symbol: 'BNB', // 2-6 characters long

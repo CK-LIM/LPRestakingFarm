@@ -28,11 +28,12 @@ module.exports = async function (deployer, network, accounts) {
     const purseToken = await deployProxy(PurseTokenUpgradable,["0x8CF7Fb0326C6a5B5A8dA62e3FE8c5eD8Cb041217", "0xA2993e1171520ba0fD0AB39224e1B24BDa5c24a9", 10, 5, 5],{deployer, kind: 'uups' });
     // const upgrade = await upgradeProxy(purseToken.address, PurseTokenUpgradableV2, { deployer }); //Upgrade smart contract
     console.log(purseToken.address)
-    // console.log(upgrade.address)
+    // deploy RestakingFarm and pass in variables taken in in constructor ie the 2 token addresses and the 2 other variables
+    const restakingFarm = await deployProxy(RestakingFarm, [purseToken.address, tokens("1000000000")], {deployer, kind: 'uups' })
+    console.log(restakingFarm.address)
 
-  // deploy RestakingFarm and pass in variables taken in in constructor ie the 2 token addresses and the 2 other variables
-  await deployer.deploy(RestakingFarm, purseToken.address, tokens("1000000000"))
-  const restakingFarm = await RestakingFarm.deployed()
+  // await deployer.deploy(RestakingFarm, purseToken.address, tokens("1000000000"))
+  // const restakingFarm = await RestakingFarm.deployed()
   await restakingFarm.add("0xF52e1f503FffF3c212d72045839915B11478fAc6", tokens("100"), 1, 5000)
   await restakingFarm.add("0x58A26F9100f77aa68E19359EffDBd7f7B97320C1", tokens("100"), 1, 5000)
   await restakingFarm.add("0x38da41759CF77FB897ef237D4116aa50aFb1F743", tokens("100"), 1, 5000)

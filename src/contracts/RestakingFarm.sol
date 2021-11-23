@@ -2,27 +2,30 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
  
 interface PurseToken {
 
-    function transfer(address to, uint tokens) external  returns (bool success);
+    function transfer(address to, uint tokens) external returns (bool success);
 
     function mint(address to, uint tokens) external;
 
-    function transferFrom(address from, address to, uint tokens) external  returns (bool success);
+    function transferFrom(address from, address to, uint tokens) external returns (bool success);
 
     function balanceOf(address tokenOwner) external view returns (uint balance);
 
 }
 
-contract RestakingFarm is Ownable{
-    using SafeERC20 for IERC20;
+contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable {
+
+    using SafeERC20Upgradeable for IERC20Upgradeable;
 
     // ---Contract Variables---
-    string public name = "RestakingFarm";
+    string public name;
 
     // Userinfo
     struct UserInfo {
@@ -43,7 +46,7 @@ contract RestakingFarm is Ownable{
     
     // Info of each pool.
     struct PoolInfo {
-        IERC20 lpToken;           // Address of LP token contract.
+        IERC20Upgradeable lpToken;           // Address of LP token contract.
         uint256 pursePerBlock;
         uint256 bonusMultiplier;
         uint256 lastRewardBlock;  // Last block number that PURSEs distribution occurs.
@@ -55,41 +58,33 @@ contract RestakingFarm is Ownable{
     PurseToken public purseToken;
     uint256 public totalMintToken;    
     uint256 public capMintToken;
-    IERC20[] public poolTokenList;
-    mapping(IERC20 => PoolInfo) public poolInfo;
+    IERC20Upgradeable[] public poolTokenList;
+    mapping(IERC20Upgradeable => PoolInfo) public poolInfo;
 
     // Info of each user that stakes LP tokens.
-    mapping (IERC20 => mapping (address => UserInfo)) public userInfo;
+    mapping (IERC20Upgradeable => mapping (address => UserInfo)) public userInfo;
 
     event Deposit(address indexed user, uint256 amount);
     event Withdraw(address indexed user, uint256 amount);
-    event AddNewPool(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock, uint256 bonusMultiplier, uint256 startBlock);
-    event UpdatePoolReward(address indexed owner, IERC20 indexed lpToken, uint256 pursePerBlock);
-    event UpdatePoolMultiplier(address indexed owner, IERC20 indexed lpToken, uint256 bonusMultiplier);
+    event AddNewPool(address indexed owner, IERC20Upgradeable indexed lpToken, uint256 pursePerBlock, uint256 bonusMultiplier, uint256 startBlock);
+    event UpdatePoolReward(address indexed owner, IERC20Upgradeable indexed lpToken, uint256 pursePerBlock);
+    event UpdatePoolMultiplier(address indexed owner, IERC20Upgradeable indexed lpToken, uint256 bonusMultiplier);
     event ClaimReward(address indexed user, uint256 amount);
-    event EmergencyWithdraw(address indexed user, IERC20 indexed lpToken, uint256 amount);
+    event EmergencyWithdraw(address indexed user, IERC20Upgradeable indexed lpToken, uint256 amount);
 
-    modifier poolExist(IERC20 _lpToken) {
-        require( poolInfo[(_lpToken)].lpToken != IERC20(address(0)), "Pool not exist");
+    modifier poolExist(IERC20Upgradeable _lpToken) {
+        require( poolInfo[(_lpToken)].lpToken != IERC20Upgradeable(address(0)), "Pool not exist");
         _;
-    }
-
-    constructor(
-        PurseToken _purseToken,
-        uint256 _capMintToken
-    ) {
-        purseToken = _purseToken;
-        capMintToken = _capMintToken;
-        }    
+    }  
 
     function poolLength() external view returns (uint256) {
         return poolTokenList.length;
     }
 
     // Add a new lp to the pool. Can only be called by the owner.
-    function add(IERC20 _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock) public onlyOwner {
-        require(_lpToken != IERC20(address(0)), "Farmer::add: invalid lp token");
-        require(poolInfo[_lpToken].lpToken == IERC20(address(0)), "Farmer::add: lp is already in pool");
+    function add(IERC20Upgradeable _lpToken, uint256 _pursePerBlock, uint256 _bonusMultiplier, uint256 _startBlock) public onlyOwner {
+        require(_lpToken != IERC20Upgradeable(address(0)), "Farmer::add: invalid lp token");
+        require(poolInfo[_lpToken].lpToken == IERC20Upgradeable(address(0)), "Farmer::add: lp is already in pool");
         uint256 lastRewardBlock = block.number > _startBlock ? block.number : _startBlock;
         poolInfo[(_lpToken)] = PoolInfo({
             lpToken: _lpToken,
@@ -104,7 +99,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Update the given pool's PURSE _pursePerBlock. Can only be called by the owner.
-    function setPurseReward(IERC20 _lpToken, uint256 _pursePerBlock) public onlyOwner poolExist(_lpToken){        
+    function setPurseReward(IERC20Upgradeable _lpToken, uint256 _pursePerBlock) public onlyOwner poolExist(_lpToken){        
         PoolInfo storage pool = poolInfo[_lpToken];
         require(pool.pursePerBlock != _pursePerBlock, "Same Purse Reward");
         updatePool(_lpToken);
@@ -113,7 +108,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Update the given pool's PURSE _bonusMultiplier. Can only be called by the owner.
-    function setBonusMultiplier(IERC20 _lpToken, uint256 _bonusMultiplier) public onlyOwner poolExist(_lpToken){        
+    function setBonusMultiplier(IERC20Upgradeable _lpToken, uint256 _bonusMultiplier) public onlyOwner poolExist(_lpToken){        
         PoolInfo storage pool = poolInfo[_lpToken];
         require(pool.bonusMultiplier != _bonusMultiplier, "Same bonus multiplier");
         updatePool(_lpToken);
@@ -127,7 +122,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Update reward variables of the given pool to be up-to-date.
-    function updatePool(IERC20 _lpToken) public poolExist(_lpToken){
+    function updatePool(IERC20Upgradeable _lpToken) public poolExist(_lpToken){
         PoolInfo storage pool = poolInfo[_lpToken];
         if (block.number <= pool.lastRewardBlock) {
             return;
@@ -154,7 +149,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Deposit LP tokens to Restaking Pool for Purse allocation.
-    function deposit(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken) {     
+    function deposit(IERC20Upgradeable _lpToken, uint256 _amount) public poolExist(_lpToken) {     
         require(_amount > 0, "Deposit: not good");
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
@@ -176,7 +171,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Withdraw LP tokens from MasterChef.
-    function withdraw(IERC20 _lpToken, uint256 _amount) public poolExist(_lpToken){
+    function withdraw(IERC20Upgradeable _lpToken, uint256 _amount) public poolExist(_lpToken){
 
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
@@ -197,7 +192,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Harvest reward tokens from pool.
-    function claimReward(IERC20 _lpToken) public poolExist(_lpToken){
+    function claimReward(IERC20Upgradeable _lpToken) public poolExist(_lpToken){
 
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
@@ -229,7 +224,7 @@ contract RestakingFarm is Ownable{
     }
 
     // Withdraw without caring about rewards. EMERGENCY ONLY.
-    function emergencyWithdraw(IERC20 _lpToken) public poolExist(_lpToken) {
+    function emergencyWithdraw(IERC20Upgradeable _lpToken) public poolExist(_lpToken) {
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
         require(user.amount > 0, "Emergency Withdraw: not good");
@@ -243,11 +238,11 @@ contract RestakingFarm is Ownable{
     // Return any token function, just in case if any user transfer token into the smart contract. 
     function returnAnyToken(address token, uint256 amount, address _to) public onlyOwner{
         require(_to != address(0), "send to the zero address");
-        IERC20(token).safeTransfer(_to, amount);
+        IERC20Upgradeable(token).safeTransfer(_to, amount);
     }
 
      // View function to see pending PURSEs on frontend.
-    function pendingReward(IERC20 _lpToken, address _user) external view poolExist(_lpToken) returns (uint256) {
+    function pendingReward(IERC20Upgradeable _lpToken, address _user) external view poolExist(_lpToken) returns (uint256) {
         PoolInfo memory pool = poolInfo[_lpToken];
         UserInfo memory user = userInfo[_lpToken][_user];
         uint256 accPursePerShare = pool.accPursePerShare;
@@ -269,4 +264,15 @@ contract RestakingFarm is Ownable{
 
         return (pending);
     }
+
+    function _authorizeUpgrade(address) internal override onlyOwner {}
+
+    function initialize(PurseToken _purseToken, uint256 _capMintToken) public initializer {
+        name = "LP Token Restaking Farm";
+        purseToken = _purseToken;
+        capMintToken = _capMintToken;
+        __Ownable_init();
+        __UUPSUpgradeable_init();
+    }
+
 }
