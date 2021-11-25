@@ -12,12 +12,13 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-  color: #fff;
+  color: #D3D3D3;
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0.2rem;
+  padding: 0.0rem;
   height: 100%;
+  font-size: 18px;
   cursor: pointer;
 
   &.active {
@@ -29,14 +30,52 @@ export const NavLink = styled(Link)`
   }
 `;
 
-export const NavLink2 = styled(Link)`
+export const NavLink0 = styled(Link)`
+  color: #D3D3D3;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.0rem;
+  height: 100%;
+  font-size: 18px;
+  cursor: pointer;
+
+  &.active {
+    color:  #D3D3D3;
+  }
+  &:hover {
+    text-decoration: none;
+    color: #04f7ff;
+  }
+`;
+
+export const NavLinkHome = styled(Link)`
   color: #fff;
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0.2rem;
+  padding: 0.0rem;
+  height: 100%;
+  font-size: 18px;
+  cursor: pointer;
+
+  &.active {
+    color:  #fff;
+  }
+  &:hover {
+    text-decoration: none;
+    color: #fff;
+  }
+`;
+
+export const NavLink2 = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.0rem;
   height: 100%;
   cursor: pointer;
+  font-size: 18px;
   color: #c37aff;
 
   &.active {

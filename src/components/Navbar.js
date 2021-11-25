@@ -13,7 +13,9 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 import {
   NavLink2,
-  NavLink
+  NavLink,
+  NavLink0,
+  NavLinkHome
   // Bars,
   // NavMenu,
   // NavBtn
@@ -25,33 +27,42 @@ class Navb extends Component {
     return (
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
 
-        <a
-          className="navbar-brand col-sm-3 col-md-2 mr-0"
-          href="https://www.pundix.com/"
-          target="_blank"
-        // rel="noopener noreferrer"
+        <div
+          className="navbar-brand col-sm-3 col-md-2 mr-0 rowC"
         >
-          <img src={fx_token} width="30" height="30" className="d-inline-block align-top" alt="" />
-          &nbsp; LP Restaking Farm
-        </a>
+          <div>
+            <NavLinkHome to='/menu' onClick={() => {
+              window.open(`https://www.pundix.com/`, '_blank')
+            }}>
+              <img src={fx_token} width="30" height="30" className="d-inline-block align-top" alt="" />
+              &nbsp; <b>LP Restaking Farm</b></NavLinkHome></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+          <div>
+            <NavLink to='/home' >Home</NavLink>
+          </div>&nbsp;&nbsp;&nbsp;
+          <div>
+            <NavLink to='/menu' >Menu</NavLink>
+          </div>&nbsp;&nbsp;&nbsp;
+          <div>
+            <NavLink0 to='/menu' onClick={() => {
+              window.open(`https://pundix-purse.gitbook.io/untitled/`, '_blank')
+            }}> Docs
+            </NavLink0>
+          </div>&nbsp;
+        </div>
 
         <span>
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap-small d-none d-sm-none d-sm-block">
               <div className="text-light rowC">
-                <div>
-                  <NavLink to='/home' >Home</NavLink>
-                </div>&nbsp;&nbsp;
-                <div>
-                  <NavLink to='/menu' >Menu</NavLink>
-                </div>&nbsp;&nbsp;
-                <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;
-                <div>
+                <div>                  
                   <NavLink2 to='/menu' onClick={() => {
                     window.open(`https://pancakeswap.finance/swap`, '_blank')
-                  }}> ${this.props.PURSEPrice}
+                  }}> 
+                  <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;
+                  ${this.props.PURSEPrice}
                   </NavLink2>
-                </div>&nbsp;
+                </div>&nbsp;&nbsp;
                 <div>
                   <Buttons variant="info" size="sm" onClick={() => {
                   }}>{this.props.networkName}

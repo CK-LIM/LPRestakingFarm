@@ -6,6 +6,7 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
  
 interface PurseToken {
@@ -20,7 +21,7 @@ interface PurseToken {
 
 }
 
-contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable {
+contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable, PausableUpgradeable {
 
     using SafeERC20Upgradeable for IERC20Upgradeable;
 
@@ -149,7 +150,7 @@ contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     // Deposit LP tokens to Restaking Pool for Purse allocation.
-    function deposit(IERC20Upgradeable _lpToken, uint256 _amount) public poolExist(_lpToken) {     
+    function deposit(IERC20Upgradeable _lpToken, uint256 _amount) public whenNotPaused poolExist(_lpToken) {     
         require(_amount > 0, "Deposit: not good");
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
@@ -171,7 +172,7 @@ contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     // Withdraw LP tokens from MasterChef.
-    function withdraw(IERC20Upgradeable _lpToken, uint256 _amount) public poolExist(_lpToken){
+    function withdraw(IERC20Upgradeable _lpToken, uint256 _amount) public whenNotPaused poolExist(_lpToken){
 
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
@@ -192,7 +193,7 @@ contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     // Harvest reward tokens from pool.
-    function claimReward(IERC20Upgradeable _lpToken) public poolExist(_lpToken){
+    function claimReward(IERC20Upgradeable _lpToken) public whenNotPaused poolExist(_lpToken){
 
         PoolInfo storage pool = poolInfo[_lpToken];
         UserInfo storage user = userInfo[_lpToken][msg.sender];
@@ -235,8 +236,8 @@ contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         emit EmergencyWithdraw(msg.sender, _lpToken, amount);
     }
 
-    // Return any token function, just in case if any user transfer token into the smart contract. 
-    function returnAnyToken(address token, uint256 amount, address _to) public onlyOwner{
+    // Recover any token function, just in case if any user transfer token into the smart contract. 
+    function recoverToken(address token, uint256 amount, address _to) public onlyOwner{
         require(_to != address(0), "send to the zero address");
         IERC20Upgradeable(token).safeTransfer(_to, amount);
     }
@@ -265,12 +266,21 @@ contract RestakingFarm is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         return (pending);
     }
 
+    function pause() public whenNotPaused onlyOwner {
+        _pause();
+    }
+
+    function unpause() public whenPaused onlyOwner {
+        _unpause();
+    }
+
     function _authorizeUpgrade(address) internal override onlyOwner {}
 
     function initialize(PurseToken _purseToken, uint256 _capMintToken) public initializer {
         name = "LP Token Restaking Farm";
         purseToken = _purseToken;
         capMintToken = _capMintToken;
+        __Pausable_init();
         __Ownable_init();
         __UUPSUpgradeable_init();
     }

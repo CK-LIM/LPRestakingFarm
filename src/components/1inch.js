@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import purse from '../purse.png'
+import purse2 from '../purse-.png'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
+import bigInt from 'big-integer'
 import './App.css';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
 class Menu extends Component {
 
@@ -17,12 +22,12 @@ class Menu extends Component {
                         <Button variant="contained" color="primary" component={Link} to="/oneinch/" >1inch</Button>
                     </ButtonGroup>
                 </div>
-                <br />
+                <br /><br />
                 <div className="center img">
-                    <img src={purse} height='100' alt="" />
-                </div><br/>
+                    <img src={purse2} height='90' alt="" />
+                </div><br />
                 <h1 className="textWhite center"><b>LP Restaking Farm</b></h1>
-                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;1inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;1Inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
                 <br />
 
                 <div className="rowC center">
@@ -37,7 +42,7 @@ class Menu extends Component {
                             </span>
                             <span>
                                 <small>
-                                    <span className="float-left">Pending harvest</span>
+                                    <span className="float-left">Total Pending harvest</span>
                                     <span className="float-right">
                                         <span>
                                             {window.web3.utils.fromWei(this.props.totalpendingReward, 'Ether')}&nbsp;PURSE
@@ -132,17 +137,30 @@ class Menu extends Component {
                                 <div className="col">
                                     <div className="card mb-4 cardbody card-body text-center" style={{ maxWidth: '230px', color: 'silver' }}>
                                         <span>
-                                            <img src={purse} height='30' alt="" /><br/><br/>
-                                            <b  className="text">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]}</b>
+                                            <img src={purse} height='30' alt="" /><br />
+                                            <b className="text">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]}</b>
                                             <div>
-                                                <span className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]} PANCAKE LP</small> to Earn PURSE</small></span><br /><br />
-                                                <span className=" "><small>APR:  {this.props.apr[1][i]} % </small></span><br />
+                                                <span className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]} 1INCH LP</small> to Earn PURSE</small></span><br/><br/>
+                                                <span className=" " ><small>APR:  {parseInt(this.props.apr[1][i])} % </small></span><br />
+                                                <span className="center rowC"><small>Bonus Multiplier: {this.props.bonusMultiplier[1][i]}x &nbsp;&nbsp;
+                                                    <Popup
+                                                        trigger={open => (
+                                                            <span><BsFillQuestionCircleFill size={13} /></span>
+                                                        )}
+                                                        on="hover"
+                                                        position="right center"
+                                                        offsetY={-50}
+                                                        offsetX={5}
+                                                        >
+                                                        <span className="textInfo">The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.<br /></span>
+                                                        <span className="textInfo">For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.<br /></span>
+                                                        <span className="textInfo">This amount is already included in all APR calculations for the farm. </span></Popup>&nbsp;</small></span>
                                                 <span className=" "><small>LP Staked: {this.props.userSegmentInfo[1][i]}</small></span><br />
                                                 <span className=" "><small>Purse Earned: {this.props.pendingSegmentReward[1][i]}</small></span><br />
                                                 <span className=" "><small>TVL: $ {this.props.tvl[1][i]}</small></span>
                                                 <br />
                                                 {/* <Button variant="outlined" color="default" component={Link} onClick={(event) => { this.props.setI(0, i) }} to="/deposit">Select</Button> */}
-                                                <Buttons variant="outline-info" size="sm" style={{ minWidth: '80px' }} className="mb-2" onClick={() => {
+                                                <Buttons variant="outline-info" size="sm" style={{ minWidth: '80px', marginTop: '10px' }} className="mb-2" onClick={() => {
                                                     this.props.setTrigger(true)
                                                     this.props.setI(1, i)
                                                 }}>Select</Buttons>

@@ -15,7 +15,7 @@ class Main extends Component {
         <br /><br />
         <div className="card mb-4 cardbody" style={{ minWidth: '350px' }} >
           <div className="card-body">
-            <table className="table table-borderless textWhite text-center">
+            <table className="table table-borderless textWhiteSmall text-center">
               <thead>
                 <tr>
                   <th scope="col">Total Pool</th>
@@ -32,7 +32,7 @@ class Main extends Component {
               </tbody>
             </table>
             <br />
-            <table className="table table-borderless textWhite text-center">
+            <table className="table table-borderless textWhiteSmall text-center">
               <thead>
                 <tr>
                   <th scope="col">Farm Cap Reward Token</th>

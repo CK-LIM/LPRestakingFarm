@@ -168,13 +168,13 @@ class Deposit extends Component {
                           this.props.deposit(this.props.i, amount, this.props.n)
                         }
                       } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
-                        if ((this.input.value) > parseInt(this.props.userSegmentInfo[this.props.n][this.props.i])) {
+                        if ((this.input.value) > this.props.userSegmentInfo[this.props.n][this.props.i]) {
                           console.log((this.input.value))
-                          console.log(parseInt(this.props.userSegmentInfo[this.props.n][this.props.i]))
+                          console.log(this.props.userSegmentInfo[this.props.n][this.props.i])
                           alert("Withdraw tokens more than deposit LP tokens")   
                         } else {
                           console.log((this.input.value))
-                          console.log(parseInt(this.props.userSegmentInfo[this.props.n][this.props.i]))
+                          console.log(this.props.userSegmentInfo[this.props.n][this.props.i])
                           this.props.withdraw(this.props.i, amount, this.props.n)
                         }
                       }

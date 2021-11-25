@@ -106,6 +106,7 @@ class App extends Component {
         let lpTokenSegmentBsymbol = [[], []]
         let pendingSegmentReward = [[], []]
         let lpTokenValue = [[], []]
+        let bonusMultiplier =[[],[]]
         let tvl = [[], []]
         let apr = [[], []]
         let n = 0
@@ -163,12 +164,14 @@ class App extends Component {
 
 
           totalrewardperblock += parseInt(poolInfo.pursePerBlock)
+          let poolbonusMultiplier = poolInfo.bonusMultiplier
           // totalpendingReward += parseInt(pendingReward)
 
           if (lpTokenPairsymbol == "Cake-LP") {
             userSegmentInfo[0][n] = "0"
             poolSegmentInfo[0][n] = poolInfo
             lpTokenSegmentInContract[0][n] = lpTokenInContract
+            bonusMultiplier[0][n] = poolbonusMultiplier
             lpTokenSegmentBalance[0][n] = lpTokenBalance
             lpTokenSegmentAsymbol[0][n] = lpTokenAsymbol
             lpTokenSegmentBsymbol[0][n] = lpTokenBsymbol
@@ -181,6 +184,7 @@ class App extends Component {
             userSegmentInfo[1][n] = "0"
             poolSegmentInfo[1][n] = poolInfo
             lpTokenSegmentInContract[1][n] = lpTokenInContract
+            bonusMultiplier[1][n] = poolbonusMultiplier
             lpTokenSegmentBalance[1][n] = lpTokenBalance
             lpTokenSegmentAsymbol[1][n] = lpTokenAsymbol
             lpTokenSegmentBsymbol[1][n] = lpTokenBsymbol
@@ -193,6 +197,7 @@ class App extends Component {
         }
         this.setState({ apr })
         this.setState({ tvl })
+        this.setState({ bonusMultiplier })
         this.setState({ userSegmentInfo })
         this.setState({ poolSegmentInfo })
         this.setState({ lpTokenSegmentInContract })
@@ -635,6 +640,7 @@ class App extends Component {
       lpTokenSegmentBsymbol: [[], []],
       pendingSegmentReward: [[], []],
       lpTokenSegmentAllowance: [[], []],
+      bonusMultiplier: [[], []],
       tvl: [[], []],
       apr: [[], []],
       totalrewardperblock: '0',
@@ -704,6 +710,7 @@ class App extends Component {
         harvest={this.harvest}
         tvl={this.state.tvl}
         apr={this.state.apr}
+        bonusMultiplier={this.state.bonusMultiplier}
       />
       depositcontent = <Deposit
         lpTokenBalance={this.state.lpTokenBalance}
@@ -746,6 +753,7 @@ class App extends Component {
       harvest={this.harvest}
       tvl={this.state.tvl}
       apr={this.state.apr}
+      bonusMultiplier={this.state.bonusMultiplier}
       />
     }
 
