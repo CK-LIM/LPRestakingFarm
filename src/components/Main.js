@@ -26,8 +26,8 @@ class Main extends Component {
               <tbody>
                 <tr>
                   <td>{this.props.poolLength}</td>
-                  <td>{window.web3.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')} Purse</td>
-                  <td>{window.web3.utils.fromWei(this.props.totalrewardperblock, 'Ether')} Purse</td>
+                  <td>{window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')} Purse</td>
+                  <td>{window.web3Bsc.utils.fromWei(this.props.totalrewardperblock, 'Ether')} Purse</td>
                 </tr>
               </tbody>
             </table>
@@ -42,9 +42,9 @@ class Main extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>{window.web3.utils.fromWei(this.props.poolCapRewardToken, 'Ether')} Purse</td>
-                  <td>{window.web3.utils.fromWei(this.props.poolMintedRewardToken, 'Ether')} Purse</td>
-                  <td>{window.web3.utils.fromWei(this.props.poolRewardToken, 'Ether')} Purse</td>
+                  <td>{window.web3Bsc.utils.fromWei(this.props.poolCapRewardToken, 'Ether')} Purse</td>
+                  <td>{window.web3Bsc.utils.fromWei(this.props.poolMintedRewardToken, 'Ether')} Purse</td>
+                  <td>{window.web3Bsc.utils.fromWei(this.props.poolRewardToken, 'Ether')} Purse</td>
                 </tr>
               </tbody>
             </table>

@@ -13,6 +13,22 @@ import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
 class Menu extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            isShown: false
+        }
+        this.changeBackgroundColor = this.changeBackgroundColor.bind(this)
+    }
+
+    changeBackgroundColor() {
+        console.log("clicked")
+        this.setState({
+            isShown: true
+        })
+        console.log(this.state.isShown)
+    }
+
     render() {
         return (
             <div id="content" className="mt-3">
@@ -27,7 +43,7 @@ class Menu extends Component {
                     <img src={purse2} height='90' alt="" />
                 </div><br />
                 <h1 className="textWhite center"><b>LP Restaking Farm</b></h1>
-                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;1Inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;1INCH LP Tokens&nbsp;</b> to earn PURSE!!!</div>
                 <br />
 
                 <div className="rowC center">
@@ -35,7 +51,7 @@ class Menu extends Component {
                         <div className="card-body">
                             <span>
                                 <span className="float-left">
-                                    Your PURSE Balance<br /><b>{window.web3.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}</b>
+                                    Your PURSE Balance<br /><b>{window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}</b>
                                     <div>
                                     </div>
                                 </span><br /><br /><br />
@@ -45,7 +61,7 @@ class Menu extends Component {
                                     <span className="float-left">Total Pending harvest</span>
                                     <span className="float-right">
                                         <span>
-                                            {window.web3.utils.fromWei(this.props.totalpendingReward, 'Ether')}&nbsp;PURSE
+                                            {window.web3Bsc.utils.fromWei(this.props.totalpendingReward, 'Ether')}&nbsp;PURSE
                                         </span>
                                     </span>
                                 </small>
@@ -57,7 +73,7 @@ class Menu extends Component {
                         <div className="card-body " style={{ minWidth: '350px', color: 'silver' }}>
                             <span>
                                 <span className="float-left">
-                                    Total PURSE Supply<br /><b>{window.web3.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')}</b>
+                                    Total PURSE Supply<br /><b>{window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')}</b>
                                     <div>
                                     </div>
                                 </span><br /><br /><br />
@@ -66,7 +82,7 @@ class Menu extends Component {
                                         <span className="float-left ">Total Reward/block</span>
                                         <span className="float-right ">
                                             <span>
-                                                {window.web3.utils.fromWei(this.props.totalrewardperblock, 'Ether')}&nbsp;PURSE
+                                                {window.web3Bsc.utils.fromWei(this.props.totalrewardperblock, 'Ether')}&nbsp;PURSE
                                             </span>
                                         </span>
                                     </small>
@@ -126,65 +142,76 @@ class Menu extends Component {
                     </div>
                 </div> */}
 
-                <br />
+              
                 {/* <div className="center" style={{ color: 'grey' }}><b><big>Dynamic added farm in progress...</big></b></div><br/> */}
 
-                <div className="row floated" >
-                    {this.props.poolSegmentInfo[1].map((poolSegmentInfo, key) => {
-                        let i = this.props.poolSegmentInfo[1].indexOf(poolSegmentInfo)
-                        return (
-                            <div key={key}>
-                                <div className="col">
-                                    <div className="card mb-4 cardbody card-body text-center" style={{ maxWidth: '230px', color: 'silver' }}>
-                                        <span>
-                                            <img src={purse} height='30' alt="" /><br />
-                                            <b className="text">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]}</b>
-                                            <div>
-                                                <span className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]} 1INCH LP</small> to Earn PURSE</small></span><br/><br/>
-                                                <span className=" " ><small>APR:  {parseInt(this.props.apr[1][i])} % </small></span><br />
-                                                <span className="center rowC"><small>Bonus Multiplier: {this.props.bonusMultiplier[1][i]}x &nbsp;&nbsp;
-                                                    <Popup
-                                                        trigger={open => (
-                                                            <span><BsFillQuestionCircleFill size={13} /></span>
-                                                        )}
-                                                        on="hover"
-                                                        position="right center"
-                                                        offsetY={-50}
-                                                        offsetX={5}
+                {this.props.farmLoading ?
+                    <div className="row floated" >
+                        {this.props.poolSegmentInfo[1].map((poolSegmentInfo, key) => {
+                            let i = this.props.poolSegmentInfo[1].indexOf(poolSegmentInfo)
+                            return (
+                                <div key={key}>
+                                    <div className="col">
+                                        <div className="card mb-4 cardbody card-body text-center" style={{ maxWidth: '230px', color: 'silver' }}>
+                                            <span>
+                                                <img src={purse} height='30' alt="" /><br />
+                                                <b className="text">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]}</b>
+                                                <div>
+                                                    <span className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]} 1INCH LP</small> to Earn PURSE</small></span><br /><br />
+                                                    <span className=" " ><small>APR:  {parseInt(this.props.apr[1][i])} % </small></span><br />
+                                                    <span className="center rowC"><small>Bonus Multiplier: {this.props.bonusMultiplier[1][i]}x &nbsp;&nbsp;
+                                                        <Popup
+                                                            trigger={open => (
+                                                                <span><BsFillQuestionCircleFill size={13} /></span>
+                                                            )}
+                                                            on="hover"
+                                                            position="right center"
+                                                            offsetY={-50}
+                                                            offsetX={5}
                                                         >
-                                                        <span className="textInfo">The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.<br /></span>
-                                                        <span className="textInfo">For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.<br /></span>
-                                                        <span className="textInfo">This amount is already included in all APR calculations for the farm. </span></Popup>&nbsp;</small></span>
-                                                <span className=" "><small>LP Staked: {this.props.userSegmentInfo[1][i]}</small></span><br />
-                                                <span className=" "><small>Purse Earned: {this.props.pendingSegmentReward[1][i]}</small></span><br />
-                                                <span className=" "><small>TVL: $ {this.props.tvl[1][i]}</small></span>
-                                                <br />
-                                                {/* <Button variant="outlined" color="default" component={Link} onClick={(event) => { this.props.setI(0, i) }} to="/deposit">Select</Button> */}
-                                                <Buttons variant="outline-info" size="sm" style={{ minWidth: '80px', marginTop: '10px' }} className="mb-2" onClick={() => {
-                                                    this.props.setTrigger(true)
-                                                    this.props.setI(1, i)
-                                                }}>Select</Buttons>
-                                                <div >
-                                                    <Buttons
-                                                        variant="outline-success"
-                                                        type="submit"
-                                                        size="sm"
-                                                        style={{ minWidth: '80px' }}
-                                                        onClick={(event) => {
-                                                            event.preventDefault()
-                                                            this.props.harvest(i, "1")
-                                                        }}>
-                                                        Harvest
-                                                    </Buttons>
+                                                            <span className="textInfo">The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.<br /></span>
+                                                            <span className="textInfo">For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.<br /></span>
+                                                            <span className="textInfo">This amount is already included in all APR calculations for the farm. </span></Popup>&nbsp;</small></span>
+                                                    <span className=" "><small>LP Staked: {this.props.userSegmentInfo[1][i]}</small></span><br />
+                                                    <span className=" "><small>Purse Earned: {this.props.pendingSegmentReward[1][i]}</small></span><br />
+                                                    <span className=" "><small>TVL: $ {this.props.tvl[1][i]}</small></span>
+                                                    <br />
+                                                    {/* <Button variant="outlined" color="default" component={Link} onClick={(event) => { this.props.setI(0, i) }} to="/deposit">Select</Button> */}
+                                                    <Buttons variant="outline-info" size="sm" style={{ minWidth: '80px', marginTop: '10px' }} className="mb-2" onClick={() => {
+                                                        this.props.setTrigger(true)
+                                                        this.props.setI(1, i)
+                                                    }}>Select</Buttons>
+                                                    <div >
+                                                        <Buttons
+                                                            variant="outline-success"
+                                                            type="submit"
+                                                            size="sm"
+                                                            style={{ minWidth: '80px' }}
+                                                            onClick={(event) => {
+                                                                event.preventDefault()
+                                                                this.props.harvest(i, "1")
+                                                            }}>
+                                                            Harvest
+                                                        </Buttons>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )
-                    })}
-                </div>
+                            )
+                        })}
+                    </div>
+                    :
+                    <div className="center">
+                        <div className="bounceball"></div> &nbsp;
+                        <div className="textLoadingSmall">NETWORK IS Loading...</div>
+                    </div>
+                }
+
+
+
+
             </div >
         );
     }

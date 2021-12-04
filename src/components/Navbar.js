@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 // import Navbar from 'react-bootstrap/Navbar'
-import fx_token from '../x.png'
 import purse from '../purse.png'
+import fox from '../metamask-fox.svg'
+import walletconnectLogo from '../walletconnect-logo.svg'
 import Identicon from 'identicon.js';
 import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
@@ -34,7 +35,7 @@ class Navb extends Component {
             <NavLinkHome to='/menu' onClick={() => {
               window.open(`https://www.pundix.com/`, '_blank')
             }}>
-              <img src={fx_token} width="30" height="30" className="d-inline-block align-top" alt="" />
+              <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />
               &nbsp; <b>LP Restaking Farm</b></NavLinkHome></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
           <div>
@@ -55,12 +56,12 @@ class Navb extends Component {
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap-small d-none d-sm-none d-sm-block">
               <div className="text-light rowC">
-                <div>                  
+                <div>
                   <NavLink2 to='/menu' onClick={() => {
                     window.open(`https://pancakeswap.finance/swap`, '_blank')
-                  }}> 
-                  <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;
-                  ${this.props.PURSEPrice}
+                  }}>
+                    <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;
+                    ${this.props.PURSEPrice}
                   </NavLink2>
                 </div>&nbsp;&nbsp;
                 <div>
@@ -69,7 +70,7 @@ class Navb extends Component {
                   </Buttons>
                 </div>&nbsp;
                 <div>
-                  {this.props.wallet ?
+                  {this.props.wallet||this.props.walletConnect ?
                     <DropdownButton
                       id="dropdown-menu-align-end"
                       variant="secondary"
@@ -84,6 +85,9 @@ class Navb extends Component {
                       <Dropdown.Divider />
                       <Dropdown.Item variant="dark" onClick={() => {
                         this.props.setWalletTrigger(false)
+                        if (this.props.walletConnect == true) {
+                          this.props.WalletDisconnect()
+                        }
                       }}>Disconnect</Dropdown.Item>
                     </DropdownButton>
                     : <DropdownButton
@@ -96,7 +100,11 @@ class Navb extends Component {
                       <Dropdown.Item onClick={async () => {
                         await this.props.connectWallet()
                       }
-                      }>Metamask</Dropdown.Item>
+                      }><img src={fox} width="23" height="23" className="d-inline-block" alt=""/>&nbsp; Metamask</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item variant="dark" onClick={() => {
+                        this.props.WalletConnect()
+                      }}><img src={walletconnectLogo} width="26" height="23" className="d-inline-block" alt=""/>&nbsp;WalletConnect</Dropdown.Item>
                     </DropdownButton>}
                 </div>&nbsp;
               </div>

@@ -149,7 +149,7 @@ class Deposit extends Component {
 
             <div className="card mb-4 cardbody" >
               <div className="card-body">
-                {this.props.wallet ?
+                {this.props.wallet || this.props.walletConnect?
 
                   <form className="mb-3" onSubmit={(event) => {
                     event.preventDefault()
@@ -158,7 +158,7 @@ class Deposit extends Component {
                     } else {
                       let amount
                       amount = this.input.value.toString()
-                      amount = window.web3.utils.toWei(amount, 'Ether')
+                      amount = window.web3Bsc.utils.toWei(amount, 'Ether')
                       console.log(this.state.txDeposit)
                       console.log(this.state.txWithdraw)
                       if (this.state.txDeposit === true && this.state.txWithdraw === false) {
@@ -184,9 +184,9 @@ class Deposit extends Component {
                       <label className="float-left"><b>Deposit</b></label>
                       <span className="float-right"  style={{ color: 'silver' }}>
                         <span>
-                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}</span>
+                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}</span>
                         <span><br />
-                          PURSE Balance&nbsp;: {window.web3.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}
+                          PURSE Balance&nbsp;: {window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}
                         </span>
                       </span>
                     </div>
@@ -229,7 +229,6 @@ class Deposit extends Component {
                       :
                       <div className="rowC center">                                             
                         <button type="submit" className="btn btn-primary btn-block btn-lg" onClick={(event) => {
-                          console.log("clicked withdraw...")
                           this.props.approve(this.props.i, this.props.n)
                         }}>Approve</button>
                       </div>
