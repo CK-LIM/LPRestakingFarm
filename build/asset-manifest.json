@@ -1,10 +1,10 @@
 {
-  "main.css": "/static/css/main.24132430.chunk.css",
-  "main.js": "/static/js/main.14c066c0.chunk.js",
-  "main.js.map": "/static/js/main.14c066c0.chunk.js.map",
+  "main.css": "/static/css/main.9ab5a003.chunk.css",
+  "main.js": "/static/js/main.7bdae9f4.chunk.js",
+  "main.js.map": "/static/js/main.7bdae9f4.chunk.js.map",
   "static/css/1.9cb1bd3e.chunk.css": "/static/css/1.9cb1bd3e.chunk.css",
-  "static/js/1.7e1b02b4.chunk.js": "/static/js/1.7e1b02b4.chunk.js",
-  "static/js/1.7e1b02b4.chunk.js.map": "/static/js/1.7e1b02b4.chunk.js.map",
+  "static/js/1.dc0ca51c.chunk.js": "/static/js/1.dc0ca51c.chunk.js",
+  "static/js/1.dc0ca51c.chunk.js.map": "/static/js/1.dc0ca51c.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
   "static/media/purse.png": "/static/media/purse.6cad2843.png",
@@ -13,9 +13,9 @@
   "static/media/pancakeswap.png": "/static/media/pancakeswap.bdd7c45a.png",
   "static/media/metamask-fox.svg": "/static/media/metamask-fox.c06f3a3e.svg",
   "static/media/walletconnect-logo.svg": "/static/media/walletconnect-logo.37f2bc6e.svg",
-  "static/css/main.24132430.chunk.css.map": "/static/css/main.24132430.chunk.css.map",
   "static/css/1.9cb1bd3e.chunk.css.map": "/static/css/1.9cb1bd3e.chunk.css.map",
+  "static/css/main.9ab5a003.chunk.css.map": "/static/css/main.9ab5a003.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.1b9f1af3b090fe4412c6c92b567bc561.js": "/precache-manifest.1b9f1af3b090fe4412c6c92b567bc561.js",
+  "precache-manifest.ed86c44ff48af1a1e5f8b6fce27dec5d.js": "/precache-manifest.ed86c44ff48af1a1e5f8b6fce27dec5d.js",
   "service-worker.js": "/service-worker.js"
 }
