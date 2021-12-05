@@ -142,7 +142,7 @@ class Menu extends Component {
                     </div>
                 </div> */}
 
-              
+
                 {/* <div className="center" style={{ color: 'grey' }}><b><big>Dynamic added farm in progress...</big></b></div><br/> */}
 
                 {this.props.farmLoading ?
@@ -158,25 +158,48 @@ class Menu extends Component {
                                                 <b className="text">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]}</b>
                                                 <div>
                                                     <span className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]} 1INCH LP</small> to Earn PURSE</small></span><br /><br />
-                                                    <span className=" " ><small>APR:  {parseInt(this.props.apr[1][i])} % </small></span><br />
-                                                    <span className="center rowC"><small>Bonus Multiplier: {this.props.bonusMultiplier[1][i]}x &nbsp;&nbsp;
+
+                                                    <span className="" style={{ color: 'silver' }}> {this.props.aprloading ?
+                                                        <div className="">
+                                                            <span><small>APR: {parseFloat(this.props.apr[1][i]).toFixed(3)} % &nbsp;</small></span>
+                                                            <span className="">
+                                                                <Popup trigger={open => (
+                                                                    <span style={{ position: "relative", top: '-1px' }}><BsFillQuestionCircleFill size={10} /></span>
+                                                                )}
+                                                                    on="hover"
+                                                                    position="right center"
+                                                                    offsetY={-50}
+                                                                    offsetX={10}
+                                                                ><span className="textInfo"><small>APR are affected by the price of PURSE which has not yet stabilized. </small></span>
+                                                                    <span className="textInfo"><small>If it shows 'NaN' or 'Infinity', it means currently the pool has no LP token staked. </small></span>
+                                                                </Popup></span> </div> :
+                                                        <div className="">
+                                                            <span><small>APR:</small></span>&nbsp;&nbsp;
+                                                            <span className="lds-dual-ring"><div></div><div></div><div></div></span>
+                                                        </div>} </span>
+
+                                                    <span className=""><small>Bonus Multiplier: {this.props.bonusMultiplier[1][i]}x &nbsp;
                                                         <Popup
                                                             trigger={open => (
-                                                                <span><BsFillQuestionCircleFill size={13} /></span>
+                                                                <span style={{ position: "relative", top: '-0.8px' }}><BsFillQuestionCircleFill size={10} /></span>
                                                             )}
                                                             on="hover"
                                                             position="right center"
                                                             offsetY={-50}
                                                             offsetX={5}
                                                         >
-                                                            <span className="textInfo">The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.<br /></span>
-                                                            <span className="textInfo">For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.<br /></span>
-                                                            <span className="textInfo">This amount is already included in all APR calculations for the farm. </span></Popup>&nbsp;</small></span>
-                                                    <span className=" "><small>LP Staked: {this.props.userSegmentInfo[1][i]}</small></span><br />
-                                                    <span className=" "><small>Purse Earned: {this.props.pendingSegmentReward[1][i]}</small></span><br />
-                                                    <span className=" "><small>TVL: $ {this.props.tvl[1][i]}</small></span>
-                                                    <br />
-                                                    {/* <Button variant="outlined" color="default" component={Link} onClick={(event) => { this.props.setI(0, i) }} to="/deposit">Select</Button> */}
+                                                            <span className="textInfo"><small>The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.</small><br /></span>
+                                                            <span className="textInfo"><small>For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.</small><br /></span>
+                                                            <span className="textInfo"><small>This amount is already included in all APR calculations for the farm. </small></span></Popup>&nbsp;</small></span><br />
+
+                                                    <span className=" "><small>LP Staked: {parseFloat(this.props.userSegmentInfo[1][i])}</small></span><br />
+                                                    <span className=" "><small>Purse Earned: {parseFloat(this.props.pendingSegmentReward[1][i])}</small></span><br />
+                                                    <span className=" "><small>{this.props.aprloading ? <div className="">TVL: $ {parseFloat(this.props.tvl[1][i]).toFixed(3)} </div> :
+                                                        <div className="">
+                                                            <span><small>TVL:</small></span>&nbsp;&nbsp;
+                                                            <span className="lds-dual-ring"><div></div><div></div><div></div></span>
+                                                        </div>} </small></span><br />
+
                                                     <Buttons variant="outline-info" size="sm" style={{ minWidth: '80px', marginTop: '10px' }} className="mb-2" onClick={() => {
                                                         this.props.setTrigger(true)
                                                         this.props.setI(1, i)

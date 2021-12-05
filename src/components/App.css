@@ -68,8 +68,10 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
 .rowC{
   display:flex; 
   flex-direction:row;
-  /* line-height: 22px;
-  text-align: middle; */
+  /* line-height: 22px; */
+  min-height: 1em;
+  text-align: middle;
+  vertical-align: middle;
 }
 
 .loading {
@@ -241,5 +243,34 @@ width: 15px;
   50%, 100% {
     top: -3px;
     height: 8px;
+  }
+}
+
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 10px;
+  height: 0px;
+}
+.lds-dual-ring:after {
+  position:relative;
+  content: " ";
+  display: block;
+  top: -12px;
+  left: 0px;
+  width: 12px;
+  height: 12px;
+  margin: 2px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
