@@ -363,7 +363,7 @@ class App extends Component {
         .then(async () => {
           await this.switchNetwork()
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          if (chainId == "0x61") {
+          if (chainId == "0x38") {
             this.setWalletTrigger(true)
           }
         })
@@ -433,7 +433,7 @@ class App extends Component {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x61' }],
+        params: [{ chainId: '0x38' }],
       });
     } catch (switchError) {
       // console.log(switchError.code)
@@ -444,7 +444,7 @@ class App extends Component {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: '0x61', rpcUrls: ['https://data-seed-prebsc-1-s3.binance.org:8545'], chainName: 'BSC Testnet',
+              chainId: '0x38', rpcUrls: ['https://data-seed-prebsc-1-s3.binance.org:8545'], chainName: 'BSC Testnet',
               nativeCurrency: {
                 name: 'BNB',
                 symbol: 'BNB', // 2-6 characters long
@@ -506,7 +506,7 @@ class App extends Component {
     // We recommend reloading the page, unless you must do otherwise
     // window.location.reload();
     // console.log(chainId)
-    if (chainId != "0x61") {
+    if (chainId != "0x38") {
       this.setWalletTrigger(false)
     }
     if (this.state.networkId !== chainId) {
