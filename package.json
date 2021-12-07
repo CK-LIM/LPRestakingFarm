@@ -8,7 +8,7 @@
     "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.13",
     "@openzeppelin/contracts": "^4.0.0-beta.0",
     "@openzeppelin/contracts-upgradeable": "^4.3.0",
-    "@truffle/hdwallet-provider": "^1.5.0",
+    "@truffle/hdwallet-provider": "^1.7.0",
     "@walletconnect/web3-provider": "^1.6.6",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.7.0",
@@ -56,6 +56,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@openzeppelin/truffle-upgrades": "^1.8.1"
+    "@openzeppelin/truffle-upgrades": "^1.8.1",
+    "truffle-plugin-verify": "^0.5.18"
   }
 }

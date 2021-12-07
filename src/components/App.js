@@ -33,7 +33,7 @@ class App extends Component {
   async loadBlockchainData() {
     const web3Bsc = window.web3Bsc
 
-    const networkId = "97"
+    const networkId = "56"
     this.setState({ networkId })
 
     if (this.state.walletConnect == true) {
@@ -78,19 +78,19 @@ class App extends Component {
 
     if (this.state.wallet == false && this.state.walletConnect == false) {
       // Load PurseTokenUpgradable
-      const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
+      // const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
       const restakingFarmData = RestakingFarm.networks[networkId]
 
-      if (purseTokenUpgradableData) {
-        const purseTokenUpgradable = new web3Bsc.eth.Contract(PurseTokenUpgradable.abi, purseTokenUpgradableData.address)
-        this.setState({ purseTokenUpgradable })
-        let purseTokenUpgradableBalance = 0
-        this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
-        let purseTokenTotalSupply = await purseTokenUpgradable.methods.totalSupply().call()
-        this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
-        let poolRewardToken = await purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
-        this.setState({ poolRewardToken })
-      }
+
+      const purseTokenUpgradable = new web3Bsc.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C")
+      this.setState({ purseTokenUpgradable })
+      let purseTokenUpgradableBalance = 0
+      this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
+      let purseTokenTotalSupply = await purseTokenUpgradable.methods.totalSupply().call()
+      this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
+      let poolRewardToken = await purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
+      this.setState({ poolRewardToken })
+
 
       if (restakingFarmData) {
         const restakingFarm = new web3Bsc.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
@@ -184,16 +184,16 @@ class App extends Component {
     // ##############################################################################################################################
     else {
       // Load PurseTokenUpgradable
-      const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
+      // const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
       const restakingFarmData = RestakingFarm.networks[networkId]
-      if (purseTokenUpgradableData) {
-        let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-        this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
-        let purseTokenTotalSupply = await this.state.purseTokenUpgradable.methods.totalSupply().call()
-        this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
-        let poolRewardToken = await this.state.purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
-        this.setState({ poolRewardToken })
-      }
+      // if (purseTokenUpgradableData) {
+      let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
+      this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
+      let purseTokenTotalSupply = await this.state.purseTokenUpgradable.methods.totalSupply().call()
+      this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
+      let poolRewardToken = await this.state.purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
+      this.setState({ poolRewardToken })
+      // }
       // Load RestakingFarm
       if (restakingFarmData) {
         let totalpendingReward = 0
@@ -244,7 +244,7 @@ class App extends Component {
   // ***************************TVL & APR***********************************************************************
   async loadTVLAPR() {
     // Load bavaMasterFarmer
-    const networkId = "97"
+    const networkId = "56"
     const web3Bsc = window.web3Bsc
     const restakingFarmData = RestakingFarm.networks[networkId]
 
@@ -332,8 +332,8 @@ class App extends Component {
       this.setState({ metamask: false })
       this.setState({ wallet: false })
     }
-    window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s3.binance.org:8545/`);
-    // window.web3Bsc = new Web3(`https://bsc-dataseed.binance.org/`);
+    // window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s3.binance.org:8545/`);
+    window.web3Bsc = new Web3(`https://bsc-dataseed.binance.org/`);
     let response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin%2Cweth%2Cbinance-usd%2Cusd-coin%2Ctether%2Cbitcoin%2Cpundi-x-purse&vs_currencies=usd`);
     // let purseResponse = await fetch('https://api.pancakeswap.info/api/v2/tokens/0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C')
     // let purseResponse = await fetch('https://api.1inch.exchange/v4.0/56/quote?fromTokenAddress=0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C&toTokenAddress=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&amount=1000000000000')
@@ -386,17 +386,18 @@ class App extends Component {
   WalletConnect = async () => {
     const provider = new WalletConnectProvider({
       rpc: {
-        97: `https://data-seed-prebsc-1-s3.binance.org:8545/`
+        // 97: `https://data-seed-prebsc-1-s3.binance.org:8545/`
+        56: `https://bsc-dataseed.binance.org/`
       },
-      chainId: 97,
-      // chainId: 56,
+      // chainId: 97,
+      chainId: 56,
     });
     window.provider = provider
-    console.log(window.provider)
+    // console.log(window.provider)
     await window.provider.enable();
     window.web3Con = await new Web3(window.provider);
     const networkId = await window.web3Con.eth.net.getId();
-    if (networkId != 97) {
+    if (networkId != 56) {
       alert("You're connected to an unsupported network.")
       this.WalletDisconnect()
     } else {
@@ -452,7 +453,7 @@ class App extends Component {
             }],
           });
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          console.log("switched")
+          // console.log("switched")
           this.setState({ chainId })
           if (this.state.chainId == "0x61") {
             this.setState({ networkName: "BSC Testnet" })
@@ -488,10 +489,10 @@ class App extends Component {
     if (accounts.length === 0) {
       // MetaMask is locked or the user has not connected any accounts
       // console.log('Please connect to MetaMask.');
-      console.log(accounts)
+      // console.log(accounts)
       this.setWalletTrigger(false)
     } else if (accounts[0] !== this.state.account) {
-      console.log(accounts)
+      // console.log(accounts)
       this.state.account = accounts[0];
       const first4Account = this.state.account.substring(0, 4)
       const last4Account = this.state.account.slice(-4)
@@ -504,7 +505,7 @@ class App extends Component {
   handleChainChanged = async (chainId) => {
     // We recommend reloading the page, unless you must do otherwise
     // window.location.reload();
-    console.log(chainId)
+    // console.log(chainId)
     if (chainId != "0x61") {
       this.setWalletTrigger(false)
     }
@@ -543,7 +544,7 @@ class App extends Component {
 
   deposit = async (i, amount, n) => {
     if (this.state.walletConnect == true) {
-      console.log("abc")
+      // console.log("abc")
       this.setState({ loading: false })
       let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
       const restakingFarmData = RestakingFarm.networks[this.state.networkId]
@@ -569,10 +570,10 @@ class App extends Component {
         }
       });
     } else if (this.state.wallet == true) {
-      console.log("efg")
+      // console.log("efg")
       this.setState({ loading: false })
       let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
-      console.log(this.state.restakingFarm)
+      // console.log(this.state.restakingFarm)
       const restakingFarmData = RestakingFarm.networks[this.state.networkId]
       let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
       await restakingFarm.methods.deposit(lpTokenAddress, amount).send({ from: this.state.account }).then(async (result) => {
@@ -596,7 +597,7 @@ class App extends Component {
         }
       });
     }
-    console.log("done")
+    // console.log("done")
     this.setState({ loading: true })
     this.componentWillMount()
   }
@@ -606,9 +607,7 @@ class App extends Component {
       this.setState({ loading: false })
       let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
       let lpToken = new window.web3Con.eth.Contract(LpToken.abi, lpTokenAddress)
-      console.log(lpToken)
-      console.log(this.state.account)
-      console.log(this.state.restakingFarm)
+
       await lpToken.methods.approve(this.state.restakingFarm._address, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: this.state.account }).then(async (result) => {
         let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, lpTokenAddress)
         let lpTokenAllowance = await lpTokenPair.methods.allowance(this.state.account, this.state.restakingFarm._address).call()
@@ -620,9 +619,7 @@ class App extends Component {
       this.setState({ loading: false })
       let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
       let lpToken = new window.web3.eth.Contract(LpToken.abi, lpTokenAddress)
-      console.log(lpToken)
-      console.log(this.state.account)
-      console.log(this.state.restakingFarm)
+
       await lpToken.methods.approve(this.state.restakingFarm._address, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: this.state.account }).then(async (result) => {
         let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, lpTokenAddress)
         let lpTokenAllowance = await lpTokenPair.methods.allowance(this.state.account, this.state.restakingFarm._address).call()

@@ -1,10 +1,10 @@
 {
   "main.css": "/static/css/main.9ab5a003.chunk.css",
-  "main.js": "/static/js/main.7bdae9f4.chunk.js",
-  "main.js.map": "/static/js/main.7bdae9f4.chunk.js.map",
+  "main.js": "/static/js/main.4c69f41d.chunk.js",
+  "main.js.map": "/static/js/main.4c69f41d.chunk.js.map",
   "static/css/1.9cb1bd3e.chunk.css": "/static/css/1.9cb1bd3e.chunk.css",
-  "static/js/1.dc0ca51c.chunk.js": "/static/js/1.dc0ca51c.chunk.js",
-  "static/js/1.dc0ca51c.chunk.js.map": "/static/js/1.dc0ca51c.chunk.js.map",
+  "static/js/1.7749a59c.chunk.js": "/static/js/1.7749a59c.chunk.js",
+  "static/js/1.7749a59c.chunk.js.map": "/static/js/1.7749a59c.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
   "static/media/purse.png": "/static/media/purse.6cad2843.png",
@@ -16,6 +16,6 @@
   "static/css/1.9cb1bd3e.chunk.css.map": "/static/css/1.9cb1bd3e.chunk.css.map",
   "static/css/main.9ab5a003.chunk.css.map": "/static/css/main.9ab5a003.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.ed86c44ff48af1a1e5f8b6fce27dec5d.js": "/precache-manifest.ed86c44ff48af1a1e5f8b6fce27dec5d.js",
+  "precache-manifest.b96479103928aba47eaffba01fca7b08.js": "/precache-manifest.b96479103928aba47eaffba01fca7b08.js",
   "service-worker.js": "/service-worker.js"
 }
