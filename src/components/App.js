@@ -700,7 +700,7 @@ class App extends Component {
   harvest = async (i, n) => {
     if (this.state.walletConnect == true) {
       if (this.state.pendingSegmentReward[n][i] <= 0) {
-        alert("No token to harvest! Please deposit PANCAKE LP to earn PURSE")
+        alert("No token to harvest! Please deposit LP to earn PURSE")
       } else {
         this.setState({ loading: false })
         const restakingFarmData = RestakingFarm.networks[this.state.networkId]
@@ -725,7 +725,7 @@ class App extends Component {
       this.setState({ loading: true })
     } else if (this.state.wallet == true) {
       if (this.state.pendingSegmentReward[n][i] <= 0) {
-        alert("No token to harvest! Please deposit PANCAKE LP to earn PURSE")
+        alert("No token to harvest! Please deposit LP to earn PURSE")
       } else {
         this.setState({ loading: false })
         const restakingFarmData = RestakingFarm.networks[this.state.networkId]
