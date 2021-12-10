@@ -34,8 +34,8 @@ class Menu extends Component {
             <div id="content" className="mt-3">
                 <div className="text-center">
                     <ButtonGroup>
-                        <Button variant="outlined" color="primary" component={Link} to="/menu/" >pancakeswap</Button>
-                        <Button variant="contained" color="primary" component={Link} to="/oneinch/" >1inch</Button>
+                        <Button variant="outlined" color="primary" component={Link} to="/lpfarm/menu/" >pancakeswap</Button>
+                        <Button variant="contained" color="primary" component={Link} to="/lpfarm/oneinch/" >1inch</Button>
                     </ButtonGroup>
                 </div>
                 <br /><br />

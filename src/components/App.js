@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import bigInt from 'big-integer'
 
 import LpToken from '../abis/LpToken.json'
 import IPancakePair from '../abis/IPancakePair.json'
 import PurseTokenUpgradable from '../abis/PurseTokenUpgradable.json'
 import RestakingFarm from '../abis/RestakingFarm.json'
+import Sum30BurnAmount from '../bdl/sum30BurnAmount.json'
+import TotalBurnAmount from '../bdl/totalBurnAmount.json'
 
 import Navb from './Navbar'
 import Main from './Main'
@@ -14,6 +17,7 @@ import Menu from './Menu'
 import Oneinch from './1inch'
 import Deposit from './Deposit'
 import Popup from './Popup'
+import Farm from './Farm'
 
 import './Popup.css'
 import './App.css'
@@ -75,10 +79,13 @@ class App extends Component {
       this.setState({ networkName: "Unavailable" })
     }
 
-
     if (this.state.wallet == false && this.state.walletConnect == false) {
       // Load PurseTokenUpgradable
       // const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
+      const totalBurnAmount = bigInt(TotalBurnAmount.totalBurnAmount).toString()
+      const sum30BurnAmount = bigInt(Sum30BurnAmount.sum30BurnAmount).toString()
+      this.setState({ totalBurnAmount })
+      this.setState({ sum30BurnAmount })
       const restakingFarmData = RestakingFarm.networks[networkId]
 
 
@@ -89,7 +96,9 @@ class App extends Component {
       let purseTokenTotalSupply = await purseTokenUpgradable.methods.totalSupply().call()
       this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
       let poolRewardToken = await purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
-      this.setState({ poolRewardToken })
+      this.setState({ poolRewardToken: poolRewardToken.toString() })
+      let distributionPoolToken = await purseTokenUpgradable.methods.balanceOf("0xb59C7c1E2ec8eb460D12093AD1f21d7F7E8e2FEF").call()
+      this.setState({ distributionPoolToken: distributionPoolToken.toString() })
 
 
       if (restakingFarmData) {
@@ -781,6 +790,9 @@ class App extends Component {
       restakingFarm: {},
       purseTokenUpgradableBalance: '0',
       purseTokenTotalSupply: '0',
+      distributionPoolToken:'0',
+      totalBurnAmount :'0',
+      sum30BurnAmount :'0',
       i: '0',
       n: '0',
       loading: false,
@@ -815,6 +827,7 @@ class App extends Component {
     let menucontent
     let depositcontent
     let oneinchcontent
+    let farmInfoContent
     if (this.state.loading == false) {
       maincontent =
         <div className="wrap">
@@ -839,12 +852,16 @@ class App extends Component {
         poolLength={this.state.poolLength}
         deposit={this.deposit}
         withdraw={this.withdraw}
+        PURSEPrice={this.state.PURSEPrice}
         purseTokenTotalSupply={this.state.purseTokenTotalSupply}
         lpTokenInContract={this.state.lpTokenInContract}
         totalrewardperblock={this.state.totalrewardperblock}
         poolCapRewardToken={this.state.poolCapRewardToken}
         poolMintedRewardToken={this.state.poolMintedRewardToken}
         poolRewardToken={this.state.poolRewardToken}
+        distributionPoolToken={this.state.distributionPoolToken}
+        totalBurnAmount={this.state.totalBurnAmount}
+        sum30BurnAmount={this.state.sum30BurnAmount}
       />
       menucontent = <Menu
         lpTokenBalance={this.state.lpTokenBalance}
@@ -914,6 +931,19 @@ class App extends Component {
         farmLoading={this.state.farmLoading}
         aprloading={this.state.aprloading}
       />
+      farmInfoContent= <Farm
+      lpTokenBalance={this.state.lpTokenBalance}
+      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+      poolLength={this.state.poolLength}
+      deposit={this.deposit}
+      withdraw={this.withdraw}
+      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+      lpTokenInContract={this.state.lpTokenInContract}
+      totalrewardperblock={this.state.totalrewardperblock}
+      poolCapRewardToken={this.state.poolCapRewardToken}
+      poolMintedRewardToken={this.state.poolMintedRewardToken}
+      poolRewardToken={this.state.poolRewardToken}
+    />
     }
 
     return (
@@ -941,9 +971,10 @@ class App extends Component {
                   <Switch>
                     <Route path="/" exact > {maincontent} </Route>
                     <Route path="/home" exact > {maincontent} </Route>
-                    <Route path="/menu" exact > {menucontent} </Route>
+                    <Route path="/lpfarm/menu" exact > {menucontent} </Route>
+                    <Route path="/lpfarm/farmInfo" exact > {farmInfoContent} </Route>
+                    <Route path="/lpfarm/oneinch" exact > {oneinchcontent} </Route>
                     <Route path="/deposit" exact > {depositcontent} </Route>
-                    <Route path="/oneinch/" exact > {oneinchcontent} </Route>
                   </Switch>
                   <Popup trigger={this.state.buttonPopup} setTrigger={this.setTrigger}>
                     <div className="container-fluid mt-5">{depositcontent}</div>

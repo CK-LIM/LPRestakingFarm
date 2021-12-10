@@ -5,10 +5,8 @@ import purse2 from '../purse-.png'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
-import bigInt from 'big-integer'
 import './App.css';
 import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
 class Menu extends Component {
@@ -34,8 +32,8 @@ class Menu extends Component {
             <div id="content" className="mt-3">
                 <div className="text-center">
                     <ButtonGroup>
-                        <Button variant="contained" color="primary" component={Link} to="/menu/" >pancakeswap</Button>
-                        <Button variant="outlined" color="primary" component={Link} to="/oneinch/" >1inch</Button>
+                        <Button variant="contained" color="primary" component={Link} to="/lpfarm/menu/" >pancakeswap</Button>
+                        <Button variant="outlined" color="primary" component={Link} to="/lpfarm/oneinch/" >1inch</Button>
                     </ButtonGroup>
                 </div>
                 <br /><br />
@@ -170,6 +168,7 @@ class Menu extends Component {
                                                                     position="right center"
                                                                     offsetY={-50}
                                                                     offsetX={10}
+                                                                    contentStyle={{ padding: '3px' }}
                                                                 ><span className="textInfo"><small>APR are affected by the price of PURSE which has not yet stabilized. </small></span>
                                                                     <span className="textInfo"><small>If it shows 'NaN' or 'Infinity', it means currently the pool has no LP token staked. </small></span>
                                                                 </Popup></span> </div> :
@@ -187,6 +186,7 @@ class Menu extends Component {
                                                             position="right center"
                                                             offsetY={-50}
                                                             offsetX={5}
+                                                            contentStyle={{ padding: '3px'}}
                                                         >
                                                             <span className="textInfo"><small>The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.</small><br /></span>
                                                             <span className="textInfo"><small>For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.</small><br /></span>
