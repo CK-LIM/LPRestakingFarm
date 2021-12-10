@@ -52,7 +52,7 @@ class Deposit extends Component {
       this.setState({
         txValidAmount: false
       })
-    } 
+    }
     // else if (bigInt(window.web3.utils.toWei(event, 'ether')).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
     //   this.setState({
     //     message: 'Not enough Balance'
@@ -114,13 +114,7 @@ class Deposit extends Component {
               style={{ maxWidth: '70px' }}
               onClick={(event) => {
                 event.preventDefault()
-                if (this.props.pendingSegmentReward[this.props.n][this.props.i] <= 0) {
-                  alert("No token to harvest! Please deposit PURSE-USDC PANCAKE LP to earn PURSE")
-                } else {
-                  console.log("...")
-                  console.log(this.props.pendingSegmentReward[this.props.n][this.props.i])
-                  this.props.harvest(this.props.i, this.props.n)
-                }
+                this.props.harvest(this.props.i, this.props.n)
               }}>
               <small>Harvest</small>
 
@@ -149,7 +143,7 @@ class Deposit extends Component {
 
             <div className="card mb-4 cardbody" >
               <div className="card-body">
-                {this.props.wallet || this.props.walletConnect?
+                {this.props.wallet || this.props.walletConnect ?
 
                   <form className="mb-3" onSubmit={(event) => {
                     event.preventDefault()
@@ -163,7 +157,7 @@ class Deposit extends Component {
                       console.log(this.state.txWithdraw)
                       if (this.state.txDeposit === true && this.state.txWithdraw === false) {
                         if (bigInt(amount).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
-                          alert("Not enough funds")                          
+                          alert("Not enough funds")
                         } else {
                           this.props.deposit(this.props.i, amount, this.props.n)
                         }
@@ -171,7 +165,7 @@ class Deposit extends Component {
                         if ((this.input.value) > this.props.userSegmentInfo[this.props.n][this.props.i]) {
                           console.log((this.input.value))
                           console.log(this.props.userSegmentInfo[this.props.n][this.props.i])
-                          alert("Withdraw tokens more than deposit LP tokens")   
+                          alert("Withdraw tokens more than deposit LP tokens")
                         } else {
                           console.log((this.input.value))
                           console.log(this.props.userSegmentInfo[this.props.n][this.props.i])
@@ -182,7 +176,7 @@ class Deposit extends Component {
                   }}>
                     <div>
                       <label className="float-left"><b>Deposit</b></label>
-                      <span className="float-right"  style={{ color: 'silver' }}>
+                      <span className="float-right" style={{ color: 'silver' }}>
                         <span>
                           LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}</span>
                         <span><br />
@@ -190,7 +184,7 @@ class Deposit extends Component {
                         </span>
                       </span>
                     </div>
-                    <br/><br/><br/>
+                    <br /><br /><br />
 
                     {this.props.lpTokenSegmentAllowance[this.props.n][this.props.i] > 100000000000000000000000000000 ?
                       <div>
@@ -227,7 +221,7 @@ class Deposit extends Component {
                         </div>
                       </div>
                       :
-                      <div className="rowC center">                                             
+                      <div className="rowC center">
                         <button type="submit" className="btn btn-primary btn-block btn-lg" onClick={(event) => {
                           this.props.approve(this.props.i, this.props.n)
                         }}>Approve</button>
