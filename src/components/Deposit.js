@@ -44,7 +44,6 @@ class Deposit extends Component {
       this.setState({
         txValidAmount: false
       })
-      // console.log(this.state.txValid)
     } else if (event <= 0) {
       this.setState({
         message: 'Value need to be greater than 0'
@@ -153,8 +152,6 @@ class Deposit extends Component {
                       let amount
                       amount = this.input.value.toString()
                       amount = window.web3Bsc.utils.toWei(amount, 'Ether')
-                      console.log(this.state.txDeposit)
-                      console.log(this.state.txWithdraw)
                       if (this.state.txDeposit === true && this.state.txWithdraw === false) {
                         if (bigInt(amount).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
                           alert("Not enough funds")
@@ -162,13 +159,9 @@ class Deposit extends Component {
                           this.props.deposit(this.props.i, amount, this.props.n)
                         }
                       } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
-                        if ((this.input.value) > this.props.userSegmentInfo[this.props.n][this.props.i]) {
-                          console.log((this.input.value))
-                          console.log(this.props.userSegmentInfo[this.props.n][this.props.i])
+                        if (bigInt(window.web3Bsc.utils.fromWei(amount, 'Ether')).value > this.props.userSegmentInfo[this.props.n][this.props.i]) {
                           alert("Withdraw tokens more than deposit LP tokens")
                         } else {
-                          console.log((this.input.value))
-                          console.log(this.props.userSegmentInfo[this.props.n][this.props.i])
                           this.props.withdraw(this.props.i, amount, this.props.n)
                         }
                       }
@@ -196,7 +189,6 @@ class Deposit extends Component {
                             placeholder="0"
                             onChange={(e) => {
                               const value = e.target.value;
-                              // console.log(value)
                               this.changeHandler(value)
                             }}
                             required />
@@ -211,11 +203,9 @@ class Deposit extends Component {
 
                         <div className="rowC center">
                           <button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
-                            console.log("clicked deposit...")
                             this.clickHandlerDeposit()
                           }}> Deposit </button>&nbsp;&nbsp;&nbsp;
                           <button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
-                            console.log("clicked withdraw...")
                             this.clickHandlerWithdraw()
                           }}>Withdraw</button>&nbsp;&nbsp;&nbsp;
                         </div>
@@ -235,7 +225,6 @@ class Deposit extends Component {
                   :
                   <div className="rowC center">
                     <button type="submit" className="btn btn-primary btn-lg" onClick={async () => {
-                      console.log("clicked withdraw...")
                       await this.props.connectWallet()
                     }}>Connect Wallet</button>
                   </div>
