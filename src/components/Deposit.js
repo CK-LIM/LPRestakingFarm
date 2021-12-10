@@ -151,18 +151,18 @@ class Deposit extends Component {
                     } else {
                       let amount
                       amount = this.input.value.toString()
-                      amount = window.web3Bsc.utils.toWei(amount, 'Ether')
+                      let amountWei = window.web3Bsc.utils.toWei(amount, 'Ether')
                       if (this.state.txDeposit === true && this.state.txWithdraw === false) {
-                        if (bigInt(amount).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
+                        if (bigInt(amountWei).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
                           alert("Not enough funds")
                         } else {
-                          this.props.deposit(this.props.i, amount, this.props.n)
+                          this.props.deposit(this.props.i, amountWei, this.props.n)
                         }
                       } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
-                        if (bigInt(window.web3Bsc.utils.fromWei(amount, 'Ether')).value > this.props.userSegmentInfo[this.props.n][this.props.i]) {
+                        if (amount> this.props.userSegmentInfo[this.props.n][this.props.i]) {
                           alert("Withdraw tokens more than deposit LP tokens")
                         } else {
-                          this.props.withdraw(this.props.i, amount, this.props.n)
+                          this.props.withdraw(this.props.i, amountWei, this.props.n)
                         }
                       }
                     }

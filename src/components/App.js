@@ -553,7 +553,7 @@ class App extends Component {
 
   deposit = async (i, amount, n) => {
     if (this.state.walletConnect == true) {
-      // console.log("abc")
+      console.log("abc")
       this.setState({ loading: false })
       let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
       const restakingFarmData = RestakingFarm.networks[this.state.networkId]
@@ -574,12 +574,14 @@ class App extends Component {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
+          this.setState({ loading: true })
+          this.componentWillMount()
         } else {
           console.error(err);
         }
       });
     } else if (this.state.wallet == true) {
-      // console.log("efg")
+      console.log("efg")
       this.setState({ loading: false })
       let lpTokenAddress = await this.state.poolSegmentInfo[n][i].lpToken
       // console.log(this.state.restakingFarm)
@@ -601,6 +603,8 @@ class App extends Component {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
+          this.setState({ loading: true })
+          this.componentWillMount()
         } else {
           console.error(err);
         }
@@ -663,6 +667,8 @@ class App extends Component {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
+          this.setState({ loading: true })
+          this.componentWillMount()
         } else {
           console.error(err);
         }
@@ -690,6 +696,8 @@ class App extends Component {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
+          this.setState({ loading: true })
+          this.componentWillMount()
         } else {
           console.error(err);
         }
@@ -717,6 +725,8 @@ class App extends Component {
             // EIP-1193 userRejectedRequest error
             // If this happens, the user rejected the connection request.
             alert("Something went wrong...Code: 4001 User rejected the request.")
+            this.setState({ loading: true })
+            this.componentWillMount()
           } else {
             console.error(err);
           }
@@ -742,6 +752,8 @@ class App extends Component {
             // EIP-1193 userRejectedRequest error
             // If this happens, the user rejected the connection request.
             alert("Something went wrong...Code: 4001 User rejected the request.")
+            this.setState({ loading: true })
+            this.componentWillMount()
           } else {
             console.error(err);
           }
