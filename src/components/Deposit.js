@@ -103,27 +103,28 @@ class Deposit extends Component {
         <div className="card mb-4 cardbody" >
           <div className="card-body">
 
-          <div className='float-right'>
+          <div className='float-left'>
               <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
                 window.open(this.props.lpTokenLink[this.props.n][this.props.i], '_blank')
               }}> Get {this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} <img src={exlink} height='10' alt="" />
-              </span><br />
+              </span>
               <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
                 window.open(this.props.lpTokenContract[this.props.n][this.props.i], '_blank')
               }}> View Contract <img src={exlink} height='10' alt="" />
               </span>
             </div>
+          
 
             <button
               type="submit"
-              className="btn btn-success btn-sm float-left"
+              className="btn btn-success btn-sm float-right"
               style={{ maxWidth: '70px' }}
               onClick={(event) => {
                 event.preventDefault()
                 this.props.harvest(this.props.i, this.props.n)
               }}>
               <small>Harvest</small>
-            </button>
+            </button>  <br/>  <br/>
 
             <table className="table table-borderless text-center" style={{ color: 'silver' }}>
               <thead>
@@ -143,7 +144,6 @@ class Deposit extends Component {
                 </tr>
               </tbody>
             </table>
-
 
 
             <div className="card mb-4 cardbody" >
@@ -174,7 +174,7 @@ class Deposit extends Component {
                     }
                   }}>
                     <div>
-                      <label className="float-left"><b>Deposit</b></label>
+                      <label className="float-left" style={{ color: 'silver' }}><b>Start Farming</b></label>
                       <span className="float-right" style={{ color: 'silver' }}>
                         <span>
                           LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}
