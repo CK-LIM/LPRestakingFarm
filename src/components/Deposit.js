@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import { Link } from 'react-router-dom';
 // import dai from '../uniswap-uni-logo.png'
 import asterisk from '../asterisk.png'
+import exlink from '../link.png'
 import purse from '../purse.png'
 import pancake from '../pancakeswap.png'
 import bigInt from 'big-integer'
@@ -90,39 +91,44 @@ class Deposit extends Component {
     return (
       <div id="content" className="mt-3">
         <div className="text-center">
-          {/* <ButtonGroup>
-            <Button variant="contained" color="default" >pancakeswap</Button>
-            <Button variant="outlined" color="default" >1inch</Button>
-          </ButtonGroup> */}
+
         </div>
         <br /><br />
 
         <h2 className="center textWhite"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} Farm</b></h2>
         <br />
         <div className="center" style={{ color: 'silver' }}>&nbsp;Deposit <b>&nbsp;{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Token&nbsp;</b> and earn PURSE!!!</div>
-        {/* <div className="center" style={{ color: 'silver' }}>&nbsp;APY :  {(28000 * 365 * this.props.poolSegmentInfo[this.props.n][this.props.i].pursePerBlock / this.props.lpTokenSegmentInContract[this.props.n][this.props.i]) * 100} %</div> */}
         <br />
 
         <div className="card mb-4 cardbody" >
           <div className="card-body">
 
+          <div className='float-right'>
+              <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
+                window.open(this.props.lpTokenLink[this.props.n][this.props.i], '_blank')
+              }}> Get {this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} <img src={exlink} height='10' alt="" />
+              </span><br />
+              <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
+                window.open(this.props.lpTokenContract[this.props.n][this.props.i], '_blank')
+              }}> View Contract <img src={exlink} height='10' alt="" />
+              </span>
+            </div>
 
             <button
               type="submit"
-              className="btn btn-success btn-sm float-right"
+              className="btn btn-success btn-sm float-left"
               style={{ maxWidth: '70px' }}
               onClick={(event) => {
                 event.preventDefault()
                 this.props.harvest(this.props.i, this.props.n)
               }}>
               <small>Harvest</small>
-
             </button>
 
             <table className="table table-borderless text-center" style={{ color: 'silver' }}>
               <thead>
                 <tr>
-                  <th scope="col">{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Staked</th>
+                  <th scope="col">{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Staked </th>
                   <th scope="col">PURSE Earned</th>
                 </tr>
                 <tr>
@@ -159,7 +165,7 @@ class Deposit extends Component {
                           this.props.deposit(this.props.i, amountWei, this.props.n)
                         }
                       } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
-                        if (amount> this.props.userSegmentInfo[this.props.n][this.props.i]) {
+                        if (amount > this.props.userSegmentInfo[this.props.n][this.props.i]) {
                           alert("Withdraw tokens more than deposit LP tokens")
                         } else {
                           this.props.withdraw(this.props.i, amountWei, this.props.n)
@@ -171,7 +177,8 @@ class Deposit extends Component {
                       <label className="float-left"><b>Deposit</b></label>
                       <span className="float-right" style={{ color: 'silver' }}>
                         <span>
-                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}</span>
+                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}
+                        </span>
                         <span><br />
                           PURSE Balance&nbsp;: {window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}
                         </span>
@@ -218,10 +225,6 @@ class Deposit extends Component {
                       </div>
                     }
                   </form>
-
-
-
-
                   :
                   <div className="rowC center">
                     <button type="submit" className="btn btn-primary btn-lg" onClick={async () => {
@@ -232,6 +235,8 @@ class Deposit extends Component {
               </div>
             </div>
           </div>
+
+
         </div>
 
 

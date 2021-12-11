@@ -119,6 +119,10 @@ class App extends Component {
         let bonusMultiplier = [[], []]
         let userSegmentInfo = [[], []]
         let pendingSegmentReward = [[], []]
+        let lpTokenLink = [[], []]
+        let lpTokenContract = [[], []]
+        lpTokenLink[0][0] = "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C"
+        lpTokenContract[0][0] = "https://bscscan.com/address/0x081F4B87F223621B4B31cB7A727BB583586eAD98"
 
         let lpTokenAsymbols = []
         let lpTokenBsymbols = []
@@ -181,6 +185,8 @@ class App extends Component {
         this.setState({ pendingSegmentReward: [[], []] })
         this.setState({ userSegmentInfo: [[], []] })
         this.setState({ totalpendingReward: "0" })
+        this.setState({ lpTokenLink })
+        this.setState({ lpTokenContract})
 
         this.setState({ lpTokenAsymbols })
         this.setState({ lpTokenBsymbols })
@@ -830,7 +836,9 @@ class App extends Component {
       poolCapRewardToken: '0',
       poolMintedRewardToken: '0',
       poolRewardToken: '0',
-      networkName: "Loading"
+      networkName: "Loading",
+      lpTokenLink: "",
+      lpTokenContract: ""
     }
   }
 
@@ -918,6 +926,8 @@ class App extends Component {
         approve={this.approve}
         connectWallet={this.connectWallet}
         walletConnect={this.state.walletConnect}
+        lpTokenLink={this.state.lpTokenLink}
+        lpTokenContract={this.state.lpTokenContract}
       />
       oneinchcontent = <Oneinch
         lpTokenBalance={this.state.lpTokenBalance}
