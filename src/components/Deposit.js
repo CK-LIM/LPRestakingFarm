@@ -155,8 +155,7 @@ class Deposit extends Component {
                     if (this.state.txValidAmount === false) {
                       alert("Invalid input! PLease check your input again")
                     } else {
-                      let amount
-                      amount = this.input.value.toString()
+                      let amount = this.input.value.toString()
                       let amountWei = window.web3Bsc.utils.toWei(amount, 'Ether')
                       if (this.state.txDeposit === true && this.state.txWithdraw === false) {
                         if (bigInt(amountWei).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
@@ -165,7 +164,7 @@ class Deposit extends Component {
                           this.props.deposit(this.props.i, amountWei, this.props.n)
                         }
                       } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
-                        if (amount > this.props.userSegmentInfo[this.props.n][this.props.i]) {
+                        if (bigInt(amountWei).value > bigInt(window.web3Bsc.utils.toWei(this.props.userSegmentInfo[this.props.n][this.props.i], 'Ether')).value) {
                           alert("Withdraw tokens more than deposit LP tokens")
                         } else {
                           this.props.withdraw(this.props.i, amountWei, this.props.n)
