@@ -6,6 +6,8 @@ import exlink from '../link.png'
 import purse from '../purse.png'
 import pancake from '../pancakeswap.png'
 import bigInt from 'big-integer'
+import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import './App.css';
 
 class Deposit extends Component {
@@ -103,7 +105,7 @@ class Deposit extends Component {
         <div className="card mb-4 cardbody" >
           <div className="card-body">
 
-          <div className='float-left'>
+            <div className='float-left'>
               <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
                 window.open(this.props.lpTokenLink[this.props.n][this.props.i], '_blank')
               }}> Get {this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} <img src={exlink} height='10' alt="" />
@@ -113,7 +115,7 @@ class Deposit extends Component {
               }}> View Contract <img src={exlink} height='10' alt="" />
               </span>
             </div>
-          
+
 
             <button
               type="submit"
@@ -124,7 +126,7 @@ class Deposit extends Component {
                 this.props.harvest(this.props.i, this.props.n)
               }}>
               <small>Harvest</small>
-            </button>  <br/>  <br/>
+            </button>  <br />  <br />
 
             <table className="table table-borderless text-center" style={{ color: 'silver' }}>
               <thead>
@@ -190,6 +192,7 @@ class Deposit extends Component {
                         <div className="input-group mb-4" >
                           <input
                             type="text"
+                            style={{ color: 'grey' }}
                             ref={(input) => { this.input = input }}
                             className="form-control form-control-lg cardbody"
                             placeholder="0"
@@ -208,12 +211,20 @@ class Deposit extends Component {
                         <div style={{ color: 'red' }}>{this.state.message} </div>
 
                         <div className="rowC center">
-                          <button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
-                            this.clickHandlerDeposit()
-                          }}> Deposit </button>&nbsp;&nbsp;&nbsp;
-                          <button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
-                            this.clickHandlerWithdraw()
-                          }}>Withdraw</button>&nbsp;&nbsp;&nbsp;
+                          <ButtonGroup>
+                            <Button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
+                              this.clickHandlerDeposit()
+                            }}>&nbsp;Deposit&nbsp;</Button><Button type="text" variant="outline-primary" className="btn-lg" onClick={(event) => {
+                              this.input.value = window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i],'Ether')
+                            }}>Max</Button>&nbsp;&nbsp;&nbsp;
+                          </ButtonGroup>
+                          <ButtonGroup>
+                            <Button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
+                              this.clickHandlerWithdraw()
+                            }}>Withdraw</Button><Button type="text" variant="outline-primary" className="btn-lg" onClick={(event) => {
+                              this.input.value = this.props.userSegmentInfo[this.props.n][this.props.i]
+                            }}>Max</Button>&nbsp;&nbsp;&nbsp;
+                          </ButtonGroup>
                         </div>
                       </div>
                       :

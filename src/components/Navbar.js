@@ -51,8 +51,8 @@ class Navb extends Component {
               arrow={false}
             ><div>
               <Link></Link>
-                <div ><Link className='dropdown0' to='/lpfarm/farmInfo' >&nbsp;Farm Info</Link><br/></div>
-                <div style={{marginTop: '5px'}}><Link className='dropdown' to='/lpfarm/menu' >&nbsp;Farm Menu</Link></div>
+                <div style={{marginTop: '5px'}}><Link className='dropdown0' to='/lpfarm/farmInfo' >&nbsp;Farm Dashboard</Link><br/></div>
+                <div style={{marginTop: '8px'}}><Link className='dropdown' to='/lpfarm/menu' >&nbsp;Farm Menu</Link></div>
               </div>
             </Popup>
           </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

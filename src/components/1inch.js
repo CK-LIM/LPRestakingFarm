@@ -155,10 +155,9 @@ class Menu extends Component {
                                                 <img src={purse} height='30' alt="" /><br />
                                                 <b className="text">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]}</b>
                                                 <div>
-                                                    <span className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]} 1INCH LP</small> to Earn PURSE</small></span><br /><br />
-
-                                                    <span className="" style={{ color: 'silver' }}> {this.props.aprloading ?
-                                                        <div className="">
+                                                    <div className=" "><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[1][i]}-{this.props.lpTokenSegmentBsymbol[1][i]} 1INCH LP</small> to Earn PURSE</small></div>
+                                                    <div className="" style={{ color: 'silver' }}> {this.props.aprloading ?
+                                                        <div className="borderTop" style={{ marginTop: '8px' }}>
                                                             <span><small>APR: {parseFloat(this.props.apr[1][i]).toFixed(3)} % &nbsp;</small></span>
                                                             <span className="">
                                                                 <Popup trigger={open => (
@@ -171,11 +170,27 @@ class Menu extends Component {
                                                                     contentStyle={{ padding: '3px' }}
                                                                 ><span className="textInfo"><small>APR are affected by the price of PURSE which has not yet stabilized. </small></span>
                                                                     <span className="textInfo"><small>If it shows 'NaN' or 'Infinity', it means currently the pool has no LP token staked. </small></span>
-                                                                </Popup></span> </div> :
+                                                                </Popup></span><br />
+                                                            <span><small>APY: {parseFloat(this.props.apyDaily[1][i]).toFixed(3)} % &nbsp;</small></span>
+                                                            <span className="">
+                                                                <Popup trigger={open => (
+                                                                    <span style={{ position: "relative", top: '-1px' }}><BsFillQuestionCircleFill size={10} /></span>
+                                                                )}
+                                                                    on="hover"
+                                                                    position="right center"
+                                                                    offsetY={-50}
+                                                                    offsetX={10}
+                                                                    contentStyle={{ padding: '3px' }}
+                                                                ><span className="textInfo"><small>APY are calculated based on the compound APR number. </small></span>
+                                                                    <span className="textInfo"><small>The value shown on Farm Menu is based on daily compounding frequency. </small></span>
+                                                                    <span className="textInfo"><small>For weekly and monthly compounding frequency, APY : {parseFloat(this.props.apyWeekly[1][i]).toFixed(3)} / {parseFloat(this.props.apyMonthly[1][i]).toFixed(3)} %</small></span>
+                                                                </Popup></span></div> :
                                                         <div className="">
                                                             <span><small>APR:</small></span>&nbsp;&nbsp;
+                                                            <span className="lds-dual-ring"><div></div><div></div><div></div></span><br />
+                                                            <span><small>APY:</small></span>&nbsp;&nbsp;
                                                             <span className="lds-dual-ring"><div></div><div></div><div></div></span>
-                                                        </div>} </span>
+                                                        </div>} </div>
 
                                                     <span className=""><small>Bonus Multiplier: {this.props.bonusMultiplier[1][i]}x &nbsp;
                                                         <Popup
@@ -186,7 +201,7 @@ class Menu extends Component {
                                                             position="right center"
                                                             offsetY={-50}
                                                             offsetX={5}
-                                                            contentStyle={{ padding: '3px'}}
+                                                            contentStyle={{ padding: '3px' }}
                                                         >
                                                             <span className="textInfo"><small>The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.</small><br /></span>
                                                             <span className="textInfo"><small>For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.</small><br /></span>
@@ -198,8 +213,7 @@ class Menu extends Component {
                                                         <div className="">
                                                             <span><small>TVL:</small></span>&nbsp;&nbsp;
                                                             <span className="lds-dual-ring"><div></div><div></div><div></div></span>
-                                                        </div>} </small></span><br />
-
+                                                        </div>} </small></span>
                                                     <Buttons variant="outline-info" size="sm" style={{ minWidth: '80px', marginTop: '10px' }} className="mb-2" onClick={() => {
                                                         this.props.setTrigger(true)
                                                         this.props.setI(1, i)

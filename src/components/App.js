@@ -267,6 +267,9 @@ class App extends Component {
     let lpTokenValue = [[], []]
     let tvl = [[], []]
     let apr = [[], []]
+    let apyDaily = [[], []]
+    let apyWeekly = [[], []]
+    let apyMonthly = [[], []]
     let n = 0
 
     for (let i = 0; i < this.state.poolLength; i++) {
@@ -316,17 +319,27 @@ class App extends Component {
         lpTokenValue[0][n] = ((lpTokenABalanceContract * tokenAPrice) + (lpTokenBBalanceContract * tokenBPrice)) / lpTokenTSupply
         tvl[0][n] = lpTokenValue[0][n] * lpTokenInContract
         apr[0][n] = ((28000 * 365 * web3Bsc.utils.fromWei((this.state.poolSegmentInfo[0][i].pursePerBlock * this.state.bonusMultiplier[0][i]).toString(), 'Ether') * this.state.PURSEPrice) / tvl[0][n]) * 100
+        apyDaily[0][n] = Math.pow((1 + apr[0][n]/365), 365)-1
+        apyWeekly[0][n] = Math.pow((1 + apr[0][n]/52), 52)-1
+        apyMonthly[0][n] = Math.pow((1 + apr[0][n]/12), 12)-1
         n += 1
       } else {
         pendingSegmentReward[1][n] = pendingReward
         lpTokenValue[1][n] = ((lpTokenABalanceContract * tokenAPrice) + (lpTokenBBalanceContract * tokenBPrice)) / lpTokenTSupply
         tvl[1][n] = lpTokenValue[1][n] * lpTokenInContract
         apr[1][n] = ((28000 * 365 * web3Bsc.utils.fromWei((this.state.poolSegmentInfo[1][i].pursePerBlock * this.state.bonusMultiplier[1][i]).toString(), 'Ether') * this.state.PURSEPrice) / tvl[1][n]) * 100
+        apyDaily[1][n] = Math.pow((1 + apr[1][n]/365), 365)-1
+        apyWeekly[1][n] = Math.pow((1 + apr[1][n]/52), 52)-1
+        apyMonthly[1][n] = Math.pow((1 + apr[1][n]/12), 12)-1
         n += 1
       }
     }
     this.setState({ tvl })
     this.setState({ apr })
+    this.setState({ apyDaily })
+    this.setState({ apyWeekly })
+    this.setState({ apyMonthly })  
+    console.log(this.state.apyWeekly)  
     this.setState({ aprloading: true })
   }
 
@@ -830,6 +843,9 @@ class App extends Component {
       bonusMultiplier: [[], []],
       tvl: [[], []],
       apr: [[], []],
+      apyDaily: [[], []],
+      apyWeekly: [[], []],
+      apyMonthly: [[], []],
       totalrewardperblock: '0',
       totalpendingReward: '0',
       buttonPopup: false,
@@ -886,9 +902,6 @@ class App extends Component {
       menucontent = <Menu
         lpTokenBalance={this.state.lpTokenBalance}
         purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        setI={this.setI}
         purseTokenTotalSupply={this.state.purseTokenTotalSupply}
         totalpendingReward={this.state.totalpendingReward}
         totalrewardperblock={this.state.totalrewardperblock}
@@ -899,13 +912,19 @@ class App extends Component {
         lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
         pendingSegmentReward={this.state.pendingSegmentReward}
         buttonPopup={this.state.buttonPopup}
-        setTrigger={this.setTrigger}
-        harvest={this.harvest}
         tvl={this.state.tvl}
         apr={this.state.apr}
+        apyDaily={this.state.apyDaily}
+        apyWeekly={this.state.apyWeekly}
+        apyMonthly={this.state.apyMonthly}        
         bonusMultiplier={this.state.bonusMultiplier}
         farmLoading={this.state.farmLoading}
         aprloading={this.state.aprloading}
+        deposit={this.deposit}
+        withdraw={this.withdraw}
+        setI={this.setI}
+        setTrigger={this.setTrigger}
+        harvest={this.harvest}
       />
       depositcontent = <Deposit
         lpTokenBalance={this.state.lpTokenBalance}
@@ -930,28 +949,31 @@ class App extends Component {
         lpTokenContract={this.state.lpTokenContract}
       />
       oneinchcontent = <Oneinch
-        lpTokenBalance={this.state.lpTokenBalance}
-        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        setI={this.setI}
-        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-        totalpendingReward={this.state.totalpendingReward}
-        totalrewardperblock={this.state.totalrewardperblock}
-        userSegmentInfo={this.state.userSegmentInfo}
-        poolSegmentInfo={this.state.poolSegmentInfo}
-        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
-        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
-        pendingSegmentReward={this.state.pendingSegmentReward}
-        buttonPopup={this.state.buttonPopup}
-        setTrigger={this.setTrigger}
-        harvest={this.harvest}
-        tvl={this.state.tvl}
-        apr={this.state.apr}
-        bonusMultiplier={this.state.bonusMultiplier}
-        farmLoading={this.state.farmLoading}
-        aprloading={this.state.aprloading}
+      lpTokenBalance={this.state.lpTokenBalance}
+      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+      totalpendingReward={this.state.totalpendingReward}
+      totalrewardperblock={this.state.totalrewardperblock}
+      userSegmentInfo={this.state.userSegmentInfo}
+      poolSegmentInfo={this.state.poolSegmentInfo}
+      lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+      lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
+      lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
+      pendingSegmentReward={this.state.pendingSegmentReward}
+      buttonPopup={this.state.buttonPopup}
+      tvl={this.state.tvl}
+      apr={this.state.apr}
+      apyDaily={this.state.apyDaily}
+      apyWeekly={this.state.apyWeekly}
+      apyMonthly={this.state.apyMonthly}        
+      bonusMultiplier={this.state.bonusMultiplier}
+      farmLoading={this.state.farmLoading}
+      aprloading={this.state.aprloading}
+      deposit={this.deposit}
+      withdraw={this.withdraw}
+      setI={this.setI}
+      setTrigger={this.setTrigger}
+      harvest={this.harvest}
       />
       farmInfoContent= <Farm
       lpTokenBalance={this.state.lpTokenBalance}
