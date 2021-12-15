@@ -21,7 +21,7 @@ class Main extends Component {
           <div className="card-body text-center">
             <table className="textWhiteSmall">
               <thead>
-                <tr>
+                <tr>                
                   <th scope="col">Market Cap</th>
                   <th scope="col">Circulating Supply <span className="">
                     <Popup trigger={open => (
@@ -32,21 +32,21 @@ class Main extends Component {
                       offsetY={-50}
                       offsetX={5}
                       contentStyle={{ padding: '3px' }}
-                    ><span className="textInfo"><small> Currently based on the total supply of purse token </small></span>
+                    ><span className="textInfo"> Currently based on the total supply of purse token </span>
                     </Popup></span></th>
                   <th scope="col">PURSE Token Price</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>$ {(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether') * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
-                  <td>$ {parseFloat(this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:6})}</td>
+                <tr>               
+                  <td>$ {(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether') * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>$ {parseFloat(this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 6 })}</td>
                 </tr>
               </tbody>
               <thead><tr><td></td></tr><tr><td></td></tr></thead>
               <thead>
-                <tr>
+                <tr>           
                   <th scope="col">Burn <span className="">
                     <Popup trigger={open => (
                       <span style={{ position: "relative", top: '-1px' }}><BsFillQuestionCircleFill size={10} /></span>
@@ -55,8 +55,8 @@ class Main extends Component {
                       position="right center"
                       offsetY={-50}
                       offsetX={5}
-                      contentStyle={{ padding: '3px' }}
-                    ><span className="textInfo"><small> (Unit in Token / unit in Usd). First line number is accumulative amount since contract created. 2nd line number is past 30 days total amount.</small></span>
+                      contentStyle={{ padding: '1px' }}
+                    ><span className="textInfo"> (Unit in Token / unit in Usd)</span>
                     </Popup></span></th>
 
                   <th scope="col">Distribution <span className="">
@@ -67,8 +67,8 @@ class Main extends Component {
                       position="right center"
                       offsetY={-50}
                       offsetX={5}
-                      contentStyle={{ padding: '3px' }}
-                    ><span className="textInfo"><small> (Unit in Token / unit in Usd). </small></span>
+                      contentStyle={{ padding: '1px' }}
+                    ><span className="textInfo"> (Unit in Token / unit in Usd)</span>
                     </Popup></span></th>
 
                   <th scope="col">Liquidity <span className="">
@@ -79,21 +79,37 @@ class Main extends Component {
                       position="right center"
                       offsetY={-50}
                       offsetX={5}
-                      contentStyle={{ padding: '3px' }}
-                    ><span className="textInfo"><small> (Unit in Token / unit in Usd). </small></span>
+                      contentStyle={{ padding: '1px' }}
+                    ><span className="textInfo"> (Unit in Token / unit in Usd) </span>
                     </Popup></span></th>
                 </tr>
               </thead>
               <tbody>
+              <th scope="col"> (Accumulative) </th>
+              <th scope="col"> (Accumulative) </th>
+              <th scope="col"> (Accumulative) </th>
+                </tbody>
+              <tbody>
                 <tr>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0}) } / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0}) } / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                 </tr>
+                </tbody>
+                <thead>
+                <tr>           
+                  <th scope="col">(Past 30 days Sum)</th>
+
+                  <th scope="col">(Past 30 days Sum)</th>
+
+                  <th scope="col">(Past 30 days Sum)</th>
+                </tr>
+              </thead>
+              <tbody>
                 <tr>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
-                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
-                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                 </tr>
               </tbody>
             </table>
