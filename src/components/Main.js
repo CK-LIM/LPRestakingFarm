@@ -39,9 +39,9 @@ class Main extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>$ {(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether') * this.props.PURSEPrice).toFixed(2)}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toFixed(4)}</td>
-                  <td>$ {this.props.PURSEPrice}</td>
+                  <td>$ {(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether') * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>$ {parseFloat(this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:6})}</td>
                 </tr>
               </tbody>
               <thead><tr><td></td></tr><tr><td></td></tr></thead>
@@ -86,22 +86,20 @@ class Main extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toFixed(4)} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toFixed(2)}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) } / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toFixed(2)}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) } / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toFixed(2)}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0}) } / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0}) } / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
                 </tr>
                 <tr>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4)} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toFixed(2)}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toFixed(2)}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toFixed(2)}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
+                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', {maximumFractionDigits:0})} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', {maximumFractionDigits:0})}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-
       </div>
-
 
     );
   }

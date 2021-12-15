@@ -49,7 +49,7 @@ class Menu extends Component {
                         <div className="card-body">
                             <span>
                                 <span className="float-left">
-                                    Your PURSE Balance<br /><b>{window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}</b>
+                                    Your PURSE Balance<br /><b>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}</b>
                                     <div>
                                     </div>
                                 </span><br /><br /><br />
@@ -59,7 +59,7 @@ class Menu extends Component {
                                     <span className="float-left">Total Pending harvest</span>
                                     <span className="float-right">
                                         <span>
-                                            {window.web3Bsc.utils.fromWei(this.props.totalpendingReward, 'Ether')}&nbsp;PURSE
+                                            {parseFloat(window.web3Bsc.utils.fromWei(this.props.totalpendingReward, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}&nbsp;PURSE
                                         </span>
                                     </span>
                                 </small>
@@ -71,7 +71,7 @@ class Menu extends Component {
                         <div className="card-body " style={{ minWidth: '350px', color: 'silver' }}>
                             <span>
                                 <span className="float-left">
-                                    Total PURSE Supply<br /><b>{window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')}</b>
+                                    Total PURSE Supply<br /><b>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}</b>
                                     <div>
                                     </div>
                                 </span><br /><br /><br />
@@ -89,8 +89,6 @@ class Menu extends Component {
                         </div>
                     </div>
                 </div>
-
-
 
                 <br />
                 <div className="center" style={{ color: 'white' }}><b><big>Select Your Favourite pool entrees!</big></b></div>
@@ -159,7 +157,7 @@ class Menu extends Component {
 
                                                     <div className="" style={{ color: 'silver' }}> {this.props.aprloading ?
                                                         <div className="borderTop" style={{ marginTop: '8px' }}>
-                                                            <span className=""><small>APR: {parseFloat(this.props.apr[0][i]).toFixed(3)} % &nbsp;</small></span>
+                                                            <span className=""><small>APR: {parseFloat(this.props.apr[0][i]).toLocaleString('en-US', {maximumFractionDigits:2})} % &nbsp;</small></span>
                                                             <span className="">
                                                                 <Popup trigger={open => (
                                                                     <span style={{ position: "relative", top: '-1px' }}><BsFillQuestionCircleFill size={10} /></span>
@@ -172,7 +170,7 @@ class Menu extends Component {
                                                                 ><span className="textInfo"><small>APR are affected by the price of PURSE which has not yet stabilized. </small></span>
                                                                     <span className="textInfo"><small>If it shows 'NaN' or 'Infinity', it means currently the pool has no LP token staked. </small></span>
                                                                 </Popup></span><br />
-                                                            <span><small>APY: {parseFloat(this.props.apyDaily[0][i]).toFixed(3)} % &nbsp;</small></span>
+                                                            <span><small>APY: {parseFloat(this.props.apyDaily[0][i]).toLocaleString('en-US', {maximumFractionDigits:0})} % &nbsp;</small></span>
                                                             <span className="">
                                                                 <Popup trigger={open => (
                                                                     <span style={{ position: "relative", top: '-1px' }}><BsFillQuestionCircleFill size={10} /></span>
@@ -184,7 +182,7 @@ class Menu extends Component {
                                                                     contentStyle={{ padding: '3px' }}
                                                                 ><span className="textInfo"><small>APY are calculated based on the compound APR number. </small></span>
                                                                     <span className="textInfo"><small>The value shown on Farm Menu is based on daily compounding frequency. </small></span>
-                                                                    <span className="textInfo"><small>For weekly and monthly compounding frequency, APY : {parseFloat(this.props.apyWeekly[0][i]).toFixed(3)} / {parseFloat(this.props.apyMonthly[0][i]).toFixed(3)} %</small></span>
+                                                                    <span className="textInfo"><small>For weekly and monthly compounding frequency, APY : {parseFloat(this.props.apyWeekly[0][i]).toFixed(0)} / {parseFloat(this.props.apyMonthly[0][i]).toFixed(0)} %</small></span>
                                                                 </Popup></span></div> :
                                                         <div className="">
                                                             <span><small>APR:</small></span>&nbsp;&nbsp;
@@ -208,9 +206,9 @@ class Menu extends Component {
                                                             <span className="textInfo"><small>For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.</small><br /></span>
                                                             <span className="textInfo"><small>This amount is already included in all APR calculations for the farm. </small></span></Popup>&nbsp;</small></span><br />
 
-                                                    <span className=" "><small>LP Staked: {parseFloat(this.props.userSegmentInfo[0][i])}</small></span><br />
-                                                    <span className=" "><small>Purse Earned: {parseFloat(this.props.pendingSegmentReward[0][i])}</small></span><br />
-                                                    <span className=" "><small>{this.props.aprloading ? <div className="">TVL: $ {parseFloat(this.props.tvl[0][i]).toFixed(3)} </div> :
+                                                    <span className=" "><small>LP Staked: {parseFloat(this.props.userSegmentInfo[0][i]).toLocaleString('en-US', {maximumFractionDigits:2})}</small></span><br />
+                                                    <span className=" "><small>Purse Earned: {parseFloat(this.props.pendingSegmentReward[0][i]).toLocaleString('en-US', {maximumFractionDigits:0})}</small></span><br />
+                                                    <span className=" "><small>{this.props.aprloading ? <div className="">TVL: $ {parseFloat(this.props.tvl[0][i]).toLocaleString('en-US', {maximumFractionDigits:0})} </div> :
                                                         <div className="">
                                                             <span><small>TVL:</small></span>&nbsp;&nbsp;
                                                             <span className="lds-dual-ring"><div></div><div></div><div></div></span>

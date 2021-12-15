@@ -26,7 +26,7 @@ class Farm extends Component {
               <tbody>
                 <tr>
                   <td>{this.props.poolLength}</td>
-                  <td>{window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')} Purse</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} Purse</td>
                   <td>{window.web3Bsc.utils.fromWei(this.props.totalrewardperblock, 'Ether')} Purse per block</td>
                 </tr>
               </tbody>
@@ -40,9 +40,9 @@ class Farm extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>{window.web3Bsc.utils.fromWei(this.props.poolCapRewardToken, 'Ether')} Purse</td>
-                  <td>{window.web3Bsc.utils.fromWei(this.props.poolMintedRewardToken, 'Ether')} Purse</td>
-                  <td>{window.web3Bsc.utils.fromWei(this.props.poolRewardToken, 'Ether')} Purse</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.poolCapRewardToken, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} Purse</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.poolMintedRewardToken, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} Purse</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.poolRewardToken, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})} Purse</td>
                 </tr>
               </tbody>
             </table>

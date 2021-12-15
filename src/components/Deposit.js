@@ -141,8 +141,8 @@ class Deposit extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>{this.props.userSegmentInfo[this.props.n][this.props.i]}</td>
-                  <td>{this.props.pendingSegmentReward[this.props.n][this.props.i]}</td>
+                  <td>{parseFloat(this.props.userSegmentInfo[this.props.n][this.props.i]).toLocaleString('en-US', {maximumFractionDigits:5})}</td>
+                  <td>{parseFloat(this.props.pendingSegmentReward[this.props.n][this.props.i]).toLocaleString('en-US', {maximumFractionDigits:3})}</td>
                 </tr>
               </tbody>
             </table>
@@ -178,10 +178,10 @@ class Deposit extends Component {
                       <label className="float-left" style={{ color: 'silver' }}><b>Start Farming</b></label>
                       <span className="float-right" style={{ color: 'silver' }}>
                         <span>
-                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')}
+                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {parseFloat(window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')).toLocaleString('en-US', {maximumFractionDigits:3})}
                         </span>
                         <span><br />
-                          PURSE Balance&nbsp;: {window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')}
+                          PURSE Balance&nbsp;: {parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:5})}
                         </span>
                       </span>
                     </div>
