@@ -85,9 +85,9 @@ class Main extends Component {
                 </tr>
               </thead>
               <tbody>
-              <th scope="col"> (Accumulative) </th>
-              <th scope="col"> (Accumulative) </th>
-              <th scope="col"> (Accumulative) </th>
+              <th scope="col">(Total)</th>
+              <th scope="col">(Total)</th>
+              <th scope="col">(Total)</th>
                 </tbody>
               <tbody>
                 <tr>
