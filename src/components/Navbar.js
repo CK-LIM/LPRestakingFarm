@@ -39,7 +39,7 @@ class Navb extends Component {
             <NavLink to='/home' >Home</NavLink>
           </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <div>
-            <Popup className = 'popup1' trigger={open => (
+            <Popup className='popup1' trigger={open => (
               <NavLink0 to='/lpfarm/menu'> LP Farm</NavLink0>
             )}
               on="hover"
@@ -50,14 +50,14 @@ class Navb extends Component {
               contentStyle={{ padding: '5px' }}
               arrow={false}
             ><div>
-              <Link></Link>
-                <div style={{marginTop: '5px'}}><Link className='dropdown0' to='/lpfarm/farmInfo' >&nbsp;Farm Dashboard</Link><br/></div>
-                <div style={{marginTop: '8px'}}><Link className='dropdown' to='/lpfarm/menu' >&nbsp;Farm Menu</Link></div>
+                <Link></Link>
+                <div style={{ marginTop: '5px' }}><Link className='dropdown0' to='/lpfarm/farmInfo' >&nbsp;Farm Dashboard</Link><br /></div>
+                <div style={{ marginTop: '8px' }}><Link className='dropdown' to='/lpfarm/menu' >&nbsp;Farm Menu</Link></div>
               </div>
             </Popup>
           </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <div>
-            <span className='dropdown' style={{ fontSize: '16px'}} onClick={() => {
+            <span className='dropdown' style={{ fontSize: '16px' }} onClick={() => {
               window.open(`https://pundix-purse.gitbook.io/untitled/`, '_blank')
             }}> Docs
             </span>
@@ -68,22 +68,21 @@ class Navb extends Component {
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap-small d-none d-sm-none d-sm-block">
               <div className="text-light rowC">
-                <div>
-                  <NavLink2 to='/menu' onClick={() => {
+                
+                <div className="rowC">
+                  <span className='dropdown1 center' onClick={() => {
                     window.open(`https://pancakeswap.finance/swap`, '_blank')
-                  }}>
-                    <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;
-                    ${this.props.PURSEPrice}
-                  </NavLink2>
-                </div>&nbsp; &nbsp;
-                <div>
+                  }}> <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;${this.props.PURSEPrice}
+                  </span>
+                </div>&nbsp;
+
+                <div className='center'>
                   <Buttons variant="info" size="sm" onClick={() => {
                   }}>{this.props.networkName}
                   </Buttons>
                 </div>&nbsp;
 
-
-                <div>
+                <div className='center'>
                   {this.props.wallet || this.props.walletConnect ?
                     <div>
                       <Popup trigger={open => (

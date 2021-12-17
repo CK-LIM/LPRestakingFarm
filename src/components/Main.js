@@ -108,8 +108,8 @@ class Main extends Component {
               <tbody>
                 <tr>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')) / 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                 </tr>
               </tbody>
             </table>
