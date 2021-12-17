@@ -319,18 +319,18 @@ class App extends Component {
         lpTokenValue[0][n] = ((lpTokenABalanceContract * tokenAPrice) + (lpTokenBBalanceContract * tokenBPrice)) / lpTokenTSupply
         tvl[0][n] = lpTokenValue[0][n] * lpTokenInContract
         apr[0][n] = ((28000 * 365 * web3Bsc.utils.fromWei((this.state.poolSegmentInfo[0][i].pursePerBlock * this.state.bonusMultiplier[0][i]).toString(), 'Ether') * this.state.PURSEPrice) / tvl[0][n]) * 100
-        apyDaily[0][n] = Math.pow((1 + apr[0][n]/365), 365)-1
-        apyWeekly[0][n] = Math.pow((1 + apr[0][n]/52), 52)-1
-        apyMonthly[0][n] = Math.pow((1 + apr[0][n]/12), 12)-1
+        apyDaily[0][n] = Math.pow((1 + apr[0][n]/36500), 365)-1
+        apyWeekly[0][n] = Math.pow((1 + apr[0][n]/5200), 52)-1
+        apyMonthly[0][n] = Math.pow((1 + apr[0][n]/1200), 12)-1
         n += 1
       } else {
         pendingSegmentReward[1][n] = pendingReward
         lpTokenValue[1][n] = ((lpTokenABalanceContract * tokenAPrice) + (lpTokenBBalanceContract * tokenBPrice)) / lpTokenTSupply
         tvl[1][n] = lpTokenValue[1][n] * lpTokenInContract
         apr[1][n] = ((28000 * 365 * web3Bsc.utils.fromWei((this.state.poolSegmentInfo[1][i].pursePerBlock * this.state.bonusMultiplier[1][i]).toString(), 'Ether') * this.state.PURSEPrice) / tvl[1][n]) * 100
-        apyDaily[1][n] = Math.pow((1 + apr[1][n]/365), 365)-1
-        apyWeekly[1][n] = Math.pow((1 + apr[1][n]/52), 52)-1
-        apyMonthly[1][n] = Math.pow((1 + apr[1][n]/12), 12)-1
+        apyDaily[1][n] = Math.pow((1 + apr[1][n]/36500), 365)-1
+        apyWeekly[1][n] = Math.pow((1 + apr[1][n]/5200), 52)-1
+        apyMonthly[1][n] = Math.pow((1 + apr[1][n]/1200), 12)-1
         n += 1
       }
     }

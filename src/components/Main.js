@@ -99,17 +99,15 @@ class Main extends Component {
                 <thead>
                 <tr>           
                   <th scope="col">(Past 30 days Sum)</th>
-
                   <th scope="col">(Past 30 days Sum)</th>
-
                   <th scope="col">(Past 30 days Sum)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000000000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                 </tr>
               </tbody>
             </table>
