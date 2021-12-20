@@ -288,29 +288,29 @@ class App extends Component {
 
       if (this.state.lpTokenAsymbols[i] == "PURSE") {
         tokenAPrice = this.state.PURSEPrice
-      } else if (this.state.lpTokenAsymbols[i] == "mBNB") {
-        tokenAPrice = this.state.BNBPrice
-      } else if (this.state.lpTokenAsymbols[i] == "mBTC") {
-        tokenAPrice = this.state.Price
-      } else if (this.state.lpTokenAsymbols[i] == "mWETH") {
+      } else if (this.state.lpTokenAsymbols[i] == "BUSD") {
+        tokenAPrice = this.state.BUSDPrice
+      } else if (this.state.lpTokenAsymbols[i] == "USDT") {
+        tokenAPrice = this.state.USDTPrice
+      } else if (this.state.lpTokenAsymbols[i] == "WETH") {
         tokenAPrice = this.state.WETHPrice
-      } else if (this.state.lpTokenAsymbols[i] == "mUSDC") {
+      } else if (this.state.lpTokenAsymbols[i] == "USDC") {
         tokenAPrice = this.state.USDCPrice
-      } else if (this.state.lpTokenAsymbols[i] == "mBTC") {
+      } else if (this.state.lpTokenAsymbols[i] == "WBTC") {
         tokenAPrice = this.state.BTCPrice
       }
 
       if (this.state.lpTokenBsymbols[i] == "PURSE") {
         tokenBPrice = this.state.PURSEPrice
-      } else if (this.state.lpTokenBsymbols[i] == "mBNB") {
-        tokenBPrice = this.state.BNBPrice
-      } else if (this.state.lpTokenBsymbols[i] == "mBTC") {
-        tokenBPrice = this.state.Price
-      } else if (this.state.lpTokenBsymbols[i] == "mWETH") {
+      } else if (this.state.lpTokenBsymbols[i] == "BUSD") {
+        tokenBPrice = this.state.BUSDPrice
+      } else if (this.state.lpTokenBsymbols[i] == "USDT") {
+        tokenBPrice = this.state.USDTPrice
+      } else if (this.state.lpTokenBsymbols[i] == "WETH") {
         tokenBPrice = this.state.WETHPrice
-      } else if (this.state.lpTokenBsymbols[i] == "mUSDC") {
+      } else if (this.state.lpTokenBsymbols[i] == "USDC") {
         tokenBPrice = this.state.USDCPrice
-      } else if (this.state.lpTokenBsymbols[i] == "mBTC") {
+      } else if (this.state.lpTokenBsymbols[i] == "WBTC") {
         tokenBPrice = this.state.BTCPrice
       }
 
