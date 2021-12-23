@@ -92,8 +92,8 @@ class Main extends Component {
               <tbody>
                 <tr>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.distributionPoolToken, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                 </tr>
                 </tbody>
                 <thead>
@@ -106,8 +106,8 @@ class Main extends Component {
               <tbody>
                 <tr>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>{((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 )/ 2).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {((parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30BurnAmount, 'Ether'))-1000100000 ).toFixed(4) / 2 * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30TransferAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30TransferAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                  <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30TransferAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.sum30TransferAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                 </tr>
               </tbody>
             </table>

@@ -10,6 +10,8 @@ import PurseTokenUpgradable from '../abis/PurseTokenUpgradable.json'
 import RestakingFarm from '../abis/RestakingFarm.json'
 import Sum30BurnAmount from '../bdl/sum30BurnAmount.json'
 import TotalBurnAmount from '../bdl/totalBurnAmount.json'
+import TotalTransferAmount from '../bdl/totalTransferAmount.json'
+import SumTransferAmount30Days from '../bdl/sumTransferAmount30Days.json'
 
 import Navb from './Navbar'
 import Main from './Main'
@@ -84,10 +86,13 @@ class App extends Component {
       // const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
       const totalBurnAmount = bigInt(TotalBurnAmount.totalBurnAmount).toString()
       const sum30BurnAmount = bigInt(Sum30BurnAmount.sum30BurnAmount).toString()
+      const totalTransferAmount = bigInt(TotalTransferAmount.totalTransferAmount).toString()
+      const sum30TransferAmount = bigInt(SumTransferAmount30Days.totalTransferAmount30Days).toString()
       this.setState({ totalBurnAmount })
       this.setState({ sum30BurnAmount })
+      this.setState({ totalTransferAmount })
+      this.setState({ sum30TransferAmount })
       const restakingFarmData = RestakingFarm.networks[networkId]
-
 
       const purseTokenUpgradable = new web3Bsc.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C")
       this.setState({ purseTokenUpgradable })
@@ -97,9 +102,6 @@ class App extends Component {
       this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
       let poolRewardToken = await purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
       this.setState({ poolRewardToken: poolRewardToken.toString() })
-      let distributionPoolToken = await purseTokenUpgradable.methods.balanceOf("0xb59C7c1E2ec8eb460D12093AD1f21d7F7E8e2FEF").call()
-      this.setState({ distributionPoolToken: distributionPoolToken.toString() })
-
 
       if (restakingFarmData) {
         const restakingFarm = new web3Bsc.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
@@ -821,9 +823,10 @@ class App extends Component {
       restakingFarm: {},
       purseTokenUpgradableBalance: '0',
       purseTokenTotalSupply: '0',
-      distributionPoolToken:'0',
       totalBurnAmount :'0',
       sum30BurnAmount :'0',
+      totalTransferAmount :'0',
+      sum30TransferAmount :'0',
       i: '0',
       n: '0',
       loading: false,
@@ -895,9 +898,10 @@ class App extends Component {
         poolCapRewardToken={this.state.poolCapRewardToken}
         poolMintedRewardToken={this.state.poolMintedRewardToken}
         poolRewardToken={this.state.poolRewardToken}
-        distributionPoolToken={this.state.distributionPoolToken}
         totalBurnAmount={this.state.totalBurnAmount}
         sum30BurnAmount={this.state.sum30BurnAmount}
+        totalTransferAmount = {this.state.totalTransferAmount}
+        sum30TransferAmount = {this.state.sum30TransferAmount}
       />
       menucontent = <Menu
         lpTokenBalance={this.state.lpTokenBalance}
