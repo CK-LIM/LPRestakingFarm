@@ -71,7 +71,7 @@ class Navb extends Component {
                 
                 <div className="rowC">
                   <span className='dropdown1 center' onClick={() => {
-                    window.open(`https://pancakeswap.finance/swap`, '_blank')
+                    window.open(`https://pancakeswap.finance/swap?inputCurrency=0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56`, '_blank')
                   }}> <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />&nbsp;${this.props.PURSEPrice}
                   </span>
                 </div>&nbsp;
