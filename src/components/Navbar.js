@@ -1,25 +1,17 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-// import Navbar from 'react-bootstrap/Navbar'
 import purse from '../purse.png'
 import fox from '../metamask-fox.svg'
 import walletconnectLogo from '../walletconnect-logo.svg'
 import Buttons from 'react-bootstrap/Button'
-// import DropdownButton from 'react-bootstrap/DropdownButton'
-// import Dropdown from 'react-bootstrap/Dropdown'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
-// import web3connect from 'web3connect';
-
 import {
-  NavLink2,
   NavLink,
   NavLink0,
-  NavLinkHome,
-  NavLinkSub,
-  NavLinkSub1
+  NavLinkHome
 } from './NavMenu'
 
 

@@ -2,16 +2,11 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import bigInt from 'big-integer'
 
 import LpToken from '../abis/LpToken.json'
 import IPancakePair from '../abis/IPancakePair.json'
 import PurseTokenUpgradable from '../abis/PurseTokenUpgradable.json'
 import RestakingFarm from '../abis/RestakingFarm.json'
-import Sum30BurnAmount from '../bdl/sum30BurnAmount.json'
-import TotalBurnAmount from '../bdl/totalBurnAmount.json'
-import TotalTransferAmount from '../bdl/totalTransferAmount.json'
-import SumTransferAmount30Days from '../bdl/sumTransferAmount30Days.json'
 
 import Navb from './Navbar'
 import Main from './Main'
@@ -84,10 +79,13 @@ class App extends Component {
     if (this.state.wallet == false && this.state.walletConnect == false) {
       // Load PurseTokenUpgradable
       // const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
-      const totalBurnAmount = bigInt(TotalBurnAmount.totalBurnAmount).toString()
-      const sum30BurnAmount = bigInt(Sum30BurnAmount.sum30BurnAmount).toString()
-      const totalTransferAmount = bigInt(TotalTransferAmount.totalTransferAmount).toString()
-      const sum30TransferAmount = bigInt(SumTransferAmount30Days.totalTransferAmount30Days).toString()
+      let response = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-iqgbt/endpoint/PundiX`);
+      const myJson = await response.json();
+      let totalTransferAmount = myJson["TransferTotal"]
+      let sum30TransferAmount = myJson["Transfer30Days"]
+      let totalBurnAmount = myJson["BurnTotal"]
+      let sum30BurnAmount = myJson["Burn30Days"]
+      
       this.setState({ totalBurnAmount })
       this.setState({ sum30BurnAmount })
       this.setState({ totalTransferAmount })
