@@ -260,11 +260,7 @@ class App extends Component {
   async loadTVLAPR() {
     // Load bavaMasterFarmer
     const networkId = "56"
-    const web3Bsc = window.web3Bsc
-    const restakingFarmData = RestakingFarm.networks[networkId]
 
-    let pendingSegmentReward = [[], []]
-    let lpTokenValue = [[], []]
     let tvl = [[], []]
     let apr = [[], []]
     let apyDaily = [[], []]
@@ -272,62 +268,24 @@ class App extends Component {
     let apyMonthly = [[], []]
     let n = 0
 
+    let response = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-iqgbt/endpoint/TVLAPR`);
+    const myJson = await response.json();
+    let tvlArray = myJson["TVL"]
+    let aprArray = myJson["APR"]
+    let apyArray = myJson["APYDaily"]
+
     for (let i = 0; i < this.state.poolLength; i++) {
-      let lpTokenPair = new web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-      let lpTokenInContract = await lpTokenPair.methods.balanceOf(restakingFarmData.address).call()
-      lpTokenInContract = web3Bsc.utils.fromWei(lpTokenInContract, "ether")
-      let lpTokenTSupply = await lpTokenPair.methods.totalSupply().call()
-      let lpTokenA = new web3Bsc.eth.Contract(LpToken.abi, this.state.lpTokenPairAs[i])
-      let lpTokenB = new web3Bsc.eth.Contract(LpToken.abi, this.state.lpTokenPairBs[i])
-      let lpTokenABalanceContract = await lpTokenA.methods.balanceOf(this.state.lpTokenAddresses[i]).call()
-      let lpTokenBBalanceContract = await lpTokenB.methods.balanceOf(this.state.lpTokenAddresses[i]).call()
-
-      let pendingReward = 0
-      let tokenAPrice = 0
-      let tokenBPrice = 0
-
-      if (this.state.lpTokenAsymbols[i] == "PURSE") {
-        tokenAPrice = this.state.PURSEPrice
-      } else if (this.state.lpTokenAsymbols[i] == "BUSD") {
-        tokenAPrice = this.state.BUSDPrice
-      } else if (this.state.lpTokenAsymbols[i] == "USDT") {
-        tokenAPrice = this.state.USDTPrice
-      } else if (this.state.lpTokenAsymbols[i] == "WETH") {
-        tokenAPrice = this.state.WETHPrice
-      } else if (this.state.lpTokenAsymbols[i] == "USDC") {
-        tokenAPrice = this.state.USDCPrice
-      } else if (this.state.lpTokenAsymbols[i] == "WBTC") {
-        tokenAPrice = this.state.BTCPrice
-      }
-
-      if (this.state.lpTokenBsymbols[i] == "PURSE") {
-        tokenBPrice = this.state.PURSEPrice
-      } else if (this.state.lpTokenBsymbols[i] == "BUSD") {
-        tokenBPrice = this.state.BUSDPrice
-      } else if (this.state.lpTokenBsymbols[i] == "USDT") {
-        tokenBPrice = this.state.USDTPrice
-      } else if (this.state.lpTokenBsymbols[i] == "WETH") {
-        tokenBPrice = this.state.WETHPrice
-      } else if (this.state.lpTokenBsymbols[i] == "USDC") {
-        tokenBPrice = this.state.USDCPrice
-      } else if (this.state.lpTokenBsymbols[i] == "WBTC") {
-        tokenBPrice = this.state.BTCPrice
-      }
 
       if (this.state.lpTokenPairsymbols[i] == "Cake-LP") {
-        pendingSegmentReward[0][n] = pendingReward
-        lpTokenValue[0][n] = ((lpTokenABalanceContract * tokenAPrice) + (lpTokenBBalanceContract * tokenBPrice)) / lpTokenTSupply
-        tvl[0][n] = lpTokenValue[0][n] * lpTokenInContract
-        apr[0][n] = ((28000 * 365 * web3Bsc.utils.fromWei((this.state.poolSegmentInfo[0][i].pursePerBlock * this.state.bonusMultiplier[0][i]).toString(), 'Ether') * this.state.PURSEPrice) / tvl[0][n]) * 100
+        tvl[0][n] = tvlArray
+        apr[0][n] = aprArray
         apyDaily[0][n] = (Math.pow((1 + 0.8*apr[0][n]/36500), 365)-1) * 100
         apyWeekly[0][n] = (Math.pow((1 + 0.8*apr[0][n]/5200), 52)-1) * 100
         apyMonthly[0][n] = (Math.pow((1 + 0.8*apr[0][n]/1200), 12)-1) * 100
         n += 1
       } else {
-        pendingSegmentReward[1][n] = pendingReward
-        lpTokenValue[1][n] = ((lpTokenABalanceContract * tokenAPrice) + (lpTokenBBalanceContract * tokenBPrice)) / lpTokenTSupply
-        tvl[1][n] = lpTokenValue[1][n] * lpTokenInContract
-        apr[1][n] = ((28000 * 365 * web3Bsc.utils.fromWei((this.state.poolSegmentInfo[1][i].pursePerBlock * this.state.bonusMultiplier[1][i]).toString(), 'Ether') * this.state.PURSEPrice) / tvl[1][n]) * 100
+        tvl[1][n] = tvlArray
+        apr[1][n] = aprArray
         apyDaily[1][n] = (Math.pow((1 + 0.8*apr[1][n]/36500), 365)-1) * 100
         apyWeekly[1][n] = (Math.pow((1 + 0.8*apr[1][n]/5200), 52)-1) * 100
         apyMonthly[1][n] = (Math.pow((1 + 0.8*apr[1][n]/1200), 12)-1) * 100
@@ -338,8 +296,7 @@ class App extends Component {
     this.setState({ apr })
     this.setState({ apyDaily })
     this.setState({ apyWeekly })
-    this.setState({ apyMonthly })  
-    console.log(this.state.apyWeekly)  
+    this.setState({ apyMonthly })
     this.setState({ aprloading: true })
   }
 
