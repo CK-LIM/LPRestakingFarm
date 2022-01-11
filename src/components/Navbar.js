@@ -11,35 +11,35 @@ import './App.css';
 import {
   NavLink,
   NavLink0,
-  NavLinkHome
 } from './NavMenu'
 
 
 class Navb extends Component {
   render() {
     return (
-      <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-
+      <nav className="navbar navbar-dark top bg-dark flex-md-nowrap p-0 shadow">
         <div className="navbar-brand col-sm-3 col-md-2 mr-0 rowB">
-          <div>
-            <NavLinkHome to='/menu' onClick={() => {
-              window.open(`https://www.pundix.com/`, '_blank')
-            }}>
-              <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />
-              &nbsp; <b> PURSE </b></NavLinkHome></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div>
+          <div to='/menu' className="mr-5" style={{ cursor: "pointer" }} onClick={() => {
+            window.open(`https://www.pundix.com/`, '_blank')
+          }}>
+            <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />
+            &nbsp; <b> PURSE </b>
+          </div>&nbsp;&nbsp;&nbsp;
+
+          <div className="mr-5">
             <NavLink to='/home' >Home</NavLink>
-          </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div>
+          </div>
+
+          <div className="mr-5">
             <Popup className='popup1' trigger={open => (
               <NavLink0 to='/lpfarm/menu'> LP Farm</NavLink0>
             )}
               on="hover"
               position="bottom left"
-              offsetY={-45}
+              offsetY={5}
               offsetX={-5}
-              mouseLeaveDelay={300}
-              contentStyle={{ padding: '5px' }}
+              mouseLeaveDelay={200}
+              contentStyle={{ padding: '3px' }}
               arrow={false}
             ><div>
                 <Link></Link>
@@ -47,20 +47,21 @@ class Navb extends Component {
                 <div style={{ marginTop: '8px' }}><Link className='dropdown' to='/lpfarm/menu' >&nbsp;Farm Menu</Link></div>
               </div>
             </Popup>
-          </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+
           <div>
-            <span className='dropdown' style={{ fontSize: '16px' }} onClick={() => {
+            <span className='hover' style={{ fontSize: '16px' }} onClick={() => {
               window.open(`https://pundix-purse.gitbook.io/untitled/`, '_blank')
             }}> Docs
             </span>
-          </div>&nbsp;
+          </div>
         </div>
 
         <span>
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap-small d-none d-sm-none d-sm-block">
               <div className="text-light rowC">
-                
+
                 <div className="rowC">
                   <span className='dropdown1 center' onClick={() => {
                     window.open(`https://pancakeswap.finance/swap?inputCurrency=0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56`, '_blank')
@@ -77,15 +78,15 @@ class Navb extends Component {
                 <div className='center'>
                   {this.props.wallet || this.props.walletConnect ?
                     <div>
-                      <Popup trigger={open => (
+                      <Popup className='popup1' trigger={open => (
                         <Buttons variant="secondary" size="sm"> {this.props.first4Account}...{this.props.last4Account}</Buttons>
                       )}
                         on="hover"
                         position="bottom right"
-                        offsetY={-43}
+                        offsetY={6}
                         offsetX={0}
-                        mouseLeaveDelay={300}
-                        contentStyle={{ padding: '5px' }}
+                        mouseLeaveDelay={200}
+                        contentStyle={{ padding: '3px' }}
                         arrow={false}
                       ><div>
                           <div className='dropdown0' onClick={() => {
@@ -100,15 +101,15 @@ class Navb extends Component {
                         </div>
                       </Popup>
                     </div> : <div>
-                      <Popup trigger={open => (
+                      <Popup className='popup1' trigger={open => (
                         <Buttons variant="secondary" size="sm" > Connect Wallet</Buttons>
                       )}
                         on="hover"
                         position="bottom right"
-                        offsetY={-43}
+                        offsetY={6}
                         offsetX={0}
-                        mouseLeaveDelay={300}
-                        contentStyle={{ padding: '5px' }}
+                        mouseLeaveDelay={200}
+                        contentStyle={{ padding: '3px' }}
                         arrow={false}
                       ><div>
                           <div className='dropdown0' onClick={async () => {
@@ -121,8 +122,8 @@ class Navb extends Component {
                           }><img src={walletconnectLogo} width="26" height="23" className="d-inline-block" alt="" />&nbsp; WalletConnect</div>
                         </div>
                       </Popup>
-                    </div>}</div>
-
+                    </div>}
+                </div>
               </div>
             </li>
           </ul>

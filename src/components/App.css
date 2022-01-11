@@ -11,7 +11,7 @@ position: relative;
 width: 100%;
 height: 10vh;
 font-family: Montserrat;
-margin-top: 50px;
+margin-top: 0px;
 z-index: 1;
 background-attachment: fixed;
 background-color: #1f1f24;
@@ -69,14 +69,6 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
   padding : 0.2rem;
 }
 
-.dropdown0 {
-  padding : 0.3rem;
-  font-size: 16px;
-  color: #d6d6d6;
-  cursor: pointer;
-  border-bottom: 0.1px solid rgb(187, 187, 187);
-}
-
 .dropdown {
   padding : 0.3rem;
   font-size: 16px;
@@ -84,11 +76,21 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
   cursor: pointer;
 }
 
-.dropdown1 {
-  padding : 0.3rem;
-  font-size: 18px;
+.dropdown.active {
   color: #c37aff;
+}
+
+.dropdown:hover {
+  text-decoration: none;
+  color: #04f7ff;
+}
+
+.dropdown0 {
+  padding : 0.3rem;
+  font-size: 16px;
+  color: #d6d6d6;
   cursor: pointer;
+  border-bottom: 0.1px solid rgb(187, 187, 187);
 }
 
 .dropdown0.active {
@@ -100,6 +102,13 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
   color: #04f7ff;
 }
 
+.dropdown1 {
+  padding : 0.3rem;
+  font-size: 18px;
+  color: #c37aff;
+  cursor: pointer;
+}
+
 .dropdown1.active {
   color: #c37aff;
 }
@@ -109,14 +118,23 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
   color: #04f7ff;
 }
 
-.dropdown.active {
+.hover {
+  font-size: 16px;
+  color: #d6d6d6;
+  cursor: pointer;
+}
+
+.hover.active {
   color: #c37aff;
 }
 
-.dropdown:hover {
+.hover:hover {
   text-decoration: none;
   color: #04f7ff;
 }
+
+
+
 
 .menu {
   width: 200px;
@@ -177,6 +195,20 @@ font-size: 50px;
 .textWhite {
   color: #ffffff;
   font-size: 45px;
+}
+
+.textWhiteMedium {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+.textPurpleMedium {
+  color: #c680ff;
+  font-weight: bold;
+  border: 1.9px solid #c37aff;
+  font-size: 18px;
 }
 
 .textWhiteSmall {
@@ -267,17 +299,20 @@ width: 15px;
 .popup-content {
   margin: auto;
   background: #303b47;
-  border: 1px solid #9e9e9e;
+  border: 1px solid #596169;
   width: 100%;
   padding: 5px;
 }
 .popup-arrow {
   color: #303b47;
-  
+  stroke-width: 1px;
+  stroke: #596169;
+  /* stroke-dasharray: 30px;
+  stroke-dashoffset: -54px; */
 }
 [role='tooltip'].popup-content {
-  width: 180px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+  width: 220px;
+  box-shadow: #596169 0px 0px 1px;
 }
 
 .popup-overlay {
@@ -289,13 +324,13 @@ width: 15px;
 
 .popup1-content {
   margin: auto;
-  background: #303b47;
-  border: 1px solid #9e9e9e;
+  background: #353A40;
+  border: 1px solid #596169;
   width: 100%;
   padding: 5px;
 }
 .popup1-arrow {
-  color: #303b47;
+  color: #353A40;
   
 }
 [role='tooltip'].popup1-content {
@@ -372,6 +407,22 @@ width: 15px;
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.comingSoon {
+  animation: comingSoon ease 2.5s;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes comingSoon {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
   }
 }
 

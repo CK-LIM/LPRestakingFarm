@@ -967,7 +967,7 @@ class App extends Component {
             PURSEPrice={this.state.PURSEPrice}
           />
 
-          <div className="container-fluid mt-5">
+          <div className="container-fluid mt-4">
             <div className="row">
               <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '800px' }}>
                 <div className="content mr-auto ml-auto">

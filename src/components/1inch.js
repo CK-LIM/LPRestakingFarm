@@ -32,8 +32,12 @@ class Menu extends Component {
             <div id="content" className="mt-3">
                 <div className="text-center">
                     <ButtonGroup>
-                        <Button variant="outlined" color="primary" component={Link} to="/lpfarm/menu/" >pancakeswap</Button>
-                        <Button variant="contained" color="primary" component={Link} to="/lpfarm/oneinch/" >1inch</Button>
+                        <Link to="/lpfarm/menu/" style={{ textDecoration: "none" }}>
+                            <Buttons className="textWhiteMedium center hover" variant="link" size="lg">PANCAKESWAP</Buttons>
+                        </Link>
+                        <Link to="/lpfarm/oneinch/" style={{ textDecoration: "none" }}>
+                            <Buttons className="textPurpleMedium center hover" variant="outline" size="lg">1INCH</Buttons>
+                        </Link>
                     </ButtonGroup>
                 </div>
                 <br /><br />
@@ -41,15 +45,15 @@ class Menu extends Component {
                     <img src={purse2} height='90' alt="" />
                 </div><br />
                 <h1 className="textWhite center"><b>LP Restaking Farm</b></h1>
-                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;Pancakeswap LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+                <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;1INCH LP Tokens&nbsp;</b> to earn PURSE!!!</div>
                 <br />
 
                 <div className="rowC center">
-                    <div className="card mb-4 cardbody" style={{ minWidth: '350px', color: 'silver' }} >
+                    <div className="card mb-4 cardbody" style={{ minWidth: '350px', color: 'white' }} >
                         <div className="card-body">
                             <span>
                                 <span className="float-left">
-                                    Your PURSE Balance<br /><b>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}</b>
+                                    Your PURSE Balance<br /><b>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</b>
                                     <div>
                                     </div>
                                 </span><br /><br /><br />
@@ -59,7 +63,7 @@ class Menu extends Component {
                                     <span className="float-left">Total Pending harvest</span>
                                     <span className="float-right">
                                         <span>
-                                            {parseFloat(window.web3Bsc.utils.fromWei(this.props.totalpendingReward, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}&nbsp;PURSE
+                                            {parseFloat(window.web3Bsc.utils.fromWei(this.props.totalpendingReward, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}&nbsp;PURSE
                                         </span>
                                     </span>
                                 </small>
@@ -68,10 +72,10 @@ class Menu extends Component {
                     </div> &nbsp;&nbsp;&nbsp;
 
                     <div className="card mb-4 cardbody" >
-                        <div className="card-body " style={{ minWidth: '350px', color: 'silver' }}>
+                        <div className="card-body " style={{ minWidth: '350px', color: 'white' }}>
                             <span>
                                 <span className="float-left">
-                                    Total PURSE Supply<br /><b>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:0})}</b>
+                                    Total PURSE Supply<br /><b>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</b>
                                     <div>
                                     </div>
                                 </span><br /><br /><br />
@@ -91,12 +95,12 @@ class Menu extends Component {
                 </div>
 
                 <br />
-                <div className="center textWhite" style={{ color: 'white' }}><b><big>Coming Soon!</big></b></div>
+                <div className="center textWhite comingSoon" style={{ color: 'white' }}><b><big>Coming Soon!</big></b></div>
                 {/* <div className="center" style={{ color: 'grey' }}><small>&nbsp;! Attention:&nbsp;Be sure to familiar with protocol risks and fees before using the farms!</small></div> */}
                 <br />
 
 
-            
+
 
                 {/* {this.props.farmLoading ?
                     <div className="row floated" >
