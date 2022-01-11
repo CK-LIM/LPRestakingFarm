@@ -1,31 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import purse from '../purse.png'
-import purse2 from '../purse-.png'
+import purse2 from '../purse2.png'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
 import './App.css';
 import Popup from 'reactjs-popup';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
 class Menu extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            isShown: false
-        }
-        this.changeBackgroundColor = this.changeBackgroundColor.bind(this)
-    }
-
-    changeBackgroundColor() {
-        console.log("clicked")
-        this.setState({
-            isShown: true
-        })
-        console.log(this.state.isShown)
-    }
 
     render() {
         return (
@@ -40,10 +23,9 @@ class Menu extends Component {
                         </Link>
                     </ButtonGroup>
                 </div>
-                <br /><br />
                 <div className="center img">
-                    <img src={purse2} height='90' alt="" />
-                </div><br />
+                    <img src={purse2} height='180' alt="" />
+                </div>
                 <h1 className="textWhite center"><b>LP Restaking Farm</b></h1>
                 <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;1INCH LP Tokens&nbsp;</b> to earn PURSE!!!</div>
                 <br />
@@ -97,7 +79,7 @@ class Menu extends Component {
                 <br />
                 <div className="center textWhite comingSoon" style={{ color: 'white' }}><b><big>Coming Soon!</big></b></div>
                 {/* <div className="center" style={{ color: 'grey' }}><small>&nbsp;! Attention:&nbsp;Be sure to familiar with protocol risks and fees before using the farms!</small></div> */}
-                <br />
+                <br /><br /><br /><br />
 
 
 

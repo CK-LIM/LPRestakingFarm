@@ -17,22 +17,22 @@ import {
 class Navb extends Component {
   render() {
     return (
-      <nav className="navbar navbar-dark top bg-dark flex-md-nowrap p-0 shadow">
+      <nav className="navbar navbar-dark top bg-dark flex-md-nowrap p-0 shadow" style={{ height: '45px' }}>
         <div className="navbar-brand col-sm-3 col-md-2 mr-0 rowB">
-          <div to='/menu' className="mr-5" style={{ cursor: "pointer" }} onClick={() => {
+          <div to='/menu' className="textWhiteHeading mr-5 rowC" style={{ cursor: "pointer" }} onClick={() => {
             window.open(`https://www.pundix.com/`, '_blank')
           }}>
-            <img src={purse} width="30" height="30" className="d-inline-block align-top" alt="" />
+            <img src={purse} width="30" height="30" className="d-inline-block" alt="" />
             &nbsp; <b> PURSE </b>
           </div>&nbsp;&nbsp;&nbsp;
 
-          <div className="mr-5">
+          <div className="mr-4">
             <NavLink to='/home' >Home</NavLink>
           </div>
 
-          <div className="mr-5">
+          <div className="mr-4">
             <Popup className='popup1' trigger={open => (
-              <NavLink0 to='/lpfarm/menu'> LP Farm</NavLink0>
+              <NavLink0 to='/lpfarm/menu'> Farm</NavLink0>
             )}
               on="hover"
               position="bottom left"
@@ -48,7 +48,9 @@ class Navb extends Component {
               </div>
             </Popup>
           </div>
-
+          {/* <div className="mr-4">
+            <NavLink to='/claim' >Claim</NavLink>
+          </div> */}
           <div>
             <span className='hover' style={{ fontSize: '16px' }} onClick={() => {
               window.open(`https://pundix-purse.gitbook.io/untitled/`, '_blank')

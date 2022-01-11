@@ -15,6 +15,7 @@ import Oneinch from './1inch'
 import Deposit from './Deposit'
 import Popup from './Popup'
 import Farm from './Farm'
+import Claim from './Claim'
 
 import './Popup.css'
 import './App.css'
@@ -85,7 +86,7 @@ class App extends Component {
       let sum30TransferAmount = myJson["Transfer30Days"]
       let totalBurnAmount = myJson["BurnTotal"]
       let sum30BurnAmount = myJson["Burn30Days"]
-      
+
       this.setState({ totalBurnAmount })
       this.setState({ sum30BurnAmount })
       this.setState({ totalTransferAmount })
@@ -186,7 +187,7 @@ class App extends Component {
         this.setState({ userSegmentInfo: [[], []] })
         this.setState({ totalpendingReward: "0" })
         this.setState({ lpTokenLink })
-        this.setState({ lpTokenContract})
+        this.setState({ lpTokenContract })
 
         this.setState({ lpTokenAsymbols })
         this.setState({ lpTokenBsymbols })
@@ -279,16 +280,16 @@ class App extends Component {
       if (this.state.lpTokenPairsymbols[i] == "Cake-LP") {
         tvl[0][n] = tvlArray
         apr[0][n] = aprArray
-        apyDaily[0][n] = (Math.pow((1 + 0.8*apr[0][n]/36500), 365)-1) * 100
-        apyWeekly[0][n] = (Math.pow((1 + 0.8*apr[0][n]/5200), 52)-1) * 100
-        apyMonthly[0][n] = (Math.pow((1 + 0.8*apr[0][n]/1200), 12)-1) * 100
+        apyDaily[0][n] = (Math.pow((1 + 0.8 * apr[0][n] / 36500), 365) - 1) * 100
+        apyWeekly[0][n] = (Math.pow((1 + 0.8 * apr[0][n] / 5200), 52) - 1) * 100
+        apyMonthly[0][n] = (Math.pow((1 + 0.8 * apr[0][n] / 1200), 12) - 1) * 100
         n += 1
       } else {
         tvl[1][n] = tvlArray
         apr[1][n] = aprArray
-        apyDaily[1][n] = (Math.pow((1 + 0.8*apr[1][n]/36500), 365)-1) * 100
-        apyWeekly[1][n] = (Math.pow((1 + 0.8*apr[1][n]/5200), 52)-1) * 100
-        apyMonthly[1][n] = (Math.pow((1 + 0.8*apr[1][n]/1200), 12)-1) * 100
+        apyDaily[1][n] = (Math.pow((1 + 0.8 * apr[1][n] / 36500), 365) - 1) * 100
+        apyWeekly[1][n] = (Math.pow((1 + 0.8 * apr[1][n] / 5200), 52) - 1) * 100
+        apyMonthly[1][n] = (Math.pow((1 + 0.8 * apr[1][n] / 1200), 12) - 1) * 100
         n += 1
       }
     }
@@ -320,10 +321,7 @@ class App extends Component {
     // window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s3.binance.org:8545/`);
     window.web3Bsc = new Web3(`https://bsc-dataseed.binance.org/`);
     let response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin%2Cweth%2Cbinance-usd%2Cusd-coin%2Ctether%2Cbitcoin%2Cpundi-x-purse&vs_currencies=usd`);
-    // let purseResponse = await fetch('https://api.pancakeswap.info/api/v2/tokens/0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C')
-    // let purseResponse = await fetch('https://api.1inch.exchange/v4.0/56/quote?fromTokenAddress=0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C&toTokenAddress=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&amount=1000000000000')
     const myJson = await response.json();
-    // const purseJson = await purseResponse.json();
     let PURSEPrice = myJson["pundi-x-purse"]["usd"]
     this.setState({ PURSEPrice: PURSEPrice.toFixed(10) })
     let USDTPrice = myJson["tether"]["usd"]
@@ -741,6 +739,15 @@ class App extends Component {
     }
   }
 
+  // checkClaimAmount = async (address) => {
+  //   let accAmount = await this.state.purseTokenUpgradable.methods.accAmount(this.state.account).call()
+  //     uint256 accumulateAmount = balanceOf[_holder] * interval;
+  //     uint256 lastmonthAccAmount = accAmount[_holder].amount + accumulateAmount;
+  //     accAmount[_holder].amount = 0;
+  //     accAmount[_holder].accReward = lastmonthAccAmount * _monthlyDistributePr * _percentageDistribute * 100 / _totalSupply / _numOfDaysPerMth / 10000;
+  //   console.log(accAmount)
+  // }
+
   setI = (type, pair) => {
     this.setState({ n: type })
     this.setState({ i: pair })
@@ -764,7 +771,6 @@ class App extends Component {
       this.setState({ first4Account: first4Account })
       this.setState({ last4Account: last4Account })
       this.setState({ wallet: state })
-      // console.log(this.state.wallet)
     }
   }
 
@@ -778,10 +784,10 @@ class App extends Component {
       restakingFarm: {},
       purseTokenUpgradableBalance: '0',
       purseTokenTotalSupply: '0',
-      totalBurnAmount :'0',
-      sum30BurnAmount :'0',
-      totalTransferAmount :'0',
-      sum30TransferAmount :'0',
+      totalBurnAmount: '0',
+      sum30BurnAmount: '0',
+      totalTransferAmount: '0',
+      sum30TransferAmount: '0',
       i: '0',
       n: '0',
       loading: false,
@@ -820,7 +826,8 @@ class App extends Component {
     let maincontent
     let menucontent
     let depositcontent
-    let oneinchcontent
+    let oneinchContent
+    let claimContent
     let farmInfoContent
     if (this.state.loading == false) {
       maincontent =
@@ -855,8 +862,8 @@ class App extends Component {
         poolRewardToken={this.state.poolRewardToken}
         totalBurnAmount={this.state.totalBurnAmount}
         sum30BurnAmount={this.state.sum30BurnAmount}
-        totalTransferAmount = {this.state.totalTransferAmount}
-        sum30TransferAmount = {this.state.sum30TransferAmount}
+        totalTransferAmount={this.state.totalTransferAmount}
+        sum30TransferAmount={this.state.sum30TransferAmount}
       />
       menucontent = <Menu
         lpTokenBalance={this.state.lpTokenBalance}
@@ -875,7 +882,7 @@ class App extends Component {
         apr={this.state.apr}
         apyDaily={this.state.apyDaily}
         apyWeekly={this.state.apyWeekly}
-        apyMonthly={this.state.apyMonthly}        
+        apyMonthly={this.state.apyMonthly}
         bonusMultiplier={this.state.bonusMultiplier}
         farmLoading={this.state.farmLoading}
         aprloading={this.state.aprloading}
@@ -907,46 +914,52 @@ class App extends Component {
         lpTokenLink={this.state.lpTokenLink}
         lpTokenContract={this.state.lpTokenContract}
       />
-      oneinchcontent = <Oneinch
-      lpTokenBalance={this.state.lpTokenBalance}
-      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-      totalpendingReward={this.state.totalpendingReward}
-      totalrewardperblock={this.state.totalrewardperblock}
-      userSegmentInfo={this.state.userSegmentInfo}
-      poolSegmentInfo={this.state.poolSegmentInfo}
-      lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-      lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
-      lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
-      pendingSegmentReward={this.state.pendingSegmentReward}
-      buttonPopup={this.state.buttonPopup}
-      tvl={this.state.tvl}
-      apr={this.state.apr}
-      apyDaily={this.state.apyDaily}
-      apyWeekly={this.state.apyWeekly}
-      apyMonthly={this.state.apyMonthly}        
-      bonusMultiplier={this.state.bonusMultiplier}
-      farmLoading={this.state.farmLoading}
-      aprloading={this.state.aprloading}
-      deposit={this.deposit}
-      withdraw={this.withdraw}
-      setI={this.setI}
-      setTrigger={this.setTrigger}
-      harvest={this.harvest}
+      oneinchContent = <Oneinch
+        lpTokenBalance={this.state.lpTokenBalance}
+        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+        totalpendingReward={this.state.totalpendingReward}
+        totalrewardperblock={this.state.totalrewardperblock}
+        userSegmentInfo={this.state.userSegmentInfo}
+        poolSegmentInfo={this.state.poolSegmentInfo}
+        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
+        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
+        pendingSegmentReward={this.state.pendingSegmentReward}
+        buttonPopup={this.state.buttonPopup}
+        tvl={this.state.tvl}
+        apr={this.state.apr}
+        apyDaily={this.state.apyDaily}
+        apyWeekly={this.state.apyWeekly}
+        apyMonthly={this.state.apyMonthly}
+        bonusMultiplier={this.state.bonusMultiplier}
+        farmLoading={this.state.farmLoading}
+        aprloading={this.state.aprloading}
+        deposit={this.deposit}
+        withdraw={this.withdraw}
+        setI={this.setI}
+        setTrigger={this.setTrigger}
+        harvest={this.harvest}
       />
-      farmInfoContent= <Farm
-      lpTokenBalance={this.state.lpTokenBalance}
-      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-      poolLength={this.state.poolLength}
-      deposit={this.deposit}
-      withdraw={this.withdraw}
-      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-      lpTokenInContract={this.state.lpTokenInContract}
-      totalrewardperblock={this.state.totalrewardperblock}
-      poolCapRewardToken={this.state.poolCapRewardToken}
-      poolMintedRewardToken={this.state.poolMintedRewardToken}
-      poolRewardToken={this.state.poolRewardToken}
-    />
+      farmInfoContent = <Farm
+        lpTokenBalance={this.state.lpTokenBalance}
+        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+        poolLength={this.state.poolLength}
+        deposit={this.deposit}
+        withdraw={this.withdraw}
+        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+        lpTokenInContract={this.state.lpTokenInContract}
+        totalrewardperblock={this.state.totalrewardperblock}
+        poolCapRewardToken={this.state.poolCapRewardToken}
+        poolMintedRewardToken={this.state.poolMintedRewardToken}
+        poolRewardToken={this.state.poolRewardToken}
+      />
+      // claimContent = <Claim
+      //   wallet={this.state.wallet}
+      //   walletConnect={this.state.walletConnect}
+      //   connectWallet={this.connectWallet}
+      //   checkClaimAmount={this.checkClaimAmount}
+      // />
     }
 
     return (
@@ -966,7 +979,6 @@ class App extends Component {
             networkName={this.state.networkName}
             PURSEPrice={this.state.PURSEPrice}
           />
-
           <div className="container-fluid mt-4">
             <div className="row">
               <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '800px' }}>
@@ -976,11 +988,12 @@ class App extends Component {
                     <Route path="/home" exact > {maincontent} </Route>
                     <Route path="/lpfarm/menu" exact > {menucontent} </Route>
                     <Route path="/lpfarm/farmInfo" exact > {farmInfoContent} </Route>
-                    <Route path="/lpfarm/oneinch" exact > {oneinchcontent} </Route>
+                    <Route path="/lpfarm/oneinch" exact > {oneinchContent} </Route>
+                    {/* <Route path="/claim" exact > {claimContent} </Route> */}
                     <Route path="/deposit" exact > {depositcontent} </Route>
                   </Switch>
                   <Popup trigger={this.state.buttonPopup} setTrigger={this.setTrigger}>
-                    <div className="container-fluid mt-5">{depositcontent}</div>
+                    <div className="container-fluid">{depositcontent}</div>
                   </Popup>
                 </div>
               </main>

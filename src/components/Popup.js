@@ -7,11 +7,11 @@ class Popup extends Component {
 
     render() {
         return (
-            <div>
+            <div >
                 {this.props.trigger ?
                     <div className="popup">
-                        <div className="popup-inner ml-auto mr-auto" >
-                                <CloseButton className="close" onClick={() => {
+                        <div className="popup-inner ml-auto mr-auto mt-5" >
+                                <CloseButton variant='white' aria-label="Hide" onClick={() => {
                                     this.props.setTrigger(false)
                                 }}>close
                                 </CloseButton>

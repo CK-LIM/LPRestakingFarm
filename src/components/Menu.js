@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import purse from '../purse.png'
-import purse2 from '../purse-.png'
+import purse2 from '../purse2.png'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Button from '@material-ui/core/Button';
 import Buttons from 'react-bootstrap/Button'
 import './App.css';
 import Popup from 'reactjs-popup';
@@ -11,39 +10,22 @@ import { BsFillQuestionCircleFill } from 'react-icons/bs';
 
 class Menu extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            isShown: false
-        }
-        this.changeBackgroundColor = this.changeBackgroundColor.bind(this)
-    }
-
-    changeBackgroundColor() {
-        console.log("clicked")
-        this.setState({
-            isShown: true
-        })
-        console.log(this.state.isShown)
-    }
-
     render() {
         return (
             <div id="content" className="mt-3">
                 <div className="text-center">
                     <ButtonGroup>
-                        <Link to="/lpfarm/menu/" style={{ textDecoration: "none"}}>
-                            <Buttons className="textPurpleMedium center hover"  variant="outline" size="lg"> PANCAKESWAP</Buttons>
+                        <Link to="/lpfarm/menu/" style={{ textDecoration: "none" }}>
+                            <Buttons className="textPurpleMedium center hover" variant="outline" size="lg"> PANCAKESWAP</Buttons>
                         </Link>
-                        <Link to="/lpfarm/oneinch/" style={{ textDecoration: "none"}}>
-                            <Buttons className="textWhiteMedium center hover"  variant="link" size="lg"> 1INCH</Buttons>
+                        <Link to="/lpfarm/oneinch/" style={{ textDecoration: "none" }}>
+                            <Buttons className="textWhiteMedium center hover" variant="link" size="lg"> 1INCH</Buttons>
                         </Link>
                     </ButtonGroup>
                 </div>
-                <br /><br />
                 <div className="center img">
-                    <img src={purse2} height='90' alt="" />
-                </div><br />
+                    <img src={purse2} height='180' alt="" />
+                </div>
                 <h1 className="textWhite center"><b>LP Restaking Farm</b></h1>
                 <div className="center" style={{ color: 'silver' }}>&nbsp;Stake <b>&nbsp;Pancakeswap LP Tokens&nbsp;</b> to earn PURSE!!!</div>
                 <br />

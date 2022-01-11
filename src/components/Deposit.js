@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom';
-// import dai from '../uniswap-uni-logo.png'
 import asterisk from '../asterisk.png'
 import exlink from '../link.png'
 import purse from '../purse.png'
@@ -91,20 +89,13 @@ class Deposit extends Component {
 
   render() {
     return (
-      <div id="content" className="mt-3">
-        <div className="text-center">
-
-        </div>
-        <br /><br />
-
-        <h2 className="center textWhite"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} Farm</b></h2>
-        <br />
+      <div id="content" className="mt-0">
+        <h2 className="center textWhite"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]}</b></h2>
+       
         <div className="center" style={{ color: 'silver' }}>&nbsp;Deposit <b>&nbsp;{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Token&nbsp;</b> and earn PURSE!!!</div>
         <br />
-
         <div className="card mb-4 cardbody" >
           <div className="card-body">
-
             <div className='float-left'>
               <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
                 window.open(this.props.lpTokenLink[this.props.n][this.props.i], '_blank')
@@ -115,7 +106,6 @@ class Deposit extends Component {
               }}> View Contract <img src={exlink} height='10' alt="" />
               </span>
             </div>
-
 
             <button
               type="submit"
@@ -136,13 +126,13 @@ class Deposit extends Component {
                 </tr>
                 <tr>
                   <th scope="col"><img src={pancake} height='30' alt="" /></th>
-                  <th scope="col"><img src={purse} height='30' alt="" /></th>
+                  <th scope="col"><img src={purse} height='34' alt="" /></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>{parseFloat(this.props.userSegmentInfo[this.props.n][this.props.i]).toLocaleString('en-US', {maximumFractionDigits:5})}</td>
-                  <td>{parseFloat(this.props.pendingSegmentReward[this.props.n][this.props.i]).toLocaleString('en-US', {maximumFractionDigits:3})}</td>
+                  <td>{parseFloat(this.props.userSegmentInfo[this.props.n][this.props.i]).toLocaleString('en-US', { maximumFractionDigits: 5 })}</td>
+                  <td>{parseFloat(this.props.pendingSegmentReward[this.props.n][this.props.i]).toLocaleString('en-US', { maximumFractionDigits: 3 })}</td>
                 </tr>
               </tbody>
             </table>
@@ -178,10 +168,10 @@ class Deposit extends Component {
                       <label className="float-left" style={{ color: 'silver' }}><b>Start Farming</b></label>
                       <span className="float-right" style={{ color: 'silver' }}>
                         <span>
-                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {parseFloat(window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')).toLocaleString('en-US', {maximumFractionDigits:3})}
+                          LP Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {parseFloat(window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i].toString(), 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 3 })}
                         </span>
                         <span><br />
-                          PURSE Balance&nbsp;: {parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')).toLocaleString('en-US', {maximumFractionDigits:5})}
+                          PURSE Balance&nbsp;: {parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenUpgradableBalance, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 5 })}
                         </span>
                       </span>
                     </div>
@@ -215,7 +205,7 @@ class Deposit extends Component {
                             <Button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
                               this.clickHandlerDeposit()
                             }}>&nbsp;Deposit&nbsp;</Button><Button type="text" variant="outline-primary" className="btn-lg" onClick={(event) => {
-                              this.input.value = window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i],'Ether')
+                              this.input.value = window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i], 'Ether')
                             }}>Max</Button>&nbsp;&nbsp;&nbsp;
                           </ButtonGroup>
                           <ButtonGroup>
@@ -245,10 +235,7 @@ class Deposit extends Component {
               </div>
             </div>
           </div>
-
-
         </div>
-
 
         <div className="text-center" style={{ color: 'grey' }}><img src={asterisk} height='15' />&nbsp;<small>Every time you stake and unstake LP tokens, the contract will automatically harvest PURSE rewards for you!</small></div>
       </div>
