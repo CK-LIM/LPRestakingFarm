@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import bigInt from 'big-integer'
 import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import './App.css';
 
 class Claim extends Component {
@@ -25,7 +24,7 @@ class Claim extends Component {
                 message: ''
             })
             this.setState({
-                txValidAmount: false
+                txValidAdd: false
             })
         } else if (event !== "") {
             let result = window.web3.utils.isAddress(event); // true if its a valid address, false if not
@@ -51,63 +50,108 @@ class Claim extends Component {
 
     render() {
         return (
-            <div id="content" className="mt-0">
-                <h2 className="center textWhite"><b>Claim Distributed PURSE</b></h2>
+            <div id="content" className="mt-4">
+                <label className="center textWhite mb-5"><b>Claim Distributed PURSE</b></label>
+                <div className="rowC">
+                    <div className="card cardbody mr-3" style={{ width: '450px', height:'200px', color: 'white' }}>
+                        <div className="card-body center">
+                            <table className=" textWhiteSmall text-center" style={{ width: '400px'}}>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">End Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{Date(this.props.rewardStartTime * 1000)}</td>
+                                        <td>{this.props.rewardEndTime}</td>
+                                    </tr>
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Distributed Amount</th>
+                                        <th scope="col">End Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{this.props.distributedAmount}</td>
+                                        <td>Purse</td>
+                                    </tr>
+                                </tbody>
 
-                <div className="card mb-4 cardbody" >
-                    <div className="card-body">
-                        <h2 className="center textWhite"><b>Check Your Claimable amount</b></h2>
-                        {this.props.wallet || this.props.walletConnect ?
-                            <form className="mb-3" onSubmit={(event) => {
-                                event.preventDefault()
-                                if (this.state.txValidAmount === false) {
-                                    alert("Invalid input! PLease check your input again")
-                                } else {
-                                    // let amount = this.input.value.toString()
-                                    // if (this.state.txDeposit === true && this.state.txWithdraw === false) {
-                                        // if (bigInt(amountWei).value > 0) {
-                                            // alert("No token to claim")
-                                            this.props.checkClaimAmount(this.input.value)
-                                        // } else {
-                                            // this.props.checkClaimAmount(this.input.value)
-                                        // }
-                                    // }
-                                }
-                            }}>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div className="card cardbody" style={{ width: '450px', color: 'white' }}>
+                        <div className="card-body">
+                            {this.props.wallet || this.props.walletConnect ?
                                 <div>
-                                    <div className="input-group mb-4" >
-                                        <input
-                                            type="text"
-                                            style={{ color: 'grey' }}
-                                            ref={(input) => { this.input = input }}
-                                            className="form-control form-control-lg cardbody"
-                                            placeholder="0"
-                                            onChange={(e) => {
-                                                const value = e.target.value;
-                                                this.changeHandler(value)
-                                            }}
-                                            required />
-
-                                    </div >
-                                    <div style={{ color: 'red' }}>{this.state.message} </div>
-
-                                    <div className="rowC center">
-                                        <ButtonGroup>
-                                            <Button type="submit" className="btn btn-primary btn-lg" >&nbsp;Check&nbsp;</Button>
-                                        </ButtonGroup>
+                                    <div className="center textWhiteHeading mb-4"><b>Check Your Claimable amount</b></div>
+                                    <div>
+                                        <div className="textWhiteSmall mb-1"><b>Your address:</b></div>
+                                        <div className="textWhiteSmall mb-1"><b>{this.props.account}</b></div>
                                     </div>
+                                    <div>
+                                        <div className="textWhiteSmall mb-1"><b>Amount:</b></div>
+                                        <div className="textWhiteSmall mb-1"><b>~{this.props.account}</b></div>
+                                    </div>
+                                    <div className="center mt-2 mb-4">
+                                        <Button
+                                            className="btn-block"
+                                            variant="success"
+                                            size="sm"
+                                            style={{ minWidth: '80px' }}
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                this.props.claimDistributePurse()
+                                            }}>Claim
+                                        </Button>
+                                    </div>
+                                    <div className="float-left">
+                                        <div className="textWhiteMedium mt-2 mb-2" ><b>Check Other Address:</b></div>
+                                    </div>
+                                    <form onSubmit={(event) => {
+                                        event.preventDefault()
+                                        if (this.state.txValidAmount === false) {
+                                            alert("Invalid input! PLease check your input again")
+                                        } else {
+                                            this.props.checkClaimAmount(this.input.value)
+                                        }
+                                    }}>
+                                        <div>
+                                            <div className="input-group mb-2" >
+                                                <input
+                                                    type="text"
+                                                    style={{ color: 'grey' }}
+                                                    ref={(input) => { this.input = input }}
+                                                    className="form-control form-control-sm cardbody"
+                                                    placeholder="BSC Address"
+                                                    onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        this.changeHandler(value)
+                                                    }}
+                                                    required />
+                                            </div >
+                                            <div style={{ color: 'red' }}>{this.state.message} </div>
+                                            <div className="center mb-2">
+                                                <Button type="submit" className="btn btn-block btn-primary btn-sm" >Check</Button>                                                                                    </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                            :
-                            <div className="rowC center">
-                                <button type="submit" className="btn btn-primary btn-lg" onClick={async () => {
-                                    await this.props.connectWallet()
-                                }}>Connect Wallet</button>
-                            </div>
-                        }
+                                :
+                                <div>
+                                    <div className="center textWhiteMedium mt-2 mb-2"><b>Connect wallet to check distributed PURSE amount</b></div>
+                                    <div className="center mt-4"><button type="submit" className="btn btn-primary btn-lg" onClick={async () => {
+                                        await this.props.connectWallet()
+                                    }}>Connect</button></div>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
-
             </div>
 
         );

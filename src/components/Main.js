@@ -7,21 +7,13 @@ class Main extends Component {
 
   render() {
     return (
-      <div id="content" className="mt-3">
-
-
-
-        <label className="textWhite center" style={{ fontSize: '40px' }}><big><b>PURSE Dashboard</b></big></label>
-
-        <br />
-
-        <br />
-
-        <div className="card mb-4 cardbody" style={{ width: '800px' }} >
-          <div className="card-body text-center">
+      <div id="content" className="mt-4">
+        <label className="textWhite center mb-5" style={{ fontSize: '40px' }}><big><b>PURSE Dashboard</b></big></label>
+        <div className="card mb-4 cardbody">
+          <div className="card-body center">
             <table className="textWhiteSmall">
               <thead>
-                <tr>                
+                <tr>
                   <th scope="col">Market Cap</th>
                   <th scope="col">Circulating Supply <span className="">
                     <Popup trigger={open => (
@@ -38,15 +30,15 @@ class Main extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>               
-                  <td>$ {(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether') * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
+                <tr>
+                  <td>${(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether') * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.purseTokenTotalSupply, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                  <td>$ {parseFloat(this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 6 })}</td>
+                  <td>${parseFloat(this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 6 })}</td>
                 </tr>
               </tbody>
               <thead><tr><td></td></tr><tr><td></td></tr></thead>
               <thead>
-                <tr>           
+                <tr>
                   <th scope="col">Burn <span className="">
                     <Popup trigger={open => (
                       <span style={{ position: "relative", top: '-1px' }}><BsFillQuestionCircleFill size={10} /></span>
@@ -85,19 +77,21 @@ class Main extends Component {
                 </tr>
               </thead>
               <tbody>
-              <th scope="col">(Total)</th>
-              <th scope="col">(Total)</th>
-              <th scope="col">(Total)</th>
-                </tbody>
+                <tr>
+                  <td scope="col">(Total)</td>
+                  <td scope="col">(Total)</td>
+                  <td scope="col">(Total)</td>
+                </tr>
+              </tbody>
               <tbody>
                 <tr>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalBurnAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                   <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })} / $ {(parseFloat(window.web3Bsc.utils.fromWei(this.props.totalTransferAmount, 'Ether')).toFixed(4) * this.props.PURSEPrice).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
                 </tr>
-                </tbody>
-                <thead>
-                <tr>           
+              </tbody>
+              <thead>
+                <tr>
                   <th scope="col">(Past 30 days Sum)</th>
                   <th scope="col">(Past 30 days Sum)</th>
                   <th scope="col">(Past 30 days Sum)</th>

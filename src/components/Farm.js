@@ -5,16 +5,11 @@ class Farm extends Component {
 
   render() {
     return (
-      <div id="content" className="mt-3">
-
-
-
+      <div id="content" className="mt-4">
         <label className="textWhite center" style={{ fontSize : '40px' }}><big><b>Farm Info</b></big></label>
-
-        <div className="center" style={{ color: 'white' }}>&nbsp;Stake <b>&nbsp;Pancakeswap or 1Inch LP Tokens&nbsp;</b> to earn PURSE!!!</div>
-        <br /><br />
-        <div className="card mb-4 cardbody" style={{ width: '800px' }} >
-          <div className="card-body">
+        <div className="center mb-4" style={{ color: 'white' }}>&nbsp;Stake <b>&nbsp;LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+        <div className="card mb-4 cardbody" >
+          <div className="card-body center">
             <table className="textWhiteSmall text-center">
               <thead>
                 <tr>

@@ -435,14 +435,15 @@ width: 15px;
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  table-layout: fixed;
+  width: 900px;
 }
 
 td, th {
-  border: 0px solid #dddddd;
+  /* border: 1px solid #dddddd; */
   text-align: center;
   padding: 8px;
-  height: 50%;
+  height: 100%;
 }
 
 tr:nth-child(even) {

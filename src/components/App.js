@@ -79,7 +79,6 @@ class App extends Component {
 
     if (this.state.wallet == false && this.state.walletConnect == false) {
       // Load PurseTokenUpgradable
-      // const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
       let response = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-iqgbt/endpoint/PundiX`);
       const myJson = await response.json();
       let totalTransferAmount = myJson["TransferTotal"]
@@ -195,21 +194,48 @@ class App extends Component {
         this.setState({ lpTokenPairAs })
         this.setState({ lpTokenPairBs })
         this.setState({ lpTokenPairsymbols })
+
+        let rewardEndTime = await this.state.purseTokenUpgradable.methods._getRewardEndTime().call()
+        let rewardStartTime = await this.state.purseTokenUpgradable.methods._getRewardStartTime().call()
+        let lastRewardStartTime = await this.state.purseTokenUpgradable.methods._lastRewardStartTime().call()
+        let distributedAmount = await this.state.purseTokenUpgradable.methods._monthlyDistributePr().call()
+        let userRewardInfo = await this.state.purseTokenUpgradable.methods.accAmount("0x44f86b5fa8C8E901f28A933b6aCe084f45A3d65c").call()
+        let userBalance = await this.state.purseTokenUpgradable.methods.balanceOf("0x44f86b5fa8C8E901f28A933b6aCe084f45A3d65c").call()
+
+        this.setState({ rewardEndTime })
+        this.setState({ rewardStartTime })
+        this.setState({ distributedAmount })
+        // (Date.now()/1000).toFixed(0)
+        let reward = 0
+        if (userRewardInfo.lastUpdateTime == 0) {
+          reward = 0
+        } else if (userRewardInfo.lastUpdateTime >= rewardStartTime) {
+          reward = userRewardInfo.accReward          
+        } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {
+          let interval = (rewardStartTime - lastRewardStartTime) / 86400;
+          let accumulateAmount = userBalance * interval;
+          let lastmonthAccAmount = userRewardInfo.amount + accumulateAmount;
+          reward = lastmonthAccAmount * this.state.totalTransferAmount * 90 / this.state.purseTokenTotalSupply / 80 / 100;
+        } else {          
+          let interval = (rewardStartTime - userRewardInfo.lastUpdateTime) / 86400;
+          let accumulateAmount = userBalance * interval;
+          let lastmonthAccAmount = userRewardInfo.amount + accumulateAmount;
+          reward = lastmonthAccAmount * this.state.totalTransferAmount * 90 / this.state.purseTokenTotalSupply / 80 / 100;
+        }
+        console.log(reward)
       }
     }
     // ##############################################################################################################################
     else {
       // Load PurseTokenUpgradable
-      // const purseTokenUpgradableData = PurseTokenUpgradable.networks[networkId]
       const restakingFarmData = RestakingFarm.networks[networkId]
-      // if (purseTokenUpgradableData) {
       let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
       this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
       let purseTokenTotalSupply = await this.state.purseTokenUpgradable.methods.totalSupply().call()
       this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
       let poolRewardToken = await this.state.purseTokenUpgradable.methods.balanceOf(restakingFarmData.address).call()
       this.setState({ poolRewardToken })
-      // }
+
       // Load RestakingFarm
       if (restakingFarmData) {
         let totalpendingReward = 0
@@ -739,14 +765,51 @@ class App extends Component {
     }
   }
 
-  // checkClaimAmount = async (address) => {
-  //   let accAmount = await this.state.purseTokenUpgradable.methods.accAmount(this.state.account).call()
-  //     uint256 accumulateAmount = balanceOf[_holder] * interval;
-  //     uint256 lastmonthAccAmount = accAmount[_holder].amount + accumulateAmount;
-  //     accAmount[_holder].amount = 0;
-  //     accAmount[_holder].accReward = lastmonthAccAmount * _monthlyDistributePr * _percentageDistribute * 100 / _totalSupply / _numOfDaysPerMth / 10000;
-  //   console.log(accAmount)
-  // }
+  checkClaimAmount = async (address) => {
+    let rewardStartTime = await this.state.purseTokenUpgradable.methods._getRewardStartTime().call()
+    let lastRewardStartTime = await this.state.purseTokenUpgradable.methods._lastRewardStartTime().call() 
+    let userRewardInfo = await this.state.purseTokenUpgradable.methods.accAmount(this.state.account).call()
+    let userBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
+    // (Date.now()/1000).toFixed(0)
+    let reward = 0
+    if (userRewardInfo.lastUpdateTime == 0) {
+      reward = 0
+    } else if (userRewardInfo.lastUpdateTime >= rewardStartTime) {
+      reward = userRewardInfo.accReward          
+    } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {
+      let interval = (rewardStartTime - lastRewardStartTime) / 86400;
+      let accumulateAmount = userBalance * interval;
+      let lastmonthAccAmount = userRewardInfo.amount + accumulateAmount;
+      reward = lastmonthAccAmount * this.state.totalTransferAmount * 90 / this.state.purseTokenTotalSupply / 80 / 100;
+    } else {          
+      let interval = (rewardStartTime - userRewardInfo.lastUpdateTime) / 86400;
+      let accumulateAmount = userBalance * interval;
+      let lastmonthAccAmount = userRewardInfo.amount + accumulateAmount;
+      reward = lastmonthAccAmount * this.state.totalTransferAmount * 90 / this.state.purseTokenTotalSupply / 80 / 100;
+    }
+    console.log(reward)
+    return reward
+  }
+
+  claimDistributePurse = async () => {
+    let rewardEndTime = await this.state.purseTokenUpgradable.methods._getRewardEndTime().call()
+    let rewardStartTime = await this.state.purseTokenUpgradable.methods._getRewardStartTime().call()
+    if ((Date.now()/1000).toFixed(0) < rewardStartTime) {
+      alert("Distribution not started yet")
+    } 
+    // else if ((Date.now()/1000).toFixed(0) > rewardEndTime) {
+    //   alert("Distribution already end")
+    // } 
+    else {
+      let userRewardAmount = await this.checkClaimAmount(this.state.account)
+      if (userRewardAmount == 0) {
+        alert("No reward available")
+      } else {
+        let purseTokenUpgradable = new window.web3.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C")
+        await purseTokenUpgradable.methods.claimDistributionPurse().send({ from: this.state.account })
+      }
+    }
+  }
 
   setI = (type, pair) => {
     this.setState({ n: type })
@@ -817,8 +880,11 @@ class App extends Component {
       poolMintedRewardToken: '0',
       poolRewardToken: '0',
       networkName: "Loading",
-      lpTokenLink: "",
-      lpTokenContract: ""
+      lpTokenLink: '',
+      lpTokenContract: '',
+      rewardEndTime: '0',
+      rewardStartTime: '0',
+      distributedAmount: '0'
     }
   }
 
@@ -954,12 +1020,17 @@ class App extends Component {
         poolMintedRewardToken={this.state.poolMintedRewardToken}
         poolRewardToken={this.state.poolRewardToken}
       />
-      // claimContent = <Claim
-      //   wallet={this.state.wallet}
-      //   walletConnect={this.state.walletConnect}
-      //   connectWallet={this.connectWallet}
-      //   checkClaimAmount={this.checkClaimAmount}
-      // />
+      claimContent = <Claim
+        wallet={this.state.wallet}
+        walletConnect={this.state.walletConnect}
+        connectWallet={this.connectWallet}
+        checkClaimAmount={this.checkClaimAmount}
+        claimDistributePurse={this.claimDistributePurse}
+        account={this.state.account}
+        rewardEndTime= {this.state.rewardEndTime}
+        rewardStartTime= {this.state.rewardStartTime}
+        distributedAmount= {this.state.distributedAmount}
+      />
     }
 
     return (
@@ -981,7 +1052,7 @@ class App extends Component {
           />
           <div className="container-fluid mt-4">
             <div className="row">
-              <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '800px' }}>
+              <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '1000px' }}>
                 <div className="content mr-auto ml-auto">
                   <Switch>
                     <Route path="/" exact > {maincontent} </Route>
@@ -989,7 +1060,7 @@ class App extends Component {
                     <Route path="/lpfarm/menu" exact > {menucontent} </Route>
                     <Route path="/lpfarm/farmInfo" exact > {farmInfoContent} </Route>
                     <Route path="/lpfarm/oneinch" exact > {oneinchContent} </Route>
-                    {/* <Route path="/claim" exact > {claimContent} </Route> */}
+                    <Route path="/claim" exact > {claimContent} </Route>
                     <Route path="/deposit" exact > {depositcontent} </Route>
                   </Switch>
                   <Popup trigger={this.state.buttonPopup} setTrigger={this.setTrigger}>
