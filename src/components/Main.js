@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Popup from 'reactjs-popup';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
-import asterisk from '../asterisk.png'
 
 class Main extends Component {
 
@@ -21,7 +20,7 @@ class Main extends Component {
                     )}
                       on="hover"
                       position="right center"
-                      offsetY={-50}
+                      offsetY={0}
                       offsetX={5}
                       contentStyle={{ padding: '3px' }}
                     ><span className="textInfo"> Currently based on the total supply of purse token </span>
@@ -45,7 +44,7 @@ class Main extends Component {
                     )}
                       on="hover"
                       position="right center"
-                      offsetY={-50}
+                      offsetY={0}
                       offsetX={5}
                       contentStyle={{ padding: '1px' }}
                     ><span className="textInfo"> (Unit in Token / unit in Usd)</span>
@@ -57,7 +56,7 @@ class Main extends Component {
                     )}
                       on="hover"
                       position="right center"
-                      offsetY={-50}
+                      offsetY={0}
                       offsetX={5}
                       contentStyle={{ padding: '1px' }}
                     ><span className="textInfo"> (Unit in Token / unit in Usd)</span>
@@ -69,7 +68,7 @@ class Main extends Component {
                     )}
                       on="hover"
                       position="right center"
-                      offsetY={-50}
+                      offsetY={0}
                       offsetX={5}
                       contentStyle={{ padding: '1px' }}
                     ><span className="textInfo"> (Unit in Token / unit in Usd) </span>

@@ -1027,6 +1027,8 @@ class App extends Component {
         rewardStartTimeDate={this.state.rewardStartTimeDate}
         rewardEndTimeDate={this.state.rewardEndTimeDate}
         claimAmount={this.state.claimAmount}
+        totalTransferAmount={this.state.totalTransferAmount}
+        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
       />
     }
 

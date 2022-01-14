@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
+import Popup from 'reactjs-popup';
+import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import './App.css';
 
 class Distribution extends Component {
@@ -43,7 +45,7 @@ class Distribution extends Component {
     render() {
         return (
             <div id="content" className="mt-4">
-                <label className="textWhite center mb-5" style={{ fontSize : '40px' }}><big><b>PURSE Distribution</b></big></label>
+                <label className="textWhite center mb-5" style={{ fontSize: '40px' }}><big><b>PURSE Distribution</b></big></label>
                 <div className="rowC">
                     <div className="card cardbody mr-3" style={{ width: '450px', height: '410px', color: 'white' }}>
                         <div className="card-body center">
@@ -60,17 +62,27 @@ class Distribution extends Component {
                                             <td>{this.props.rewardStartTimeDate}</td>
                                             <td>{this.props.rewardEndTimeDate}</td>
                                         </tr>
-                                    </tbody>
+                                    </tbody><br/>
                                     <thead>
                                         <tr>
                                             <th scope="col">Distribution Amount</th>
-                                            {/* <th scope="col">Distribution Percentage</th> */}
+                                            <th scope="col">APR <span className="">
+                                                <Popup trigger={open => (
+                                                    <span style={{ position: "relative", top: '-1px' }}><BsFillQuestionCircleFill size={10} /></span>
+                                                )}
+                                                    on="hover"
+                                                    position="right center"
+                                                    offsetY={0}
+                                                    offsetX={5}
+                                                    contentStyle={{ padding: '3px' }}
+                                                ><span className="textInfo"> APR are affected by 30 days PURSE distribution amount</span>
+                                                </Popup></span></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributedAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                                            {/* <td>{this.props.distributedPercentage}</td> */}
+                                            <td>{parseFloat(this.props.totalTransferAmount * 12 * 100 / this.props.purseTokenTotalSupply).toLocaleString('en-US', { maximumFractionDigits: 2 })}%</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -146,7 +158,7 @@ class Distribution extends Component {
                             </div>
                         </div>
                         :
-                        <div className="card cardbody" style={{ width: '450px',  height: '200px', color: 'white' }}>
+                        <div className="card cardbody" style={{ width: '450px', height: '200px', color: 'white' }}>
                             <div className="card-body">
                                 <div>
                                     <div className="center textWhiteMedium mt-2 mb-3"><b>Connect wallet to claim distributed PURSE</b></div>
