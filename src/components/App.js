@@ -223,10 +223,6 @@ class App extends Component {
       const restakingFarmData = RestakingFarm.networks[networkId]
       let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
       this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
-      let purseTokenTotalSupply = await this.state.purseTokenUpgradable.methods.totalSupply().call()
-      this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
-      let poolRewardToken = await this.state.purseTokenUpgradable.methods.balanceOf("0x439ec8159740a9b9a579f286963ac1c050af31c8").call()
-      this.setState({ poolRewardToken })
       let claimAmount = await this.checkClaimAmount(this.state.account)
       this.setState({ claimAmount })
 
