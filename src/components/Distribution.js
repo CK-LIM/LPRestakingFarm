@@ -129,7 +129,7 @@ class Distribution extends Component {
                                             alert("Invalid input! PLease check your input again")
                                         } else {
                                             let claimMessage = await this.props.checkClaimAmount(this.input.value)
-                                            let otherAddressAmount = "Claimable Amount:" + " " + claimMessage.toLocaleString('en-US', { maximumFractionDigits: 2 })
+                                            let otherAddressAmount = "Amount:" + " " + claimMessage.toLocaleString('en-US', { maximumFractionDigits: 2 })
                                             this.setState({ otherAddressAmount })
                                         }
                                     }}>
