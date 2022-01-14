@@ -48,9 +48,9 @@ class Navb extends Component {
               </div>
             </Popup>
           </div>
-          <div className="mr-4">
-            <NavLink to='/claim' >Distribution</NavLink>
-          </div>
+          {/* <div className="mr-4">
+            <NavLink to='/distribution' >Distribution</NavLink>
+          </div> */}
           <div>
             <span className='hover' style={{ fontSize: '16px' }} onClick={() => {
               window.open(`https://pundix-purse.gitbook.io/untitled/`, '_blank')

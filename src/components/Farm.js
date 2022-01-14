@@ -6,8 +6,7 @@ class Farm extends Component {
   render() {
     return (
       <div id="content" className="mt-4">
-        <label className="textWhite center" style={{ fontSize : '40px' }}><big><b>Farm Info</b></big></label>
-        <div className="center mb-4" style={{ color: 'white' }}>&nbsp;Stake <b>&nbsp;LP Tokens&nbsp;</b> to earn PURSE!!!</div>
+        <label className="textWhite center mb-5" style={{ fontSize : '40px' }}><big><b>Farm Dashboard</b></big></label>
         <div className="card mb-4 cardbody" >
           <div className="card-body center">
             <table className="textWhiteSmall text-center">
@@ -45,10 +44,10 @@ class Farm extends Component {
           </div></div>
           <br /> <br />
 
-        <div className="text" style={{ color: 'grey' }}>&nbsp;<big>Remarks:</big></div><br />
-        <div className="text" style={{ color: 'grey' }}>&nbsp;<small>Farm Cap Reward Token: Total capacity reward tokens will be minted by this farm.</small></div>
-        <div className="text" style={{ color: 'grey' }}>&nbsp;<small>Farm Minted Reward Token: Total reward tokens minted by this farm until now.</small></div>
-        <div className="text" style={{ color: 'grey' }}>&nbsp;<small>Farm's Reward Token: Total reward tokens inside this farm (smart contract).</small></div>
+        <div className="text" style={{ color: 'silver' }}>&nbsp;<big>Remarks:</big></div><br />
+        <div className="text" style={{ color: 'silver' }}>&nbsp;<small>Farm Cap Reward Token: Total capacity reward tokens will be minted by this farm.</small></div>
+        <div className="text" style={{ color: 'silver' }}>&nbsp;<small>Farm Minted Reward Token: Total reward tokens minted by this farm until now.</small></div>
+        <div className="text" style={{ color: 'silver' }}>&nbsp;<small>Farm's Reward Token: Total reward tokens inside this farm (smart contract).</small></div>
       </div>
 
 

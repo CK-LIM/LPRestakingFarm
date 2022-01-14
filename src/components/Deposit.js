@@ -182,7 +182,7 @@ class Deposit extends Component {
                         <div className="input-group mb-4" >
                           <input
                             type="text"
-                            style={{ color: 'grey' }}
+                            style={{ color: 'silver', backgroundColor: '#28313b' }}
                             ref={(input) => { this.input = input }}
                             className="form-control form-control-lg cardbody"
                             placeholder="0"
@@ -237,7 +237,7 @@ class Deposit extends Component {
           </div>
         </div>
 
-        <div className="text-center" style={{ color: 'grey' }}><img src={asterisk} height='15' />&nbsp;<small>Every time you stake and unstake LP tokens, the contract will automatically harvest PURSE rewards for you!</small></div>
+        <div className="text-center" style={{ color: 'silver' }}><img src={asterisk} height='15' />&nbsp;<small>Every time you stake and unstake LP tokens, the contract will automatically harvest PURSE rewards for you!</small></div>
       </div>
 
     );

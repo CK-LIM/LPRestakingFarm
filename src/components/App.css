@@ -221,6 +221,11 @@ font-size: 50px;
   font-size: 15px;
 }
 
+.textWhiteSmaller {
+  color: #ffffff;
+  font-size: 14px;
+}
+
 .text {
 color: #ff9a04;
 display: inline-block;
@@ -448,4 +453,13 @@ td, th {
 
 tr:nth-child(even) {
   background-color: transparent;
+}
+
+::marker {
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+  text-indent: 0px !important;
+  text-align: start !important;
+  text-align-last: start !important;
 }
