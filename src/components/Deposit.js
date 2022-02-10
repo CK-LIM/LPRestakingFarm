@@ -52,16 +52,7 @@ class Deposit extends Component {
       this.setState({
         txValidAmount: false
       })
-    }
-    // else if (bigInt(window.web3.utils.toWei(event, 'ether')).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
-    //   this.setState({
-    //     message: 'Not enough Balance'
-    //   })
-    //   this.setState({
-    //     txValidAmount: false
-    //   })
-    // }
-    else {
+    } else {
       this.setState({
         message: ''
       })
@@ -90,20 +81,20 @@ class Deposit extends Component {
   render() {
     return (
       <div id="content" className="mt-0">
-        <h2 className="center textWhite"><b>{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]}</b></h2>
+        <h2 className="center textWhite"><b>{this.props.poolSegmentInfo[this.props.n][this.props.i].token[this.props.farmNetwork]["symbol"]}-{this.props.poolSegmentInfo[this.props.n][this.props.i].quoteToken[this.props.farmNetwork]["symbol"]}</b></h2>
        
-        <div className="center" style={{ color: 'silver' }}>&nbsp;Deposit <b>&nbsp;{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Token&nbsp;</b> and earn PURSE!!!</div>
+        <div className="center" style={{ color: 'silver' }}>&nbsp;Deposit <b>&nbsp;{this.props.poolSegmentInfo[this.props.n][this.props.i].token[this.props.farmNetwork]["symbol"]}-{this.props.poolSegmentInfo[this.props.n][this.props.i].quoteToken[this.props.farmNetwork]["symbol"]} LP Token&nbsp;</b> and earn PURSE!!!</div>
         <br />
-        <div className="card mb-4 cardbody" >
+        <div className="card mb-3 cardbody" >
           <div className="card-body">
             <div className='float-left'>
               <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
-                window.open(this.props.lpTokenLink[this.props.n][this.props.i], '_blank')
-              }}> Get {this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} <img src={exlink} height='10' alt="" />
+                window.open(this.props.poolSegmentInfo[this.props.n][this.props.i].getLPLink, '_blank')
+              }}> Get {this.props.poolSegmentInfo[this.props.n][this.props.i].token[this.props.farmNetwork]["symbol"]}-{this.props.poolSegmentInfo[this.props.n][this.props.i].quoteToken[this.props.farmNetwork]["symbol"]} <img src={exlink} className='mb-1' height='10' alt="" />
               </span>
               <span className='dropdown' style={{ fontSize: '12px' }} onClick={() => {
-                window.open(this.props.lpTokenContract[this.props.n][this.props.i], '_blank')
-              }}> View Contract <img src={exlink} height='10' alt="" />
+                window.open(this.props.poolSegmentInfo[this.props.n][this.props.i].lpContract, '_blank')
+              }}> View Contract <img src={exlink} className='mb-1' height='10' alt="" />
               </span>
             </div>
 
@@ -121,7 +112,7 @@ class Deposit extends Component {
             <table className="table table-borderless text-center" style={{ color: 'silver' }}>
               <thead>
                 <tr>
-                  <th scope="col">{this.props.lpTokenSegmentAsymbol[this.props.n][this.props.i]}-{this.props.lpTokenSegmentBsymbol[this.props.n][this.props.i]} LP Staked </th>
+                  <th scope="col">{this.props.poolSegmentInfo[this.props.n][this.props.i].token[this.props.farmNetwork]["symbol"]}-{this.props.poolSegmentInfo[this.props.n][this.props.i].quoteToken[this.props.farmNetwork]["symbol"]} LP Staked </th>
                   <th scope="col">PURSE Earned</th>
                 </tr>
                 <tr>
@@ -141,29 +132,7 @@ class Deposit extends Component {
             <div className="card mb-4 cardbody" >
               <div className="card-body">
                 {this.props.wallet || this.props.walletConnect ?
-
-                  <form className="mb-3" onSubmit={(event) => {
-                    event.preventDefault()
-                    if (this.state.txValidAmount === false) {
-                      alert("Invalid input! PLease check your input again")
-                    } else {
-                      let amount = this.input.value.toString()
-                      let amountWei = window.web3Bsc.utils.toWei(amount, 'Ether')
-                      if (this.state.txDeposit === true && this.state.txWithdraw === false) {
-                        if (bigInt(amountWei).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
-                          alert("Not enough funds")
-                        } else {
-                          this.props.deposit(this.props.i, amountWei, this.props.n)
-                        }
-                      } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
-                        if (bigInt(amountWei).value > bigInt(window.web3Bsc.utils.toWei(this.props.userSegmentInfo[this.props.n][this.props.i], 'Ether')).value) {
-                          alert("Withdraw tokens more than deposit LP tokens")
-                        } else {
-                          this.props.withdraw(this.props.i, amountWei, this.props.n)
-                        }
-                      }
-                    }
-                  }}>
+                <div>
                     <div>
                       <label className="float-left" style={{ color: 'silver' }}><b>Start Farming</b></label>
                       <span className="float-right" style={{ color: 'silver' }}>
@@ -179,6 +148,32 @@ class Deposit extends Component {
 
                     {this.props.lpTokenSegmentAllowance[this.props.n][this.props.i] > 100000000000000000000000000000 ?
                       <div>
+                      <form className="mb-3" onSubmit={(event) => {
+                        event.preventDefault()
+                        if (this.state.txValidAmount === false) {
+                          alert("Invalid input! PLease check your input again")
+                        } else {
+                          let amount = this.input.value.toString()
+                          let amountWei = window.web3Bsc.utils.toWei(amount, 'Ether')
+                          if (this.state.txDeposit === true && this.state.txWithdraw === false) {
+                            if (bigInt(amountWei).value <= 0 ) {
+                              alert("Amount cannot less than or equal to 0")
+                            } else if (bigInt(amountWei).value > bigInt(this.props.lpTokenSegmentBalance[this.props.n][this.props.i]).value) {
+                              alert("Not enough funds")
+                            } else {
+                              this.props.deposit(this.props.i, amountWei, this.props.n)
+                            }
+                          } else if (this.state.txDeposit === false && this.state.txWithdraw === true) {
+                            if (bigInt(amountWei).value <= 0 ) {
+                              alert("Amount cannot less than or equal to 0")
+                            } else if (bigInt(amountWei).value > bigInt(window.web3Bsc.utils.toWei(this.props.userSegmentInfo[this.props.n][this.props.i], 'Ether')).value) {
+                              alert("Withdraw tokens more than deposit LP tokens")
+                            } else {
+                              this.props.withdraw(this.props.i, amountWei, this.props.n)
+                            }
+                          }
+                        }
+                      }}>
                         <div className="input-group mb-4" >
                           <input
                             type="text"
@@ -202,42 +197,52 @@ class Deposit extends Component {
 
                         <div className="rowC center">
                           <ButtonGroup>
-                            <Button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
+                            <Button type="submit" className="btn btn-primary" onClick={(event) => {
                               this.clickHandlerDeposit()
-                            }}>&nbsp;Deposit&nbsp;</Button><Button type="text" variant="outline-primary" className="btn-lg" onClick={(event) => {
+                            }}>&nbsp;Deposit&nbsp;</Button>
+                            <Button type="text" variant="outline-primary" className="btn" onClick={(event) => {
+                              this.state.txValidAmount = true
+                              this.state.message = ''
+                              this.state.txDeposit = false
+                              this.state.txWithdraw = false
                               this.input.value = window.web3Bsc.utils.fromWei(this.props.lpTokenSegmentBalance[this.props.n][this.props.i], 'Ether')
                             }}>Max</Button>&nbsp;&nbsp;&nbsp;
                           </ButtonGroup>
                           <ButtonGroup>
-                            <Button type="submit" className="btn btn-primary btn-lg" onClick={(event) => {
+                            <Button type="submit" className="btn btn-primary" onClick={(event) => {
                               this.clickHandlerWithdraw()
-                            }}>Withdraw</Button><Button type="text" variant="outline-primary" className="btn-lg" onClick={(event) => {
+                            }}>Withdraw</Button>
+                            <Button type="text" variant="outline-primary" className="btn" onClick={(event) => {
+                              this.state.txValidAmount = true
+                              this.state.message = ''
+                              this.state.txDeposit = false
+                              this.state.txWithdraw = false
                               this.input.value = this.props.userSegmentInfo[this.props.n][this.props.i]
                             }}>Max</Button>&nbsp;&nbsp;&nbsp;
                           </ButtonGroup>
                         </div>
+                      </form>
                       </div>
                       :
                       <div className="rowC center">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg" onClick={(event) => {
+                        <button className="btn btn-primary btn-block" onClick={(event) => {
+                          console.log("abc")
                           this.props.approve(this.props.i, this.props.n)
                         }}>Approve</button>
                       </div>
-                    }
-                  </form>
+                    }</div>
                   :
                   <div className="rowC center">
-                    <button type="submit" className="btn btn-primary btn-lg" onClick={async () => {
+                    <button className="btn btn-primary" onClick={async () => {
                       await this.props.connectWallet()
                     }}>Connect Wallet</button>
                   </div>
                 }
               </div>
-            </div>
           </div>
         </div>
-
-        <div className="text-center" style={{ color: 'silver' }}><img src={asterisk} height='15' />&nbsp;<small>Every time you stake and unstake LP tokens, the contract will automatically harvest PURSE rewards for you!</small></div>
+        </div>
+        <div className="text-center" style={{ color: 'silver' }}><img src={asterisk} height='15' />&nbsp;<small>Every time you stake & unstake LP tokens, the contract will automatically harvest PURSE rewards for you!</small></div>
       </div>
 
     );

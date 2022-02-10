@@ -28,9 +28,9 @@ class App extends Component {
     await this.loadFarmData()
     await this.loadBlockchainData()
     this.loadTVLAPR()
-    while (this.state.loading == true) {
-      await this.loadBlockchainData()
-      await this.delay(1000);
+    while ((this.state.wallet || this.state.walletConnect) == true) {
+      await this.loadBlockchainUserData()
+      await this.delay(2000);
     }
   }
 
@@ -43,7 +43,6 @@ class App extends Component {
     const web3Bsc = window.web3Bsc
 
     const networkId = "56"
-
     this.setState({ networkId })
     const farmNetwork = "MAINNET"
     this.setState({ farmNetwork })
@@ -87,61 +86,96 @@ class App extends Component {
       this.setState({ networkName: "Unavailable" })
     }
 
+    let mongoResponse0 = this.loadBDL()
+    let mongoResponse1 = this.loadAccumulateTransfer()
+    let mongoResponse2 = this.loadAccumulateBurn()
+    let coingeckoResponse = this.loadApiPrice()
+    let myJson = await mongoResponse0;
+    let myJson1 = await mongoResponse1;
+    let myJson2 = await mongoResponse2;
+    let myJson3 = await coingeckoResponse;
+
+    let PURSEPrice = myJson3["pundi-x-purse"]["usd"]
+    this.setState({ PURSEPrice: PURSEPrice.toFixed(7) })
+    let USDTPrice = myJson3["tether"]["usd"]
+    this.setState({ USDTPrice: USDTPrice.toFixed(7) })
+    let USDCPrice = myJson3["usd-coin"]["usd"]
+    this.setState({ USDCPrice: USDCPrice.toFixed(7) })
+    let BNBPrice = myJson3["binancecoin"]["usd"]
+    this.setState({ BNBPrice: BNBPrice.toFixed(7) })
+    let WETHPrice = myJson3["weth"]["usd"]
+    this.setState({ WETHPrice: WETHPrice.toFixed(7) })
+    let BUSDPrice = myJson3["binance-usd"]["usd"]
+    this.setState({ BUSDPrice: BUSDPrice.toFixed(7) })
+    let BTCPrice = myJson3["bitcoin"]["usd"]
+    this.setState({ BTCPrice: BTCPrice.toFixed(7) })
+
+    let totalTransferAmount = myJson["TransferTotal"]
+    let sum30TransferAmount = myJson["Transfer30Days"]
+    let totalBurnAmount = myJson["BurnTotal"]
+    let sum30BurnAmount = myJson["Burn30Days"]
+    let cumulateTransfer = myJson1
+    let cumulateBurn = myJson2
+    
+    this.setState({ totalBurnAmount })
+    this.setState({ sum30BurnAmount })
+    this.setState({ totalTransferAmount })
+    this.setState({ sum30TransferAmount })
+    this.setState({ cumulateTransfer })
+    this.setState({ cumulateBurn })
+
+    // Load contract
+    const pancakeContract = new window.web3Bsc.eth.Contract(IPancakePair.abi, "0x081F4B87F223621B4B31cB7A727BB583586eAD98")
+    const purseTokenUpgradable = new web3Bsc.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C") //mainnet
+    const restakingFarm = new web3Bsc.eth.Contract(RestakingFarm.abi, "0x439ec8159740a9b9a579f286963ac1c050af31c8")
+
+    this.setState({ purseTokenUpgradable })
+    this.setState({ restakingFarm })
+    this.setState({ pancakeContract })
+
     if (this.state.wallet == false && this.state.walletConnect == false) {
-      // Load PurseTokenUpgradable
-      let response = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-iqgbt/endpoint/PundiX`);
-      const myJson = await response.json();
-      let totalTransferAmount = myJson["TransferTotal"]
-      let sum30TransferAmount = myJson["Transfer30Days"]
-      let totalBurnAmount = myJson["BurnTotal"]
-      let sum30BurnAmount = myJson["Burn30Days"]
 
-      this.setState({ totalBurnAmount })
-      this.setState({ sum30BurnAmount })
-      this.setState({ totalTransferAmount })
-      this.setState({ sum30TransferAmount })
+      let farmResponse0 = this.loadStakedBalance()
+      let farmResponse1 = this.loadPurseTokenTotalSupply()
+      let farmResponse2 = this.loadPoolRewardToken()
 
-      const purseTokenUpgradable = new web3Bsc.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C") //mainnet
-      this.setState({ purseTokenUpgradable })
-      let purseTokenUpgradableBalance = 0
-      this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
-      let purseTokenTotalSupply = await purseTokenUpgradable.methods.totalSupply().call()
-      this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
-      let poolRewardToken = await purseTokenUpgradable.methods.balanceOf("0x439ec8159740a9b9a579f286963ac1c050af31c8").call()
-      this.setState({ poolRewardToken: poolRewardToken.toString() })
+      let response0 = this.loadRewardEndTime()
+      let response1 = this.loadRewardStartTime()
+      let response2 = this.loadDistributedAmount()
+      let response3 = this.loadDistributedPercentage()
+      let response4 = this.loadPoolCapRewardToken()
+      let response5 = this.loadPoolMintedRewardToken()
+      let response6 = this.loadPoolLength()
 
-      let rewardEndTime = await this.state.purseTokenUpgradable.methods._getRewardEndTime().call()
-      let rewardStartTime = await this.state.purseTokenUpgradable.methods._getRewardStartTime().call()
-      let distributedAmount = await this.state.purseTokenUpgradable.methods._monthlyDistributePr().call()
-      let distributedPercentage = await this.state.purseTokenUpgradable.methods._percentageDistribute().call()
+      let stakedBalance = await farmResponse0
+      let purseTokenTotalSupply = await farmResponse1
+      let poolRewardToken = await farmResponse2
+
+      let rewardEndTime = await response0
+      let rewardStartTime = await response1
+      let distributedAmount = await response2
+      let distributedPercentage = await response3
+      let poolCapRewardToken = await response4
+      let poolMintedRewardToken = await response5
+      let poolLength = await response6
       let rewardStartTimeDate = this.timeConverter(rewardStartTime)
       let rewardEndTimeDate = this.timeConverter(rewardEndTime)
 
-      const restakingFarm = new web3Bsc.eth.Contract(RestakingFarm.abi, "0x439ec8159740a9b9a579f286963ac1c050af31c8")
-      this.setState({ restakingFarm })
-      let poolCapRewardToken = await this.state.restakingFarm.methods.capMintToken().call()
-      let poolMintedRewardToken = await this.state.restakingFarm.methods.totalMintToken().call()
-      let poolLength = await this.state.restakingFarm.methods.poolLength().call()
+      this.setState({ stakedBalance: stakedBalance.toString() })
+      this.setState({ purseTokenTotalSupply: purseTokenTotalSupply.toString() })
+      this.setState({ poolRewardToken: poolRewardToken.toString() })
       this.setState({ poolCapRewardToken })
       this.setState({ poolMintedRewardToken })
       this.setState({ poolLength })
 
       let totalrewardperblock = 0
+      let purseTokenUpgradableBalance = 0
       let poolSegmentInfo = [[], []]
       let lpTokenSegmentBalance = [[], []]
-      let lpTokenSegmentAsymbol = [[], []]
-      let lpTokenSegmentBsymbol = [[], []]
-      let bonusMultiplier = [[], []]
       let userSegmentInfo = [[], []]
       let pendingSegmentReward = [[], []]
-      let lpTokenLink = [[], []]
-      let lpTokenContract = [[], []]
 
-      let lpTokenAsymbols = []
-      let lpTokenBsymbols = []
       let lpTokenAddresses = []
-      let lpTokenPairAs = []
-      let lpTokenPairBs = []
       let lpTokenPairsymbols = []
 
       let n = 0
@@ -149,64 +183,35 @@ class App extends Component {
 
       for (i = 0; i < poolLength; i++) {
         let poolInfo = this.state.farm[i]
-        let lpTokenPairA = poolInfo.token[this.state.farmNetwork]["address"]
-        let lpTokenPairB = poolInfo.quoteToken[this.state.farmNetwork]["address"]
-        let lpTokenPairsymbol = poolInfo.lpTokenPairsymbol
-        let lpTokenAsymbol = poolInfo.token[this.state.farmNetwork]["symbol"]
-        let lpTokenBsymbol = poolInfo.quoteToken[this.state.farmNetwork]["symbol"]
-
         let lpTokenBalance = 0
         totalrewardperblock += parseInt(poolInfo.pursePerBlock * poolInfo.bonusMultiplier)
-
-        lpTokenAsymbols[i] = lpTokenAsymbol
-        lpTokenBsymbols[i] = lpTokenBsymbol
         lpTokenAddresses[i] = poolInfo.lpAddresses[this.state.networkId]
-        lpTokenPairAs[i] = lpTokenPairA
-        lpTokenPairBs[i] = lpTokenPairB
-        lpTokenPairsymbols[i] = lpTokenPairsymbol
+        lpTokenPairsymbols[i] = poolInfo.lpTokenPairsymbol
 
-        if (lpTokenPairsymbol == "Cake-LP") {
+        if (poolInfo.lpTokenPairsymbol == "Cake-LP") {
           userSegmentInfo[0][n] = ""
           pendingSegmentReward[0][n] = ""
           poolSegmentInfo[0][n] = poolInfo
-          bonusMultiplier[0][n] = poolInfo.bonusMultiplier
-          lpTokenSegmentAsymbol[0][n] = lpTokenAsymbol
-          lpTokenSegmentBsymbol[0][n] = lpTokenBsymbol
           lpTokenSegmentBalance[0][n] = lpTokenBalance
-          lpTokenLink[0][n] = poolInfo.getLPLink
-          lpTokenContract[0][n] = poolInfo.lpContract
           n += 1
         } else {
           userSegmentInfo[1][n] = ""
           pendingSegmentReward[1][n] = ""
           poolSegmentInfo[1][n] = poolInfo
-          bonusMultiplier[1][n] = poolInfo.bonusMultiplier
-          lpTokenSegmentAsymbol[1][n] = lpTokenAsymbol
-          lpTokenSegmentBsymbol[1][n] = lpTokenBsymbol
           lpTokenSegmentBalance[1][n] = lpTokenBalance
-          lpTokenLink[1][n] = poolInfo.getLPLink
-          lpTokenContract[1][n] = poolInfo.lpContract
           n += 1
         }
       }
 
-      this.setState({ bonusMultiplier })
+      this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
       this.setState({ poolSegmentInfo })
       this.setState({ lpTokenSegmentBalance })
-      this.setState({ lpTokenSegmentAsymbol })
-      this.setState({ lpTokenSegmentBsymbol })
       this.setState({ totalrewardperblock: totalrewardperblock.toLocaleString('fullwide', { useGrouping: false }) })
       this.setState({ pendingSegmentReward: [[], []] })
       this.setState({ userSegmentInfo: [[], []] })
       this.setState({ totalpendingReward: "0" })
-      this.setState({ lpTokenLink })
-      this.setState({ lpTokenContract })
 
-      this.setState({ lpTokenAsymbols })
-      this.setState({ lpTokenBsymbols })
       this.setState({ lpTokenAddresses })
-      this.setState({ lpTokenPairAs })
-      this.setState({ lpTokenPairBs })
       this.setState({ lpTokenPairsymbols })
 
       this.setState({ rewardStartTime })
@@ -215,18 +220,20 @@ class App extends Component {
       this.setState({ rewardEndTimeDate })
       this.setState({ distributedAmount })
       this.setState({ distributedPercentage })
-
+      this.setState({ farmLoading: true })
     }
-    // ##############################################################################################################################
-    else {
-      // Load PurseTokenUpgradable
-      const restakingFarmData = RestakingFarm.networks[networkId]
-      let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-      this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
-      let claimAmount = await this.checkClaimAmount(this.state.account)
-      this.setState({ claimAmount })
+  }
 
-      // Load RestakingFarm
+  // ##############################################################################################################################
+  async loadBlockchainUserData() {
+      // Load PurseTokenUpgradable
+      let userResponse0 = this.loadPurseTokenBalance()
+      let userResponse1 = this.checkClaimAmount(this.state.account)
+      let purseTokenUpgradableBalance = await userResponse0
+      let claimAmount = await userResponse1
+
+      this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
+      this.setState({ claimAmount })
 
       let totalpendingReward = 0
       let userSegmentInfo = [[], []]
@@ -236,39 +243,182 @@ class App extends Component {
       let n = 0
       let i = 0
 
+      let response0 = []
+      let response1 = []
+      let response2 = []
+      let response3 = []
+  
+      for (i = 0; i < this.state.poolLength; i++) {
+        response0[i] = this.loadUserInfo(i)
+        response1[i] = this.loadLpTokenBalance(i)
+        response2[i] = this.loadLpTokenAllowance(i)
+        response3[i] = this.loadPendingReward(i)
+      }
+
       for (i = 0; i < this.state.poolLength; i++) {
 
-        let userInfo = await this.state.restakingFarm.methods.userInfo(this.state.lpTokenAddresses[i], this.state.account).call()
-        let lpTokenPair = new web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-        let lpTokenBalance = await lpTokenPair.methods.balanceOf(this.state.account).call()
-        let lpTokenAllowance = await lpTokenPair.methods.allowance(this.state.account, restakingFarmData.address).call()
-        let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
-
+        let userInfo = await response0[i]
+        let lpTokenBalance = await response1[i]
+        let lpTokenAllowance = await response2[i]
+        let pendingReward = await response3[i]
         totalpendingReward += parseInt(pendingReward)
 
         if (this.state.lpTokenPairsymbols[i] == "Cake-LP") {
-
-          userSegmentInfo[0][n] = web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
+          userSegmentInfo[0][n] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
           lpTokenSegmentBalance[0][n] = lpTokenBalance
           lpTokenSegmentAllowance[0][n] = lpTokenAllowance
-          pendingSegmentReward[0][n] = web3Bsc.utils.fromWei(pendingReward, 'Ether')
+          pendingSegmentReward[0][n] = window.web3Bsc.utils.fromWei(pendingReward, 'Ether')
           n += 1
         } else {
-          userSegmentInfo[1][n] = web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
+          userSegmentInfo[1][n] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
           lpTokenSegmentBalance[1][n] = lpTokenBalance
           lpTokenSegmentAllowance[1][n] = lpTokenAllowance
-          pendingSegmentReward[1][n] = web3Bsc.utils.fromWei(pendingReward, 'Ether')
+          pendingSegmentReward[1][n] = window.web3Bsc.utils.fromWei(pendingReward, 'Ether')
           n += 1
         }
       }
+
       this.setState({ lpTokenSegmentBalance })
       this.setState({ pendingSegmentReward })
       this.setState({ lpTokenSegmentAllowance })
       this.setState({ userSegmentInfo })
       this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
+      this.setState({ farmLoading: true })
     }
-    this.setState({ loading: true })
-    this.setState({ farmLoading: true })
+  // ***************************Farm Info***********************************************************************
+  async loadRewardEndTime() {
+    let rewardEndTime = await this.state.purseTokenUpgradable.methods._getRewardEndTime().call()
+    return rewardEndTime
+  }
+
+  async loadRewardStartTime() {
+    let rewardStartTime = await this.state.purseTokenUpgradable.methods._getRewardStartTime().call()
+    return rewardStartTime
+  }
+
+  async loadDistributedAmount() {
+    let distributedAmount = await this.state.purseTokenUpgradable.methods._monthlyDistributePr().call()
+    return distributedAmount
+  }
+
+  async loadDistributedPercentage() {
+    let distributedPercentage = await this.state.purseTokenUpgradable.methods._percentageDistribute().call()
+    return distributedPercentage
+  }
+
+  async loadPoolCapRewardToken() {
+    let poolCapRewardToken = await this.state.restakingFarm.methods.capMintToken().call()
+    return poolCapRewardToken
+  }
+
+  async loadPoolMintedRewardToken() {
+    let poolMintedRewardToken = await this.state.restakingFarm.methods.totalMintToken().call()
+    return poolMintedRewardToken
+  }
+
+  async loadPoolLength() {
+    let poolLength = await this.state.restakingFarm.methods.poolLength().call()
+    return poolLength
+  }
+
+  async loadApiPrice() {
+    let coingeckoResponse = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin%2Cweth%2Cbinance-usd%2Cusd-coin%2Ctether%2Cbitcoin%2Cpundi-x-purse&vs_currencies=usd`);
+    return coingeckoResponse.json();
+  }
+
+  async loadBDL() {
+    let mongoResponse0 = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-iqgbt/endpoint/PundiX`);
+    return mongoResponse0.json()
+  }
+
+  async loadAccumulateTransfer() {
+    let mongoResponse1 = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-iqgbt/endpoint/CumulativeTransfer`);
+    return mongoResponse1.json()
+  }
+
+  async loadAccumulateBurn() {
+    let mongoResponse2 = await fetch(`https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-iqgbt/endpoint/CumulativeBurn`);
+    return mongoResponse2.json()
+  }
+
+  async loadStakedBalance() {
+    let stakedBalance = await this.state.pancakeContract.methods.balanceOf("0x439ec8159740a9B9a579F286963Ac1C050aF31C8").call()
+    stakedBalance = window.web3Bsc.utils.fromWei(stakedBalance, 'Ether')
+    return stakedBalance
+  }
+
+  async loadPurseTokenTotalSupply() {
+    let purseTokenTotalSupply = await this.state.purseTokenUpgradable.methods.totalSupply().call()
+    return purseTokenTotalSupply
+  }
+
+  async loadPoolRewardToken() {
+    let poolRewardToken = await this.state.purseTokenUpgradable.methods.balanceOf("0x439ec8159740a9b9a579f286963ac1c050af31c8").call()
+    return poolRewardToken
+  }
+
+
+
+  // ***************************User Info***********************************************************************
+
+  async loadPurseTokenBalance() {
+    let purseTokenBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
+    return purseTokenBalance
+  }
+
+  async loadUserInfo(i) {
+    let userInfo = await this.state.restakingFarm.methods.userInfo(this.state.lpTokenAddresses[i], this.state.account).call()
+    return userInfo
+  }
+
+  async loadLpTokenBalance(i) {
+    let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
+    let lpTokenBalance = await lpTokenPair.methods.balanceOf(this.state.account).call()
+    return lpTokenBalance
+  }
+
+  async loadLpTokenAllowance(i) {
+    let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
+    let lpTokenAllowance = await lpTokenPair.methods.allowance(this.state.account, this.state.restakingFarm._address).call()
+    return lpTokenAllowance
+  }
+
+  async loadPendingReward(i) {
+    let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
+    return pendingReward
+  }
+
+  // *************************** Distribution Reward Info ***********************************************************************
+
+  async loadLastRewardStartTime() {
+    let lastRewardStartTime = await this.state.purseTokenUpgradable.methods._lastRewardStartTime().call()
+    return lastRewardStartTime
+  }
+
+  async loadLastRewardStartTime() {
+    let numOfDays = await this.state.purseTokenUpgradable.methods._numOfDaysPerMth().call()
+    return numOfDays
+  }
+
+  async loadPercentageDis() {
+    let percentageDis = await this.state.purseTokenUpgradable.methods._percentageDistribute().call()
+    return percentageDis
+  }
+
+  async loadAverageInterval() {
+    let averageInterval = await this.state.purseTokenUpgradable.methods._averageInterval().call()
+    return averageInterval
+  }
+
+  async loadUserRewardInfo(address) {
+    let userRewardInfo = await this.state.purseTokenUpgradable.methods.accAmount(address).call()
+    return userRewardInfo
+  }
+
+  async loadUserBalance(address) {
+    let userBalance = await this.state.purseTokenUpgradable.methods.balanceOf(address).call()
+    userBalance = window.web3Bsc.utils.fromWei(userBalance, 'Ether')
+    return userBalance
   }
 
   // ***************************TVL & APR***********************************************************************
@@ -315,6 +465,8 @@ class App extends Component {
   }
 
 
+  // ***********************************************************************************************************
+
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
@@ -332,23 +484,6 @@ class App extends Component {
     }
     // window.web3Bsc = new Web3(`https://data-seed-prebsc-1-s2.binance.org:8545/`);  // testnet
     window.web3Bsc = new Web3(`https://bsc-dataseed.binance.org/`);
-    let response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin%2Cweth%2Cbinance-usd%2Cusd-coin%2Ctether%2Cbitcoin%2Cpundi-x-purse&vs_currencies=usd`);
-    const myJson = await response.json();
-    let PURSEPrice = myJson["pundi-x-purse"]["usd"]
-    this.setState({ PURSEPrice: PURSEPrice.toFixed(10) })
-    let USDTPrice = myJson["tether"]["usd"]
-    this.setState({ USDTPrice: USDTPrice.toFixed(10) })
-    let USDCPrice = myJson["usd-coin"]["usd"]
-    this.setState({ USDCPrice: USDCPrice.toFixed(10) })
-    let BNBPrice = myJson["binancecoin"]["usd"]
-    this.setState({ BNBPrice: BNBPrice.toFixed(10) })
-    let WETHPrice = myJson["weth"]["usd"]
-    this.setState({ WETHPrice: WETHPrice.toFixed(10) })
-    let BUSDPrice = myJson["binance-usd"]["usd"]
-    this.setState({ BUSDPrice: BUSDPrice.toFixed(10) })
-    let BTCPrice = myJson["bitcoin"]["usd"]
-    this.setState({ BTCPrice: BTCPrice.toFixed(10) })
-    this.setState({ loading: true })
   }
 
   connectWallet = () => {
@@ -360,19 +495,19 @@ class App extends Component {
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
           if (chainId == "0x38") {      // mainnet: 0x38, testnet: 0x61
             this.setWalletTrigger(true)
+            // this.componentWillMount()
           }
         })
         .catch((err) => {
           if (err.code === 4001) {
             // EIP-1193 userRejectedRequest error
             // If this happens, the user rejected the connection request.
-            console.log('Please connect to MetaMask.');
+            // console.log('Please connect to MetaMask.');
           } else {
             console.error("error");
             console.error(err);
           }
         });
-      // this.componentWillMount()
     } else {
       alert("No provider was found")
     }
@@ -403,11 +538,11 @@ class App extends Component {
       this.setState({ first4Account: first4Account })
       this.setState({ last4Account: last4Account })
       this.setState({ walletConnect: true })
+      this.componentWillMount()
     }
 
     // Subscribe to accounts change
     window.provider.on("accountsChanged", this.handleAccountsChanged);
-
     // Subscribe to session disconnection
     // window.provider.on("disconnect", () => {
     //   this.WalletDisconnect()
@@ -418,10 +553,11 @@ class App extends Component {
 
   WalletDisconnect = async () => {
     await window.provider.disconnect()
-    this.setState({ walletConnect: false })
+    await this.setState({ walletConnect: false })
     this.setState({ pendingSegmentReward: [[], []] })
     this.setState({ userSegmentInfo: [[], []] })
     this.setState({ totalpendingReward: "0" })
+    this.componentWillMount()
   }
 
   switchNetwork = async () => {
@@ -484,10 +620,8 @@ class App extends Component {
     if (accounts.length === 0) {
       // MetaMask is locked or the user has not connected any accounts
       // console.log('Please connect to MetaMask.');
-      // console.log(accounts)
       this.setWalletTrigger(false)
     } else if (accounts[0] !== this.state.account) {
-      // console.log(accounts)
       this.state.account = accounts[0];
       const first4Account = this.state.account.substring(0, 4)
       const last4Account = this.state.account.slice(-4)
@@ -500,7 +634,6 @@ class App extends Component {
   handleChainChanged = async (chainId) => {
     // We recommend reloading the page, unless you must do otherwise
     // window.location.reload();
-    // console.log(chainId)
     if (chainId != "0x38") {
       this.setWalletTrigger(false)
     }
@@ -532,7 +665,6 @@ class App extends Component {
       this.switchNetwork()
       // Run any other necessary logic...
     }
-
   }
 
   timeConverter = (UNIX_timestamp) => {
@@ -552,142 +684,75 @@ class App extends Component {
 
   deposit = async (i, amount, n) => {
     if (this.state.walletConnect == true) {
-      this.setState({ loading: false })
       const restakingFarmData = RestakingFarm.networks[this.state.networkId]
       let restakingFarm = new window.web3Con.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
       await restakingFarm.methods.deposit(this.state.lpTokenAddresses[i], amount).send({ from: this.state.account }).then(async (result) => {
-        let userInfo = await this.state.restakingFarm.methods.userInfo(this.state.lpTokenAddresses[i], this.state.account).call()
-        let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-        let lpTokenBalance = await lpTokenPair.methods.balanceOf(this.state.account).call()
-        let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-        let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
-
-        this.state.userSegmentInfo[n][i] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
-        this.state.lpTokenSegmentBalance[n][i] = lpTokenBalance
-        this.state.purseTokenUpgradableBalance = purseTokenUpgradableBalance
-        this.state.pendingSegmentReward[n][i] = window.web3Bsc.utils.fromWei(pendingReward, 'ether')
+        this.componentWillMount()
       }).catch((err) => {
         if (err.code === 4001) {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
-          this.setState({ loading: true })
-          this.componentWillMount()
         } else {
           console.error(err);
         }
       });
     } else if (this.state.wallet == true) {
-      console.log("efg")
-      this.setState({ loading: false })
       const restakingFarmData = RestakingFarm.networks[this.state.networkId]
       let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
       await restakingFarm.methods.deposit(this.state.lpTokenAddresses[i], amount).send({ from: this.state.account }).then(async (result) => {
-        let userInfo = await this.state.restakingFarm.methods.userInfo(this.state.lpTokenAddresses[i], this.state.account).call()
-        let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-        let lpTokenBalance = await lpTokenPair.methods.balanceOf(this.state.account).call()
-        let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-        let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
-
-        this.state.userSegmentInfo[n][i] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
-        this.state.lpTokenSegmentBalance[n][i] = lpTokenBalance
-        this.state.purseTokenUpgradableBalance = purseTokenUpgradableBalance
-        this.state.pendingSegmentReward[n][i] = window.web3Bsc.utils.fromWei(pendingReward, 'ether')
+        this.componentWillMount()
       }).catch((err) => {
         if (err.code === 4001) {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
-          this.setState({ loading: true })
-          this.componentWillMount()
         } else {
           console.error(err);
         }
       });
     }
-    this.setState({ loading: true })
-    this.componentWillMount()
   }
 
   approve = async (i, n) => {
     if (this.state.walletConnect == true) {
-      this.setState({ loading: false })
       let lpToken = new window.web3Con.eth.Contract(LpToken.abi, this.state.lpTokenAddresses[i])
-
       await lpToken.methods.approve(this.state.restakingFarm._address, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: this.state.account }).then(async (result) => {
-        let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-        let lpTokenAllowance = await lpTokenPair.methods.allowance(this.state.account, this.state.restakingFarm._address).call()
-        this.state.lpTokenSegmentAllowance[n][i] = lpTokenAllowance
+        this.componentWillMount()
       })
-      this.componentWillMount()
-      this.setState({ loading: true })
     } else if (this.state.wallet == true) {
-      this.setState({ loading: false })
       let lpToken = new window.web3.eth.Contract(LpToken.abi, this.state.lpTokenAddresses[i])
-
       await lpToken.methods.approve(this.state.restakingFarm._address, "115792089237316195423570985008687907853269984665640564039457584007913129639935").send({ from: this.state.account }).then(async (result) => {
-        let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-        let lpTokenAllowance = await lpTokenPair.methods.allowance(this.state.account, this.state.restakingFarm._address).call()
-        this.state.lpTokenSegmentAllowance[n][i] = lpTokenAllowance
+        this.componentWillMount()
       })
-      this.componentWillMount()
-      this.setState({ loading: true })
     }
   }
 
   withdraw = async (i, amount, n) => {
     if (this.state.walletConnect == true) {
-      this.setState({ loading: false })
       const restakingFarmData = RestakingFarm.networks[this.state.networkId]
       let restakingFarm = new window.web3Con.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
       restakingFarm.methods.withdraw(this.state.lpTokenAddresses[i], amount).send({ from: this.state.account }).then(async (result) => {
-        let userInfo = await this.state.restakingFarm.methods.userInfo(this.state.lpTokenAddresses[i], this.state.account).call()
-        let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-        let lpTokenBalance = await lpTokenPair.methods.balanceOf(this.state.account).call()
-        let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-        let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
-
-        this.state.userSegmentInfo[n][i] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
-        this.state.lpTokenSegmentBalance[n][i] = lpTokenBalance
-        this.state.purseTokenUpgradableBalance = purseTokenUpgradableBalance
-        this.state.pendingSegmentReward[n][i] = window.web3Bsc.utils.fromWei(pendingReward, 'ether')
-        this.setState({ loading: true })
         this.componentWillMount()
       }).catch((err) => {
         if (err.code === 4001) {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
-          this.setState({ loading: true })
-          this.componentWillMount()
         } else {
           console.error(err);
         }
       });
     } else if (this.state.wallet == true) {
-      this.setState({ loading: false })
       const restakingFarmData = RestakingFarm.networks[this.state.networkId]
       let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
       restakingFarm.methods.withdraw(this.state.lpTokenAddresses[i], amount).send({ from: this.state.account }).then(async (result) => {
-        let userInfo = await this.state.restakingFarm.methods.userInfo(this.state.lpTokenAddresses[i], this.state.account).call()
-        let lpTokenPair = new window.web3Bsc.eth.Contract(IPancakePair.abi, this.state.lpTokenAddresses[i])
-        let lpTokenBalance = await lpTokenPair.methods.balanceOf(this.state.account).call()
-        let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-        let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
-
-        this.state.userSegmentInfo[n][i] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
-        this.state.lpTokenSegmentBalance[n][i] = lpTokenBalance
-        this.state.purseTokenUpgradableBalance = purseTokenUpgradableBalance
-        this.state.pendingSegmentReward[n][i] = window.web3Bsc.utils.fromWei(pendingReward, 'ether')
-        this.setState({ loading: true })
         this.componentWillMount()
       }).catch((err) => {
         if (err.code === 4001) {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           alert("Something went wrong...Code: 4001 User rejected the request.")
-          this.setState({ loading: true })
-          this.componentWillMount()
         } else {
           console.error(err);
         }
@@ -700,95 +765,81 @@ class App extends Component {
       if (this.state.pendingSegmentReward[n][i] <= 0) {
         alert("No token to harvest! Please deposit LP to earn PURSE")
       } else {
-        this.setState({ loading: false })
         const restakingFarmData = RestakingFarm.networks[this.state.networkId]
         let restakingFarm = new window.web3Con.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
         restakingFarm.methods.claimReward(this.state.lpTokenAddresses[i]).send({ from: this.state.account }).then(async (result) => {
-          let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-          this.state.purseTokenUpgradableBalance = purseTokenUpgradableBalance
-          let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
-          this.state.pendingSegmentReward[n][i] = window.web3.utils.fromWei(pendingReward, 'ether')
           this.componentWillMount()
         }).catch((err) => {
           if (err.code === 4001) {
             // EIP-1193 userRejectedRequest error
             // If this happens, the user rejected the connection request.
             alert("Something went wrong...Code: 4001 User rejected the request.")
-            this.setState({ loading: true })
-            this.componentWillMount()
           } else {
             console.error(err);
           }
         });
       }
-      this.setState({ loading: true })
     } else if (this.state.wallet == true) {
       if (this.state.pendingSegmentReward[n][i] <= 0) {
         alert("No token to harvest! Please deposit LP to earn PURSE")
       } else {
-        this.setState({ loading: false })
         const restakingFarmData = RestakingFarm.networks[this.state.networkId]
         let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
         restakingFarm.methods.claimReward(this.state.lpTokenAddresses[i]).send({ from: this.state.account }).then(async (result) => {
-          let purseTokenUpgradableBalance = await this.state.purseTokenUpgradable.methods.balanceOf(this.state.account).call()
-          this.state.purseTokenUpgradableBalance = purseTokenUpgradableBalance
-          let pendingReward = await this.state.restakingFarm.methods.pendingReward(this.state.lpTokenAddresses[i], this.state.account).call()
-          this.state.pendingSegmentReward[n][i] = window.web3.utils.fromWei(pendingReward, 'ether')
           this.componentWillMount()
         }).catch((err) => {
           if (err.code === 4001) {
             // EIP-1193 userRejectedRequest error
             // If this happens, the user rejected the connection request.
             alert("Something went wrong...Code: 4001 User rejected the request.")
-            this.setState({ loading: true })
-            this.componentWillMount()
           } else {
             console.error(err);
           }
         });
       }
-      this.setState({ loading: true })
     } else {
       alert("Wallet is not connected")
     }
   }
 
   checkClaimAmount = async (address) => {
-    let lastRewardStartTime = await this.state.purseTokenUpgradable.methods._lastRewardStartTime().call()
-    let _numOfDays = await this.state.purseTokenUpgradable.methods._numOfDaysPerMth().call()
-    let _percentageDis = await this.state.purseTokenUpgradable.methods._percentageDistribute().call()
-    let _averageInterval = await this.state.purseTokenUpgradable.methods._averageInterval().call()
 
-    let userRewardInfo = await this.state.purseTokenUpgradable.methods.accAmount(address).call()
-    let userBalance = await this.state.purseTokenUpgradable.methods.balanceOf(address).call()
-    userBalance = window.web3Bsc.utils.fromWei(userBalance, 'Ether')
+    let response0 = this.loadLastRewardStartTime()
+    let response1 = this.loadLastRewardStartTime() 
+    let response2 = this.loadPercentageDis()
+    let response3 = this.loadAverageInterval()
+    let response4 = this.loadUserRewardInfo(address)
+    let response5 = this.loadUserBalance(address)
 
+    let lastRewardStartTime = await response0
+    let numOfDays = await response1
+    let percentageDis = await response2
+    let averageInterval = await response3
+    let userRewardInfo = await response4
+    let userBalance = await response5
     let reward = 0
+    
     if (userRewardInfo.lastUpdateTime == 0) {
       reward = 0
     } else if (userRewardInfo.lastUpdateTime >= this.state.rewardStartTime) {
       reward = userRewardInfo.accReward
     } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {
-      let interval = (this.state.rewardStartTime - lastRewardStartTime) / _averageInterval;
+      let interval = (this.state.rewardStartTime - lastRewardStartTime) / averageInterval;
       let accumulateAmount = userBalance * interval;
-      reward = accumulateAmount * this.state.distributedAmount * _percentageDis / this.state.purseTokenTotalSupply / _numOfDays / 100;
+      reward = accumulateAmount * this.state.distributedAmount * percentageDis / this.state.purseTokenTotalSupply / numOfDays / 100;
     } else {
-      let interval = ((this.state.rewardStartTime - userRewardInfo.lastUpdateTime) / _averageInterval).toFixed(0);
+      let interval = ((this.state.rewardStartTime - userRewardInfo.lastUpdateTime) / averageInterval).toFixed(0);
       let accumulateAmount = userBalance * interval;
-      console.log(userBalance)
       let lastmonthAccAmount = parseInt(window.web3Bsc.utils.fromWei(userRewardInfo.amount, 'Ether')) + accumulateAmount;
-      console.log(lastmonthAccAmount)
-      reward = lastmonthAccAmount * this.state.distributedAmount * _percentageDis / this.state.purseTokenTotalSupply / _numOfDays / 100;
+      reward = lastmonthAccAmount * this.state.distributedAmount * percentageDis / this.state.purseTokenTotalSupply / numOfDays / 100;
     }
     return reward
   }
 
   claimDistributePurse = async () => {
-    let rewardEndTime = await this.state.purseTokenUpgradable.methods._getRewardEndTime().call()
-    let rewardStartTime = await this.state.purseTokenUpgradable.methods._getRewardStartTime().call()
-    if ((Date.now() / 1000).toFixed(0) < rewardStartTime) {
+    if ((Date.now() / 1000).toFixed(0) < this.state.rewardStartTime) {
       alert("Distribution not started yet")
-    } else if ((Date.now() / 1000).toFixed(0) > rewardEndTime) {
+    } else if ((Date.now() / 1000).toFixed(0) > this.state.rewardEndTime) {
       alert("Distribution already end")
     } else {
       if (this.state.claimAmount == 0) {
@@ -812,9 +863,7 @@ class App extends Component {
   setWalletTrigger = async (state) => {
     if (state == false) {
       await this.setState({ wallet: state })
-      this.setState({ pendingSegmentReward: [[], []] })
-      this.setState({ userSegmentInfo: [[], []] })
-      this.setState({ totalpendingReward: "0" })
+      this.componentWillMount()
     } else {
       const accounts = await window.web3.eth.getAccounts()
       this.setState({ account: accounts[0] })
@@ -823,6 +872,7 @@ class App extends Component {
       this.setState({ first4Account: first4Account })
       this.setState({ last4Account: last4Account })
       this.setState({ wallet: state })
+      this.componentWillMount()
     }
   }
 
@@ -840,9 +890,11 @@ class App extends Component {
       sum30BurnAmount: '0',
       totalTransferAmount: '0',
       sum30TransferAmount: '0',
+      cumulateTransfer: [],
+      cumulateBurn: [],
+      stakedBalance: '0',
       i: '0',
       n: '0',
-      loading: false,
       wallet: false,
       metamask: false,
       farmLoading: false,
@@ -852,11 +904,8 @@ class App extends Component {
       userSegmentInfo: [[], []],
       poolSegmentInfo: [[], []],
       lpTokenSegmentBalance: [[], []],
-      lpTokenSegmentAsymbol: [[], []],
-      lpTokenSegmentBsymbol: [[], []],
       pendingSegmentReward: [[], []],
       lpTokenSegmentAllowance: [[], []],
-      bonusMultiplier: [[], []],
       tvl: [[], []],
       apr: [[], []],
       apyDaily: [[], []],
@@ -869,8 +918,6 @@ class App extends Component {
       poolMintedRewardToken: '0',
       poolRewardToken: '0',
       networkName: "Loading",
-      lpTokenLink: '',
-      lpTokenContract: '',
       rewardEndTime: '0',
       rewardStartTime: '0',
       distributedAmount: '0',
@@ -888,24 +935,6 @@ class App extends Component {
     let oneinchContent
     let distributionContent
     let farmInfoContent
-    if (this.state.loading == false) {
-      maincontent =
-        <div className="wrap">
-          <div className="loading">
-            <div className="bounceball"></div>
-            <div className="textLoading">NETWORK IS LOADING...</div>
-          </div>
-        </div>
-      depositcontent =
-        <div className="textLoadingSmall">Loading...</div>
-      menucontent =
-        <div className="wrap">
-          <div className="loading">
-            <div className="bounceball"></div>
-            <div className="textLoading">NETWORK IS LOADING...</div>
-          </div>
-        </div>
-    } else {
       maincontent = <Main
         lpTokenBalance={this.state.lpTokenBalance}
         purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
@@ -923,6 +952,8 @@ class App extends Component {
         sum30BurnAmount={this.state.sum30BurnAmount}
         totalTransferAmount={this.state.totalTransferAmount}
         sum30TransferAmount={this.state.sum30TransferAmount}
+        cumulateTransfer = {this.state.cumulateTransfer}
+        cumulateBurn = {this.state.cumulateBurn}
       />
       menucontent = <Menu
         lpTokenBalance={this.state.lpTokenBalance}
@@ -933,16 +964,14 @@ class App extends Component {
         userSegmentInfo={this.state.userSegmentInfo}
         poolSegmentInfo={this.state.poolSegmentInfo}
         lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
-        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
         pendingSegmentReward={this.state.pendingSegmentReward}
         buttonPopup={this.state.buttonPopup}
+        farmNetwork={this.state.farmNetwork}
         tvl={this.state.tvl}
         apr={this.state.apr}
         apyDaily={this.state.apyDaily}
         apyWeekly={this.state.apyWeekly}
         apyMonthly={this.state.apyMonthly}
-        bonusMultiplier={this.state.bonusMultiplier}
         farmLoading={this.state.farmLoading}
         aprloading={this.state.aprloading}
         deposit={this.deposit}
@@ -950,6 +979,7 @@ class App extends Component {
         setI={this.setI}
         setTrigger={this.setTrigger}
         harvest={this.harvest}
+        stakedBalance={this.state.stakedBalance}
       />
       depositcontent = <Deposit
         lpTokenBalance={this.state.lpTokenBalance}
@@ -961,17 +991,15 @@ class App extends Component {
         userSegmentInfo={this.state.userSegmentInfo}
         poolSegmentInfo={this.state.poolSegmentInfo}
         lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
-        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
+        c={this.state.lpTokenSegmentAsymbol}
         pendingSegmentReward={this.state.pendingSegmentReward}
         lpTokenSegmentAllowance={this.state.lpTokenSegmentAllowance}
         wallet={this.state.wallet}
+        farmNetwork={this.state.farmNetwork}
         harvest={this.harvest}
         approve={this.approve}
         connectWallet={this.connectWallet}
         walletConnect={this.state.walletConnect}
-        lpTokenLink={this.state.lpTokenLink}
-        lpTokenContract={this.state.lpTokenContract}
       />
       oneinchContent = <Oneinch
         lpTokenBalance={this.state.lpTokenBalance}
@@ -982,16 +1010,14 @@ class App extends Component {
         userSegmentInfo={this.state.userSegmentInfo}
         poolSegmentInfo={this.state.poolSegmentInfo}
         lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-        lpTokenSegmentAsymbol={this.state.lpTokenSegmentAsymbol}
-        lpTokenSegmentBsymbol={this.state.lpTokenSegmentBsymbol}
         pendingSegmentReward={this.state.pendingSegmentReward}
         buttonPopup={this.state.buttonPopup}
+        farmNetwork={this.state.farmNetwork}
         tvl={this.state.tvl}
         apr={this.state.apr}
         apyDaily={this.state.apyDaily}
         apyWeekly={this.state.apyWeekly}
         apyMonthly={this.state.apyMonthly}
-        bonusMultiplier={this.state.bonusMultiplier}
         farmLoading={this.state.farmLoading}
         aprloading={this.state.aprloading}
         deposit={this.deposit}
@@ -1030,7 +1056,6 @@ class App extends Component {
         totalTransferAmount={this.state.totalTransferAmount}
         purseTokenTotalSupply={this.state.purseTokenTotalSupply}
       />
-    }
 
     return (
       <Router>

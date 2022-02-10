@@ -1,10 +1,32 @@
 import React, { Component } from 'react'
 import Popup from 'reactjs-popup';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
+import { AreaChart, Area, YAxis, XAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
 
 class Main extends Component {
 
   render() {
+    let cumulateTransfer = this.props.cumulateTransfer
+    let cumulateBurn = this.props.cumulateBurn
+    let newCumulateTransfer = []
+    let newCumulateBurn = []
+    cumulateTransfer.forEach(item => newCumulateTransfer.push({"Sum": parseFloat(item.Sum), "Date": item.Date}));
+    cumulateBurn.forEach(item => newCumulateBurn.push({"Sum": parseFloat(item.Sum), "Date": item.Date}));
+
+    const DataFormater = (number) => {
+      if(number > 1000000000){
+        return (number/1000000000).toString() + 'B';
+      }else if(number > 1000000){
+        return (number/1000000).toString() + 'M';
+      }else if(number > 1000){
+        return (number/1000).toString() + 'K';
+      }else{
+        return number.toString();
+      }
+    }
+    const NumberFormater = (number) => {
+      return parseFloat(number).toLocaleString('en-US', { maximumFractionDigits: 2 })
+    }
     return (
       <div id="content" className="mt-4">
         <label className="textWhite center mb-5" style={{ fontSize: '40px' }}><big><b>PURSE Dashboard</b></big></label>
@@ -105,7 +127,31 @@ class Main extends Component {
               </tbody>
             </table>
           </div>
-        </div>
+        </div><br/><br/>
+        <div className="container" style={{ width: 'fit-content' }}>
+          <div className="row">
+            <div>
+              <AreaChart width={460} height={300} data={newCumulateBurn}>
+                <XAxis dataKey="Date" tick={{fontSize: 14}} stroke="#A9A9A9"/>
+                <YAxis tickFormatter={DataFormater} tick={{fontSize: 14}} stroke="#A9A9A9"/>
+                <CartesianGrid vertical={false} strokeDasharray="2 2" />
+                <Tooltip formatter={NumberFormater} />
+                <Legend verticalAlign="top" height={40} formatter={() => ("Burn")} wrapperStyle={{fontSize: "20px"}}/>
+                <Area type="monotone" dataKey="Sum" stroke="#8884d8" fillOpacity={0.5} fill="#8884d8" />
+              </AreaChart>
+            </div><li></li><li></li>
+            <div>  
+              <AreaChart width={460} height={300} data={newCumulateTransfer}>
+                <XAxis dataKey="Date" tick={{fontSize: 14}} stroke="#A9A9A9"/>
+                <YAxis tickFormatter={DataFormater} tick={{fontSize: 14}} stroke="#A9A9A9"/>
+                <CartesianGrid vertical={false} strokeDasharray="2 2" />
+                <Tooltip formatter={NumberFormater} />
+                <Legend verticalAlign="top" height={40} formatter={() => ("Distribution / Liquidity")} wrapperStyle={{fontSize: "20px"}}/>
+                <Area type="monotone" dataKey="Sum" stroke="#82ca9d" fillOpacity={0.5} fill="#82ca9d" />
+              </AreaChart>
+            </div>
+          </div>
+        </div><br/><br/><br/><br/>
       </div>
 
     );

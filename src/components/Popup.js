@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './Popup.css'
-import Button from '@material-ui/core/Button';
 import CloseButton from 'react-bootstrap/CloseButton'
 
 class Popup extends Component {

@@ -7,15 +7,20 @@
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 body {
-position: relative;
-width: 100%;
-height: 10vh;
-font-family: Montserrat;
-margin-top: 0px;
-z-index: 1;
-background-attachment: fixed;
-background-color: #1f1f24;
-background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.16) 15%,rgba(31,31,36,.16) 40%);
+  position: relative;
+  width: 100%;
+  height: 10vh;
+  font-family: Montserrat;
+  margin-top: 0px;
+  z-index: 1;
+  background-attachment: fixed;
+  background-color: #1f1f24;
+  background-image: linear-gradient(
+    147deg,
+    rgba(247, 213, 9, 0.18) 5%,
+    rgba(186, 0, 255, 0.16) 15%,
+    rgba(31, 31, 36, 0.16) 40%
+  );
 }
 
 .swap-title-img {
@@ -55,22 +60,21 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
 }
 
 .cardbody {
-
   /* background-color: #638380; */
   background-color: #28313b;
-  border-width:1px;  
-  border-style:solid;
+  border-width: 1px;
+  border-style: solid;
   border-color: #d096ff;
   /* background-image: linear-gradient(200deg, #485461 74%, #28313b 0%); */
 }
 
 .borderTop {
   border-top: 0.1px solid rgb(187, 187, 187);
-  padding : 0.2rem;
+  padding: 0.2rem;
 }
 
 .dropdown {
-  padding : 0.3rem;
+  padding: 0.3rem;
   font-size: 16px;
   color: #d6d6d6;
   cursor: pointer;
@@ -86,7 +90,7 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
 }
 
 .dropdown0 {
-  padding : 0.3rem;
+  padding: 0.3rem;
   font-size: 16px;
   color: #d6d6d6;
   cursor: pointer;
@@ -103,7 +107,7 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
 }
 
 .dropdown1 {
-  padding : 0.3rem;
+  padding: 0.3rem;
   font-size: 18px;
   color: #c37aff;
   cursor: pointer;
@@ -133,55 +137,51 @@ background-image: linear-gradient(147deg,rgba(247,213,9,.18) 5%,rgba(186,0,255,.
   color: #04f7ff;
 }
 
-
-
-
 .menu {
   width: 200px;
   display: flex;
   flex-direction: column;
   background: #28313b;
-  ;
 }
 
-.rowC{
-  display:flex; 
-  flex-direction:row;
+.rowC {
+  display: flex;
+  flex-direction: row;
   /* line-height: 22px; */
   min-height: 1em;
   text-align: middle;
   vertical-align: middle;
 }
 
-.rowB{
-  display:flex; 
-  flex-direction:row;
+.rowB {
+  display: flex;
+  flex-direction: row;
   line-height: 32px;
   min-height: 2.2em;
   text-align: middle;
-  /* vertical-align: text-bottom; */
+  vertical-align: text-bottom;
 }
 
 .loading {
-position: relative;
-width: 100%;
-height: 10vh;
-font-family: Montserrat;
-margin-top: 180px;
+  position: relative;
+  width: 100%;
+  height: 10vh;
+  font-family: Montserrat;
+  margin-top: 180px;
 }
 
 .wrap {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .textLoading {
-color: #fbae17;
-display: inline-block;
-margin-left: 5px;
-font-size: 50px;
+  color: #fbae17;
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 50px;
 }
 
 .textLoadingSmall {
@@ -227,17 +227,17 @@ font-size: 50px;
 }
 
 .text {
-color: #ff9a04;
-display: inline-block;
-margin-left: 5px;
-/* font-size: 15px; */
+  color: #ff9a04;
+  display: inline-block;
+  margin-left: 5px;
+  /* font-size: 15px; */
 }
 
 .textSmall {
-color: #04f7ff;
-display: inline-block;
-margin-left: 5px;
-/* font-size: 50px; */
+  color: #04f7ff;
+  display: inline-block;
+  margin-left: 5px;
+  /* font-size: 50px; */
 }
 
 .textInfo {
@@ -245,14 +245,13 @@ margin-left: 5px;
   display: inline-block;
   margin-left: 5px;
   font-size: 13px;
-  }
+}
 
 .bounceball {
-position: relative;
-display: inline-block;
-height: 37px;
-width: 15px;
-
+  position: relative;
+  display: inline-block;
+  height: 37px;
+  width: 15px;
 }
 .bounceball:before {
   position: absolute;
@@ -265,7 +264,7 @@ width: 15px;
   background-color: #fbae17;
   transform-origin: 50%;
   -webkit-animation: bounce 500ms alternate infinite ease;
-          animation: bounce 500ms alternate infinite ease;
+  animation: bounce 500ms alternate infinite ease;
 }
 @-webkit-keyframes bounce {
   0% {
@@ -305,7 +304,6 @@ width: 15px;
   font-size: 12px;
 }
 
-
 .popup-content {
   margin: auto;
   background: #303b47;
@@ -320,7 +318,7 @@ width: 15px;
   /* stroke-dasharray: 30px;
   stroke-dashoffset: -54px; */
 }
-[role='tooltip'].popup-content {
+[role="tooltip"].popup-content {
   width: 220px;
   box-shadow: #596169 0px 0px 1px;
 }
@@ -328,22 +326,21 @@ width: 15px;
 .popup-overlay {
   background: rgba(0, 0, 0, 0.5);
 }
-[data-popup='tooltip'].popup-overlay {
+[data-popup="tooltip"].popup-overlay {
   background: transparent;
 }
 
 .popup1-content {
   margin: auto;
-  background: #353A40;
+  background: #353a40;
   border: 1px solid #596169;
   width: 100%;
   padding: 5px;
 }
 .popup1-arrow {
-  color: #353A40;
-  
+  color: #353a40;
 }
-[role='tooltip'].popup1-content {
+[role="tooltip"].popup1-content {
   width: 180px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
 }
@@ -351,7 +348,7 @@ width: 15px;
 .popup1-overlay {
   background: rgba(0, 0, 0, 0.5);
 }
-[data-popup='tooltip'].popup-overlay {
+[data-popup="tooltip"].popup-overlay {
   background: transparent;
 }
 
@@ -385,12 +382,12 @@ width: 15px;
     top: -5px;
     height: 16px;
   }
-  50%, 100% {
+  50%,
+  100% {
     top: -3px;
     height: 8px;
   }
 }
-
 
 .lds-dual-ring {
   display: inline-block;
@@ -398,7 +395,7 @@ width: 15px;
   height: 0px;
 }
 .lds-dual-ring:after {
-  position:relative;
+  position: relative;
   content: " ";
   display: block;
   top: -12px;
@@ -429,13 +426,12 @@ width: 15px;
 
 @keyframes comingSoon {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
-
 
 table {
   font-family: arial, sans-serif;
@@ -444,7 +440,8 @@ table {
   width: 900px;
 }
 
-td, th {
+td,
+th {
   /* border: 1px solid #dddddd; */
   text-align: center;
   padding: 5px;

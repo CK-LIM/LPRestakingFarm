@@ -82,7 +82,7 @@ class Distribution extends Component {
                                     <tbody>
                                         <tr>
                                             <td>{parseFloat(window.web3Bsc.utils.fromWei(this.props.distributedAmount, 'Ether')).toLocaleString('en-US', { maximumFractionDigits: 0 })}</td>
-                                            <td>{parseFloat(this.props.totalTransferAmount * 12 * 100 / this.props.purseTokenTotalSupply).toLocaleString('en-US', { maximumFractionDigits: 2 })}%</td>
+                                            <td>{parseFloat(this.props.totalTransferAmount * 12 * 7 * 100 / this.props.purseTokenTotalSupply).toLocaleString('en-US', { maximumFractionDigits: 2 })}%</td>
                                         </tr>
                                     </tbody>
                                 </table>

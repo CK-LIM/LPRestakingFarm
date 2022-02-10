@@ -93,9 +93,9 @@ class Menu extends Component {
                                         <div className="card mb-4 cardbody card-body text-center" style={{ maxWidth: '230px', color: 'white' }}>
                                             <span>
                                                 <img src={purse} height='30' alt="" /><br />
-                                                <b className="text">{this.props.lpTokenSegmentAsymbol[0][i]}-{this.props.lpTokenSegmentBsymbol[0][i]}</b>
+                                                <b className="text">{this.props.poolSegmentInfo[0][i].token[this.props.farmNetwork]["symbol"]}-{this.props.poolSegmentInfo[0][i].quoteToken[this.props.farmNetwork]["symbol"]}</b>
                                                 <div>
-                                                    <div className=""><small>Deposit<small className="textSmall">{this.props.lpTokenSegmentAsymbol[0][i]}-{this.props.lpTokenSegmentBsymbol[0][i]} PANCAKE LP</small> to Earn PURSE</small></div>
+                                                    <div className=""><small>Deposit<small className="textSmall">{this.props.poolSegmentInfo[0][i].token[this.props.farmNetwork]["symbol"]}-{this.props.poolSegmentInfo[0][i].quoteToken[this.props.farmNetwork]["symbol"]} PANCAKE LP</small> to Earn PURSE</small></div>
 
                                                     <div className="" style={{ color: 'white' }}> {this.props.aprloading ?
                                                         <div className="borderTop" style={{ marginTop: '8px' }}>
@@ -133,7 +133,7 @@ class Menu extends Component {
                                                             <span className="lds-dual-ring"><div></div><div></div><div></div></span>
                                                         </div>} </div>
 
-                                                    <span className=""><small>Bonus Multiplier: {this.props.bonusMultiplier[0][i]}x &nbsp;
+                                                    <span className=""><small>Bonus Multiplier: {this.props.poolSegmentInfo[0][i].bonusMultiplier}x &nbsp;
                                                         <Popup
                                                             trigger={open => (
                                                                 <span style={{ position: "relative", top: '-0.8px' }}><BsFillQuestionCircleFill size={10} /></span>
@@ -147,7 +147,8 @@ class Menu extends Component {
                                                             <span className="textInfo">The Multiplier represents the proportion of PURSE rewards each farm receives, as a proportion of the PURSE produced each block.<br /></span>
                                                             <span className="textInfo mt-2">For example, if a 1x farm received 1 PURSE per block, a 40x farm would receive 40 PURSE per block.<br /></span>
                                                             <span className="textInfo mt-2">This amount is already included in all APR calculations for the farm.</span></Popup>&nbsp;</small></span><br />
-                                                    <span className=" "><small>LP Staked: {parseFloat(this.props.userSegmentInfo[0][i]).toLocaleString('en-US', { maximumFractionDigits: 2 })}</small></span><br />
+                                                    <span className=" "><small>User LP Staked: {parseFloat(this.props.userSegmentInfo[0][i]).toLocaleString('en-US', { maximumFractionDigits: 2 })}</small></span><br />
+                                                    <span className=" "><small>Total LP Staked: {parseFloat(this.props.stakedBalance).toLocaleString('en-US', { maximumFractionDigits: 0 })}</small></span><br />
                                                     <span className=" "><small>Purse Earned: {parseFloat(this.props.pendingSegmentReward[0][i]).toLocaleString('en-US', { maximumFractionDigits: 0 })}</small></span><br />
                                                     <span className=" "><small>{this.props.aprloading ? <div className="">TVL: $ {parseFloat(this.props.tvl[0][i]).toLocaleString('en-US', { maximumFractionDigits: 0 })} </div> :
                                                         <div className="">

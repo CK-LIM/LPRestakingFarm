@@ -29,7 +29,6 @@ class Navb extends Component {
           <div className="mr-4">
             <NavLink to='/home' >Home</NavLink>
           </div>
-
           <div className="mr-4">
             <Popup className='popup1' trigger={open => (
               <NavLink0 to='/lpfarm/menu'> Farm</NavLink0>
@@ -42,7 +41,7 @@ class Navb extends Component {
               contentStyle={{ padding: '3px' }}
               arrow={false}
             ><div>
-                <Link></Link>
+                <Link to='/lpfarm/farmInfo'></Link>
                 <div style={{ marginTop: '5px' }}><Link className='dropdown0' to='/lpfarm/farmInfo' >&nbsp;Farm Dashboard</Link><br /></div>
                 <div style={{ marginTop: '8px' }}><Link className='dropdown' to='/lpfarm/menu' >&nbsp;Farm Menu</Link></div>
               </div>
