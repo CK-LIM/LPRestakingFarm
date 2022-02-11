@@ -106,7 +106,7 @@ class Distribution extends Component {
                                     </div>
                                     <div>
                                         <div className="textWhiteSmall mb-1"><b>Claimable Amount:</b></div>
-                                        <div className="textWhiteSmall mb-1"><b>{this.props.claimAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}</b></div>
+                                        <div className="textWhiteSmall mb-1"><b>{this.props.claimAmount.toLocaleString('en-US', { maximumFractionDigits: 5 })}</b></div>
                                     </div>
                                     <div className="center mt-2 mb-4">
                                         <Button
@@ -129,7 +129,7 @@ class Distribution extends Component {
                                             alert("Invalid input! PLease check your input again")
                                         } else {
                                             let claimMessage = await this.props.checkClaimAmount(this.input.value)
-                                            let otherAddressAmount = "Claimable Amount:" + " " + claimMessage.toLocaleString('en-US', { maximumFractionDigits: 2 })
+                                            let otherAddressAmount = "Claimable Amount:" + " " + claimMessage.toLocaleString('en-US', { maximumFractionDigits: 5 })
                                             this.setState({ otherAddressAmount })
                                         }
                                     }}>

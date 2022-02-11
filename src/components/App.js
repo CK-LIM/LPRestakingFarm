@@ -30,7 +30,7 @@ class App extends Component {
     this.loadTVLAPR()
     while ((this.state.wallet || this.state.walletConnect) == true) {
       await this.loadBlockchainUserData()
-      await this.delay(2000);
+      await this.delay(5000);
     }
   }
 
@@ -304,6 +304,11 @@ class App extends Component {
   async loadDistributedPercentage() {
     let distributedPercentage = await this.state.purseTokenUpgradable.methods._percentageDistribute().call()
     return distributedPercentage
+  }
+
+  async loadPurseTokenTotalSupply() {
+    let purseTokenTotalSupply = await this.state.purseTokenUpgradable.methods._totalSupply().call()
+    return purseTokenTotalSupply
   }
 
   async loadPoolCapRewardToken() {
@@ -811,6 +816,7 @@ class App extends Component {
     let response3 = this.loadAverageInterval()
     let response4 = this.loadUserRewardInfo(address)
     let response5 = this.loadUserBalance(address)
+    let response6 = this.loadPurseTokenTotalSupply()
 
     let lastRewardStartTime = await response0
     let numOfDays = await response1
@@ -818,27 +824,22 @@ class App extends Component {
     let averageInterval = await response3
     let userRewardInfo = await response4
     let userBalance = await response5
+    let purseTokenTotalSupply = await response6
     let reward = 0
-    
+
     if (userRewardInfo.lastUpdateTime == 0) {
       reward = 0
     } else if (userRewardInfo.lastUpdateTime >= this.state.rewardStartTime) {
       reward = userRewardInfo.accReward
-    } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {
-      console.log(userRewardInfo.lastUpdateTime)
-      console.log(lastRewardStartTime)
-      console.log(averageInterval)
+    } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {       // 1st distribution wont happen, all users lastUpdateTime either 0 or > lastRewardStartTime
       let interval = (this.state.rewardStartTime - lastRewardStartTime) / averageInterval;
-      console.log(interval)
       let accumulateAmount = userBalance * interval;
-      reward = accumulateAmount * this.state.distributedAmount * percentageDis / this.state.purseTokenTotalSupply / numOfDays / 100;
-      console.log(reward)
+      reward = accumulateAmount * this.state.distributedAmount * percentageDis / purseTokenTotalSupply / numOfDays / 100;
     } else {
       let interval = ((this.state.rewardStartTime - userRewardInfo.lastUpdateTime) / averageInterval).toFixed(0);
       let accumulateAmount = userBalance * interval;
       let lastmonthAccAmount = parseInt(window.web3Bsc.utils.fromWei(userRewardInfo.amount, 'Ether')) + accumulateAmount;
-      reward = lastmonthAccAmount * this.state.distributedAmount * percentageDis / this.state.purseTokenTotalSupply / numOfDays / 100;
-      console.log(reward)
+      reward = lastmonthAccAmount * this.state.distributedAmount * percentageDis / purseTokenTotalSupply / numOfDays / 100;
     }
     return reward
   }
