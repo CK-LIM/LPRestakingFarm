@@ -17,8 +17,8 @@ import {
 class Navb extends Component {
   render() {
     return (
-      <nav className="navbar navbar-dark top bg-dark flex-md-nowrap p-0 shadow" style={{ height: '45px' }}>
-        <div className="navbar-brand col-sm-3 col-md-2 mr-0 rowB">
+      <nav className="navbar navbar-dark top bg-dark flex-md-nowrap p-0 shadow">
+        <div className="navbar-brand col-sm-3 col-md-2 mt-1 md-1 mr-0 rowB">
           <div to='/menu' className="textWhiteHeading mr-5 rowC" style={{ cursor: "pointer" }} onClick={() => {
             window.open(`https://www.pundix.com/`, '_blank')
           }}>
@@ -47,9 +47,9 @@ class Navb extends Component {
               </div>
             </Popup>
           </div>
-          {/* <div className="mr-4">
+          <div className="mr-4">
             <NavLink to='/distribution' >Distribution</NavLink>
-          </div> */}
+          </div>
           <div>
             <span className='hover' style={{ fontSize: '16px' }} onClick={() => {
               window.open(`https://pundix-purse.gitbook.io/untitled/`, '_blank')
@@ -60,9 +60,8 @@ class Navb extends Component {
 
         <span>
           <ul className="navbar-nav px-3">
-            <li className="nav-item text-nowrap-small d-none d-sm-none d-sm-block">
+            {/* <li className="nav-item text-nowrap-small d-none d-sm-none d-sm-block"> */}
               <div className="text-light rowC">
-
                 <div className="rowC">
                   <span className='dropdown1 center' onClick={() => {
                     window.open(`https://pancakeswap.finance/swap?inputCurrency=0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56`, '_blank')
@@ -126,7 +125,7 @@ class Navb extends Component {
                     </div>}
                 </div>
               </div>
-            </li>
+            {/* </li> */}
           </ul>
         </span>
       </nav>

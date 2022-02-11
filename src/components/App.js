@@ -395,7 +395,7 @@ class App extends Component {
     return lastRewardStartTime
   }
 
-  async loadLastRewardStartTime() {
+  async loadNumOfDays() {
     let numOfDays = await this.state.purseTokenUpgradable.methods._numOfDaysPerMth().call()
     return numOfDays
   }
@@ -806,7 +806,7 @@ class App extends Component {
   checkClaimAmount = async (address) => {
 
     let response0 = this.loadLastRewardStartTime()
-    let response1 = this.loadLastRewardStartTime() 
+    let response1 = this.loadNumOfDays() 
     let response2 = this.loadPercentageDis()
     let response3 = this.loadAverageInterval()
     let response4 = this.loadUserRewardInfo(address)
@@ -825,14 +825,20 @@ class App extends Component {
     } else if (userRewardInfo.lastUpdateTime >= this.state.rewardStartTime) {
       reward = userRewardInfo.accReward
     } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {
+      console.log(userRewardInfo.lastUpdateTime)
+      console.log(lastRewardStartTime)
+      console.log(averageInterval)
       let interval = (this.state.rewardStartTime - lastRewardStartTime) / averageInterval;
+      console.log(interval)
       let accumulateAmount = userBalance * interval;
       reward = accumulateAmount * this.state.distributedAmount * percentageDis / this.state.purseTokenTotalSupply / numOfDays / 100;
+      console.log(reward)
     } else {
       let interval = ((this.state.rewardStartTime - userRewardInfo.lastUpdateTime) / averageInterval).toFixed(0);
       let accumulateAmount = userBalance * interval;
       let lastmonthAccAmount = parseInt(window.web3Bsc.utils.fromWei(userRewardInfo.amount, 'Ether')) + accumulateAmount;
       reward = lastmonthAccAmount * this.state.distributedAmount * percentageDis / this.state.purseTokenTotalSupply / numOfDays / 100;
+      console.log(reward)
     }
     return reward
   }

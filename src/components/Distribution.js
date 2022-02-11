@@ -48,7 +48,7 @@ class Distribution extends Component {
                 <label className="textWhite center mb-5" style={{ fontSize: '40px' }}><big><b>PURSE Distribution</b></big></label>
                 <div className="rowC">
                     <div className="card cardbody mr-3" style={{ width: '450px', height: '410px', color: 'white' }}>
-                        <div className="card-body center">
+                        <div className="card-body">
                             <span>
                                 <table className=" textWhiteSmall text-center mb-4" style={{ width: '400px' }}>
                                     <thead>
@@ -88,10 +88,10 @@ class Distribution extends Component {
                                 </table>
                                 <div className="ml-3"><b>Remarks:</b></div>
                                 <ul>
-                                    <li className=" textWhiteSmaller">Distributed tokens are from B<b>D</b>L deducted from each PURSE token transaction.</li>
-                                    <li className=" textWhiteSmaller">Make sure web app is connected to the wallet(BSC network).</li>
-                                    <li className=" textWhiteSmaller">Make sure you have BNB to pay for transaction fees (~1 USD worth of BNB, paid to the network).</li>
-                                    <li className=" textWhiteSmaller">Click on claim and confirm the transaction to claim your PURSE tokens.</li>
+                                    <li className="textWhiteSmaller">Distributed tokens are from B<b>D</b>L deducted from each PURSE token transaction.</li>
+                                    <li className="textWhiteSmaller">Make sure web app is connected to the wallet(BSC network).</li>
+                                    <li className="textWhiteSmaller">Make sure you have BNB to pay for transaction fees (paid to the network).</li>
+                                    <li className="textWhiteSmaller">Click on claim and confirm the transaction to claim your PURSE tokens.</li>
                                 </ul>
                             </span>
                         </div>
@@ -105,7 +105,7 @@ class Distribution extends Component {
                                         <div className="textWhiteSmall mb-1"><b>{this.props.account}</b></div>
                                     </div>
                                     <div>
-                                        <div className="textWhiteSmall mb-1"><b>Amount:</b></div>
+                                        <div className="textWhiteSmall mb-1"><b>Claimable Amount:</b></div>
                                         <div className="textWhiteSmall mb-1"><b>{this.props.claimAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}</b></div>
                                     </div>
                                     <div className="center mt-2 mb-4">
@@ -129,7 +129,7 @@ class Distribution extends Component {
                                             alert("Invalid input! PLease check your input again")
                                         } else {
                                             let claimMessage = await this.props.checkClaimAmount(this.input.value)
-                                            let otherAddressAmount = "Amount:" + " " + claimMessage.toLocaleString('en-US', { maximumFractionDigits: 2 })
+                                            let otherAddressAmount = "Claimable Amount:" + " " + claimMessage.toLocaleString('en-US', { maximumFractionDigits: 2 })
                                             this.setState({ otherAddressAmount })
                                         }
                                     }}>
@@ -162,7 +162,7 @@ class Distribution extends Component {
                             <div className="card-body">
                                 <div>
                                     <div className="center textWhiteMedium mt-2 mb-3"><b>Connect wallet to claim distributed PURSE</b></div>
-                                    <div className="center mt-4"><button type="submit" className="btn btn-primary btn-lg mt-3" onClick={async () => {
+                                    <div className="center"><button type="submit" className="btn btn-primary btn-lg mt-3" onClick={async () => {
                                         await this.props.connectWallet()
                                     }}>Connect</button></div>
                                 </div>
