@@ -569,18 +569,19 @@ class App extends Component {
     } catch (switchError) {
       // console.log(switchError.code)
       // This error code indicates that the chain has not been added to MetaMask.
+      console.log("abc")
       if (switchError.code === 4902) {
         try {
           // console.log(switchError.code)
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: '0x38', rpcUrls: ['https://data-seed-prebsc-1-s3.binance.org:8545'], chainName: 'BSC Testnet',
+              chainId: '0x38', rpcUrls: ['https://bsc-dataseed1.binance.org/'], chainName: 'BSC Mainnet',
               nativeCurrency: {
                 name: 'BNB',
                 symbol: 'BNB', // 2-6 characters long
                 decimals: 18
-              }, blockExplorerUrls: ['https://testnet.bscscan.com/']
+              }, blockExplorerUrls: ['https://bscscan.com/']
             }],
           });
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
