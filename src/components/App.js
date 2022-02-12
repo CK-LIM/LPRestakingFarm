@@ -497,10 +497,10 @@ class App extends Component {
         .request({ method: 'eth_requestAccounts' })
         .then(async () => {
           await this.switchNetwork()
+
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
           if (chainId == "0x38") {      // mainnet: 0x38, testnet: 0x61
             this.setWalletTrigger(true)
-            // this.componentWillMount()
           }
         })
         .catch((err) => {
@@ -528,7 +528,6 @@ class App extends Component {
       chainId: 56,
     });
     window.provider = provider
-    // console.log(window.provider)
     await window.provider.enable();
     window.web3Con = await new Web3(window.provider);
     const networkId = await window.web3Con.eth.net.getId();
@@ -574,7 +573,6 @@ class App extends Component {
     } catch (switchError) {
       // console.log(switchError.code)
       // This error code indicates that the chain has not been added to MetaMask.
-      console.log("abc")
       if (switchError.code === 4902) {
         try {
           // console.log(switchError.code)
@@ -644,7 +642,7 @@ class App extends Component {
       this.setWalletTrigger(false)
     }
     if (this.state.networkId !== chainId) {
-      this.state.networkId = chainId
+      // this.state.networkId = chainId
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       this.setState({ chainId })
       if (this.state.chainId == "0x61") {
@@ -791,6 +789,7 @@ class App extends Component {
       } else {
         const restakingFarmData = RestakingFarm.networks[this.state.networkId]
         let restakingFarm = new window.web3.eth.Contract(RestakingFarm.abi, restakingFarmData.address)
+
         restakingFarm.methods.claimReward(this.state.lpTokenAddresses[i]).send({ from: this.state.account }).then(async (result) => {
           this.componentWillMount()
         }).catch((err) => {
