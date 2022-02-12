@@ -548,11 +548,13 @@ class App extends Component {
     // Subscribe to accounts change
     window.provider.on("accountsChanged", this.handleAccountsChanged);
     // Subscribe to session disconnection
-    // window.provider.on("disconnect", () => {
-    //   this.WalletDisconnect()
-    //   window.provider.stop("disconnect", ()=> console.log("exit"))
-    // });
-
+    window.provider.on("disconnect", () => {
+      this.WalletDisconnect()
+    });
+    window.provider.on("chainChanged", () => {
+      this.WalletDisconnect()
+      alert("You're connected to an unsupported network.")
+    });
   }
 
   WalletDisconnect = async () => {
@@ -635,40 +637,37 @@ class App extends Component {
     }
   }
 
-  handleChainChanged = async (chainId) => {
+  handleChainChanged = async () => {
     // We recommend reloading the page, unless you must do otherwise
     // window.location.reload();
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    this.setState({ chainId })
     if (chainId != "0x38") {
       this.setWalletTrigger(false)
     }
-    if (this.state.networkId !== chainId) {
-      // this.state.networkId = chainId
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      this.setState({ chainId })
-      if (this.state.chainId == "0x61") {
-        this.setState({ networkName: "BSC Testnet" })
-      } else if (this.state.chainId == "0x38") {
-        this.setState({ networkName: "BSC" })
-      } else if (this.state.chainId == "0x1") {
-        this.setState({ networkName: "Ethereum" })
-      } else if (this.state.chainId == "0x3") {
-        this.setState({ networkName: "Ropsten" })
-      } else if (this.state.chainId == "0x4") {
-        this.setState({ networkName: "Rinkeby" })
-      } else if (this.state.chainId == "0x2a") {
-        this.setState({ networkName: "Kovan" })
-      } else if (this.state.chainId == "0x89") {
-        this.setState({ networkName: "Polygon" })
-      } else if (this.state.chainId == "0x13881") {
-        this.setState({ networkName: "Mumbai" })
-      } else if (this.state.chainId == "0xa869") {
-        this.setState({ networkName: "Fuji" })
-      } else if (this.state.chainId == "0xa86a") {
-        this.setState({ networkName: "Avalanche" })
-      }
-      this.switchNetwork()
-      // Run any other necessary logic...
+    if (this.state.chainId == "0x61") {
+      this.setState({ networkName: "BSC Testnet" })
+    } else if (this.state.chainId == "0x38") {
+      this.setState({ networkName: "BSC" })
+    } else if (this.state.chainId == "0x1") {
+      this.setState({ networkName: "Ethereum" })
+    } else if (this.state.chainId == "0x3") {
+      this.setState({ networkName: "Ropsten" })
+    } else if (this.state.chainId == "0x4") {
+      this.setState({ networkName: "Rinkeby" })
+    } else if (this.state.chainId == "0x2a") {
+      this.setState({ networkName: "Kovan" })
+    } else if (this.state.chainId == "0x89") {
+      this.setState({ networkName: "Polygon" })
+    } else if (this.state.chainId == "0x13881") {
+      this.setState({ networkName: "Mumbai" })
+    } else if (this.state.chainId == "0xa869") {
+      this.setState({ networkName: "Fuji" })
+    } else if (this.state.chainId == "0xa86a") {
+      this.setState({ networkName: "Avalanche" })
     }
+    this.switchNetwork()
+    // Run any other necessary logic...
   }
 
   timeConverter = (UNIX_timestamp) => {
