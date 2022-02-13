@@ -422,7 +422,7 @@ class App extends Component {
 
   async loadUserBalance(address) {
     let userBalance = await this.state.purseTokenUpgradable.methods.balanceOf(address).call()
-    userBalance = window.web3Bsc.utils.fromWei(userBalance, 'Ether')
+    // userBalance = window.web3Bsc.utils.fromWei(userBalance, 'Ether')
     return userBalance
   }
 
@@ -514,7 +514,7 @@ class App extends Component {
           }
         });
     } else {
-      alert("No provider was found")
+      alert("No Metamask provider was found")
     }
   }
 
@@ -824,20 +824,21 @@ class App extends Component {
     let userBalance = await response5
     let purseTokenTotalSupply = await response6
     let reward = 0
+    // 0x818b84cc4c3012cb6b36bfb627fd82438718fc7c
 
     if (userRewardInfo.lastUpdateTime == 0) {
       reward = 0
     } else if (userRewardInfo.lastUpdateTime >= this.state.rewardStartTime) {
       reward = userRewardInfo.accReward
     } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {       // 1st distribution wont happen, all users lastUpdateTime either 0 or > lastRewardStartTime
-      let interval = (this.state.rewardStartTime - lastRewardStartTime) / averageInterval;
-      let accumulateAmount = userBalance * interval;
+      let interval = parseInt((this.state.rewardStartTime - lastRewardStartTime) / averageInterval);
+      let accumulateAmount = parseFloat(window.web3Bsc.utils.fromWei(userBalance, 'Ether') * interval);
       reward = accumulateAmount * this.state.distributedAmount * percentageDis / purseTokenTotalSupply / numOfDays / 100;
     } else {
-      let interval = ((this.state.rewardStartTime - userRewardInfo.lastUpdateTime) / averageInterval).toFixed(0);
-      let accumulateAmount = userBalance * interval;
-      let lastmonthAccAmount = parseInt(window.web3Bsc.utils.fromWei(userRewardInfo.amount, 'Ether')) + accumulateAmount;
-      reward = lastmonthAccAmount * this.state.distributedAmount * percentageDis / purseTokenTotalSupply / numOfDays / 100;
+      let interval = parseInt((this.state.rewardStartTime - userRewardInfo.lastUpdateTime) / averageInterval);
+      let accumulateAmount = parseFloat(window.web3Bsc.utils.fromWei(userBalance, 'Ether') * interval)
+      let lastmonthAccAmount = parseFloat(window.web3Bsc.utils.fromWei(userRewardInfo.amount, 'Ether')) + accumulateAmount
+      reward = lastmonthAccAmount * this.state.distributedAmount * percentageDis / purseTokenTotalSupply / numOfDays / 100
     }
     return reward
   }

@@ -62,7 +62,8 @@ class Distribution extends Component {
                                             <td>{this.props.rewardStartTimeDate}</td>
                                             <td>{this.props.rewardEndTimeDate}</td>
                                         </tr>
-                                    </tbody><br/>
+                                    </tbody>
+                                    <tbody><tr><td></td></tr></tbody>
                                     <thead>
                                         <tr>
                                             <th scope="col">Distribution Amount</th>
