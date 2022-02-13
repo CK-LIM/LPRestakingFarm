@@ -30,7 +30,7 @@ class App extends Component {
     this.loadTVLAPR()
     while ((this.state.wallet || this.state.walletConnect) == true) {
       await this.loadBlockchainUserData()
-      await this.delay(5000);
+      await this.delay(10000);
     }
   }
 
@@ -306,7 +306,7 @@ class App extends Component {
     return distributedPercentage
   }
 
-  async loadPurseTokenTotalSupply() {
+  async loadPurseTotalSupply() {
     let purseTokenTotalSupply = await this.state.purseTokenUpgradable.methods._totalSupply().call()
     return purseTokenTotalSupply
   }
@@ -814,7 +814,7 @@ class App extends Component {
     let response3 = this.loadAverageInterval()
     let response4 = this.loadUserRewardInfo(address)
     let response5 = this.loadUserBalance(address)
-    let response6 = this.loadPurseTokenTotalSupply()
+    let response6 = this.loadPurseTotalSupply()
 
     let lastRewardStartTime = await response0
     let numOfDays = await response1
@@ -825,7 +825,6 @@ class App extends Component {
     let purseTokenTotalSupply = await response6
     let reward = 0
     // 0x818b84cc4c3012cb6b36bfb627fd82438718fc7c
-
     if (userRewardInfo.lastUpdateTime == 0) {
       reward = 0
     } else if (userRewardInfo.lastUpdateTime >= this.state.rewardStartTime) {
