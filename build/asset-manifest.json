@@ -1,7 +1,7 @@
 {
   "main.css": "/static/css/main.cb849039.chunk.css",
-  "main.js": "/static/js/main.2efc4bd9.chunk.js",
-  "main.js.map": "/static/js/main.2efc4bd9.chunk.js.map",
+  "main.js": "/static/js/main.ce7e22ab.chunk.js",
+  "main.js.map": "/static/js/main.ce7e22ab.chunk.js.map",
   "static/css/1.14a64321.chunk.css": "/static/css/1.14a64321.chunk.css",
   "static/js/1.b9c3ac45.chunk.js": "/static/js/1.b9c3ac45.chunk.js",
   "static/js/1.b9c3ac45.chunk.js.map": "/static/js/1.b9c3ac45.chunk.js.map",
@@ -13,9 +13,9 @@
   "static/media/pancakeswap.png": "/static/media/pancakeswap.bdd7c45a.png",
   "static/media/metamask-fox.svg": "/static/media/metamask-fox.c06f3a3e.svg",
   "static/media/walletconnect-logo.svg": "/static/media/walletconnect-logo.37f2bc6e.svg",
-  "static/css/main.cb849039.chunk.css.map": "/static/css/main.cb849039.chunk.css.map",
   "static/css/1.14a64321.chunk.css.map": "/static/css/1.14a64321.chunk.css.map",
+  "static/css/main.cb849039.chunk.css.map": "/static/css/main.cb849039.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.7ac8db88f9d820840cbb4086ba9215b8.js": "/precache-manifest.7ac8db88f9d820840cbb4086ba9215b8.js",
+  "precache-manifest.0b85a6e80f3eba9cff816a9d7df2a104.js": "/precache-manifest.0b85a6e80f3eba9cff816a9d7df2a104.js",
   "service-worker.js": "/service-worker.js"
 }
