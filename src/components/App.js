@@ -828,7 +828,7 @@ class App extends Component {
     if (userRewardInfo.lastUpdateTime == 0) {
       reward = 0
     } else if (userRewardInfo.lastUpdateTime >= this.state.rewardStartTime) {
-      reward = userRewardInfo.accReward
+      reward = window.web3Bsc.utils.fromWei(userRewardInfo.accReward, 'Ether')
     } else if (userRewardInfo.lastUpdateTime < lastRewardStartTime) {       // 1st distribution wont happen, all users lastUpdateTime either 0 or > lastRewardStartTime
       let interval = parseInt((this.state.rewardStartTime - lastRewardStartTime) / averageInterval);
       let accumulateAmount = parseFloat(window.web3Bsc.utils.fromWei(userBalance, 'Ether') * interval);
