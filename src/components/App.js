@@ -47,13 +47,7 @@ class App extends Component {
     const farmNetwork = "MAINNET"
     this.setState({ farmNetwork })
 
-    if (this.state.walletConnect == true) {
-      if (window.provider.connected == false) {
-        await this.WalletDisconnect()
-      }
-    }
-
-    if (this.state.metamask == true) {
+    if (this.state.metamask == true && this.state.walletConnect == false) {
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       this.setState({ chainId })
 
@@ -78,10 +72,9 @@ class App extends Component {
       } else if (this.state.chainId == "0xa86a") {
         this.setState({ networkName: "Avalanche" })
       }
-
       window.ethereum.on('chainChanged', this.handleChainChanged);
       window.ethereum.on('accountsChanged', this.handleAccountsChanged);
-    } else {
+    } else if (this.state.metamask == false && this.state.walletConnect == false) {
       this.setState({ chainID: "0x" })
       this.setState({ networkName: "Unavailable" })
     }
@@ -116,7 +109,7 @@ class App extends Component {
     let sum30BurnAmount = myJson["Burn30Days"]
     let cumulateTransfer = myJson1
     let cumulateBurn = myJson2
-    
+
     this.setState({ totalBurnAmount })
     this.setState({ sum30BurnAmount })
     this.setState({ totalTransferAmount })
@@ -226,65 +219,65 @@ class App extends Component {
 
   // ##############################################################################################################################
   async loadBlockchainUserData() {
-      // Load PurseTokenUpgradable
-      let userResponse0 = this.loadPurseTokenBalance()
-      let userResponse1 = this.checkClaimAmount(this.state.account)
-      let purseTokenUpgradableBalance = await userResponse0
-      let claimAmount = await userResponse1
+    // Load PurseTokenUpgradable
+    let userResponse0 = this.loadPurseTokenBalance()
+    let userResponse1 = this.checkClaimAmount(this.state.account)
+    let purseTokenUpgradableBalance = await userResponse0
+    let claimAmount = await userResponse1
 
-      this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
-      this.setState({ claimAmount })
+    this.setState({ purseTokenUpgradableBalance: purseTokenUpgradableBalance.toString() })
+    this.setState({ claimAmount })
 
-      let totalpendingReward = 0
-      let userSegmentInfo = [[], []]
-      let lpTokenSegmentBalance = [[], []]
-      let lpTokenSegmentAllowance = [[], []]
-      let pendingSegmentReward = [[], []]
-      let n = 0
-      let i = 0
+    let totalpendingReward = 0
+    let userSegmentInfo = [[], []]
+    let lpTokenSegmentBalance = [[], []]
+    let lpTokenSegmentAllowance = [[], []]
+    let pendingSegmentReward = [[], []]
+    let n = 0
+    let i = 0
 
-      let response0 = []
-      let response1 = []
-      let response2 = []
-      let response3 = []
-  
-      for (i = 0; i < this.state.poolLength; i++) {
-        response0[i] = this.loadUserInfo(i)
-        response1[i] = this.loadLpTokenBalance(i)
-        response2[i] = this.loadLpTokenAllowance(i)
-        response3[i] = this.loadPendingReward(i)
-      }
+    let response0 = []
+    let response1 = []
+    let response2 = []
+    let response3 = []
 
-      for (i = 0; i < this.state.poolLength; i++) {
-
-        let userInfo = await response0[i]
-        let lpTokenBalance = await response1[i]
-        let lpTokenAllowance = await response2[i]
-        let pendingReward = await response3[i]
-        totalpendingReward += parseInt(pendingReward)
-
-        if (this.state.lpTokenPairsymbols[i] == "Cake-LP") {
-          userSegmentInfo[0][n] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
-          lpTokenSegmentBalance[0][n] = lpTokenBalance
-          lpTokenSegmentAllowance[0][n] = lpTokenAllowance
-          pendingSegmentReward[0][n] = window.web3Bsc.utils.fromWei(pendingReward, 'Ether')
-          n += 1
-        } else {
-          userSegmentInfo[1][n] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
-          lpTokenSegmentBalance[1][n] = lpTokenBalance
-          lpTokenSegmentAllowance[1][n] = lpTokenAllowance
-          pendingSegmentReward[1][n] = window.web3Bsc.utils.fromWei(pendingReward, 'Ether')
-          n += 1
-        }
-      }
-
-      this.setState({ lpTokenSegmentBalance })
-      this.setState({ pendingSegmentReward })
-      this.setState({ lpTokenSegmentAllowance })
-      this.setState({ userSegmentInfo })
-      this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
-      this.setState({ farmLoading: true })
+    for (i = 0; i < this.state.poolLength; i++) {
+      response0[i] = this.loadUserInfo(i)
+      response1[i] = this.loadLpTokenBalance(i)
+      response2[i] = this.loadLpTokenAllowance(i)
+      response3[i] = this.loadPendingReward(i)
     }
+
+    for (i = 0; i < this.state.poolLength; i++) {
+
+      let userInfo = await response0[i]
+      let lpTokenBalance = await response1[i]
+      let lpTokenAllowance = await response2[i]
+      let pendingReward = await response3[i]
+      totalpendingReward += parseInt(pendingReward)
+
+      if (this.state.lpTokenPairsymbols[i] == "Cake-LP") {
+        userSegmentInfo[0][n] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
+        lpTokenSegmentBalance[0][n] = lpTokenBalance
+        lpTokenSegmentAllowance[0][n] = lpTokenAllowance
+        pendingSegmentReward[0][n] = window.web3Bsc.utils.fromWei(pendingReward, 'Ether')
+        n += 1
+      } else {
+        userSegmentInfo[1][n] = window.web3Bsc.utils.fromWei(userInfo.amount, 'Ether')
+        lpTokenSegmentBalance[1][n] = lpTokenBalance
+        lpTokenSegmentAllowance[1][n] = lpTokenAllowance
+        pendingSegmentReward[1][n] = window.web3Bsc.utils.fromWei(pendingReward, 'Ether')
+        n += 1
+      }
+    }
+
+    this.setState({ lpTokenSegmentBalance })
+    this.setState({ pendingSegmentReward })
+    this.setState({ lpTokenSegmentAllowance })
+    this.setState({ userSegmentInfo })
+    this.setState({ totalpendingReward: totalpendingReward.toLocaleString('fullwide', { useGrouping: false }) })
+    this.setState({ farmLoading: true })
+  }
   // ***************************Farm Info***********************************************************************
   async loadRewardEndTime() {
     let rewardEndTime = await this.state.purseTokenUpgradable.methods._getRewardEndTime().call()
@@ -497,7 +490,6 @@ class App extends Component {
         .request({ method: 'eth_requestAccounts' })
         .then(async () => {
           await this.switchNetwork()
-
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
           if (chainId == "0x38") {      // mainnet: 0x38, testnet: 0x61
             this.setWalletTrigger(true)
@@ -507,7 +499,6 @@ class App extends Component {
           if (err.code === 4001) {
             // EIP-1193 userRejectedRequest error
             // If this happens, the user rejected the connection request.
-            // console.log('Please connect to MetaMask.');
           } else {
             console.error("error");
             console.error(err);
@@ -542,27 +533,27 @@ class App extends Component {
       this.setState({ first4Account: first4Account })
       this.setState({ last4Account: last4Account })
       this.setState({ walletConnect: true })
+      this.setState({ networkName: "BSC" })
       this.componentWillMount()
     }
 
     // Subscribe to accounts change
     window.provider.on("accountsChanged", this.handleAccountsChanged);
     // Subscribe to session disconnection
-    window.provider.on("disconnect", () => {
-      this.WalletDisconnect()
+    window.provider.on("disconnect", async () => {
+      await this.WalletDisconnect()
     });
-    window.provider.on("chainChanged", () => {
-      this.WalletDisconnect()
+    window.provider.on("chainChanged", async () => {
+      await this.WalletDisconnect()
       alert("You're connected to an unsupported network.")
     });
   }
 
   WalletDisconnect = async () => {
-    await window.provider.disconnect()
+    if (window.provider.connected == true) {
+      await window.provider.disconnect()
+    }
     await this.setState({ walletConnect: false })
-    this.setState({ pendingSegmentReward: [[], []] })
-    this.setState({ userSegmentInfo: [[], []] })
-    this.setState({ totalpendingReward: "0" })
     this.componentWillMount()
   }
 
@@ -573,11 +564,9 @@ class App extends Component {
         params: [{ chainId: '0x38' }],    // mainnet 0x38, testnet: 0x61
       });
     } catch (switchError) {
-      // console.log(switchError.code)
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         try {
-          // console.log(switchError.code)
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
@@ -590,7 +579,6 @@ class App extends Component {
             }],
           });
           const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          // console.log("switched")
           this.setState({ chainId })
           if (this.state.chainId == "0x61") {
             this.setState({ networkName: "BSC Testnet" })
@@ -622,52 +610,65 @@ class App extends Component {
   }
 
 
-  handleAccountsChanged = (accounts) => {
-    if (accounts.length === 0) {
-      // MetaMask is locked or the user has not connected any accounts
-      // console.log('Please connect to MetaMask.');
-      this.setWalletTrigger(false)
-    } else if (accounts[0] !== this.state.account) {
-      this.state.account = accounts[0];
+  handleAccountsChanged = async (accounts) => {
+    if (this.state.wallet == true) {
+      if (accounts.length === 0) {
+        // MetaMask is locked or the user has not connected any accounts
+        this.setWalletTrigger(false)
+      } else if (accounts[0] !== this.state.account) {
+        this.state.account = accounts[0];
+        const first4Account = this.state.account.substring(0, 4)
+        const last4Account = this.state.account.slice(-4)
+        this.setState({ first4Account: first4Account })
+        this.setState({ last4Account: last4Account })
+        this.componentWillMount()
+        // Do any other work!
+      }
+    } else if (this.state.walletConnect == true) {
+      const accounts = await window.web3Con.eth.getAccounts();
+      this.setState({ account: accounts[0] })
       const first4Account = this.state.account.substring(0, 4)
       const last4Account = this.state.account.slice(-4)
       this.setState({ first4Account: first4Account })
       this.setState({ last4Account: last4Account })
-      // Do any other work!
+      this.setState({ walletConnect: true })
+      this.componentWillMount()
     }
   }
 
   handleChainChanged = async () => {
     // We recommend reloading the page, unless you must do otherwise
     // window.location.reload();
-    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    this.setState({ chainId })
-    if (chainId != "0x38") {
-      this.setWalletTrigger(false)
+    if (this.state.wallet == true) {
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      this.setState({ chainId })
+      if (chainId != "0x38") {
+        this.setWalletTrigger(false)
+      }
+      if (this.state.chainId == "0x61") {
+        this.setState({ networkName: "BSC Testnet" })
+      } else if (this.state.chainId == "0x38") {
+        this.setState({ networkName: "BSC" })
+      } else if (this.state.chainId == "0x1") {
+        this.setState({ networkName: "Ethereum" })
+      } else if (this.state.chainId == "0x3") {
+        this.setState({ networkName: "Ropsten" })
+      } else if (this.state.chainId == "0x4") {
+        this.setState({ networkName: "Rinkeby" })
+      } else if (this.state.chainId == "0x2a") {
+        this.setState({ networkName: "Kovan" })
+      } else if (this.state.chainId == "0x89") {
+        this.setState({ networkName: "Polygon" })
+      } else if (this.state.chainId == "0x13881") {
+        this.setState({ networkName: "Mumbai" })
+      } else if (this.state.chainId == "0xa869") {
+        this.setState({ networkName: "Fuji" })
+      } else if (this.state.chainId == "0xa86a") {
+        this.setState({ networkName: "Avalanche" })
+      }
+      this.switchNetwork()
+      // Run any other necessary logic...
     }
-    if (this.state.chainId == "0x61") {
-      this.setState({ networkName: "BSC Testnet" })
-    } else if (this.state.chainId == "0x38") {
-      this.setState({ networkName: "BSC" })
-    } else if (this.state.chainId == "0x1") {
-      this.setState({ networkName: "Ethereum" })
-    } else if (this.state.chainId == "0x3") {
-      this.setState({ networkName: "Ropsten" })
-    } else if (this.state.chainId == "0x4") {
-      this.setState({ networkName: "Rinkeby" })
-    } else if (this.state.chainId == "0x2a") {
-      this.setState({ networkName: "Kovan" })
-    } else if (this.state.chainId == "0x89") {
-      this.setState({ networkName: "Polygon" })
-    } else if (this.state.chainId == "0x13881") {
-      this.setState({ networkName: "Mumbai" })
-    } else if (this.state.chainId == "0xa869") {
-      this.setState({ networkName: "Fuji" })
-    } else if (this.state.chainId == "0xa86a") {
-      this.setState({ networkName: "Avalanche" })
-    }
-    this.switchNetwork()
-    // Run any other necessary logic...
   }
 
   timeConverter = (UNIX_timestamp) => {
@@ -809,7 +810,7 @@ class App extends Component {
   checkClaimAmount = async (address) => {
 
     let response0 = this.loadLastRewardStartTime()
-    let response1 = this.loadNumOfDays() 
+    let response1 = this.loadNumOfDays()
     let response2 = this.loadPercentageDis()
     let response3 = this.loadAverageInterval()
     let response4 = this.loadUserRewardInfo(address)
@@ -851,8 +852,13 @@ class App extends Component {
       if (this.state.claimAmount == 0) {
         alert("No reward available")
       } else {
-        let purseTokenUpgradable = new window.web3.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C")
-        await purseTokenUpgradable.methods.claimDistributionPurse().send({ from: this.state.account })
+        if (this.state.walletConnect == true) {
+          let purseTokenUpgradable = new window.web3Con.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C")
+          await purseTokenUpgradable.methods.claimDistributionPurse().send({ from: this.state.account })
+        } else if (this.state.wallet == true) {
+          let purseTokenUpgradable = new window.web3.eth.Contract(PurseTokenUpgradable.abi, "0x29a63F4B209C29B4DC47f06FFA896F32667DAD2C")
+          await purseTokenUpgradable.methods.claimDistributionPurse().send({ from: this.state.account })
+        }
       }
     }
   }
@@ -941,127 +947,127 @@ class App extends Component {
     let oneinchContent
     let distributionContent
     let farmInfoContent
-      maincontent = <Main
-        lpTokenBalance={this.state.lpTokenBalance}
-        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        poolLength={this.state.poolLength}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        PURSEPrice={this.state.PURSEPrice}
-        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-        lpTokenInContract={this.state.lpTokenInContract}
-        totalrewardperblock={this.state.totalrewardperblock}
-        poolCapRewardToken={this.state.poolCapRewardToken}
-        poolMintedRewardToken={this.state.poolMintedRewardToken}
-        poolRewardToken={this.state.poolRewardToken}
-        totalBurnAmount={this.state.totalBurnAmount}
-        sum30BurnAmount={this.state.sum30BurnAmount}
-        totalTransferAmount={this.state.totalTransferAmount}
-        sum30TransferAmount={this.state.sum30TransferAmount}
-        cumulateTransfer = {this.state.cumulateTransfer}
-        cumulateBurn = {this.state.cumulateBurn}
-      />
-      menucontent = <Menu
-        lpTokenBalance={this.state.lpTokenBalance}
-        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-        totalpendingReward={this.state.totalpendingReward}
-        totalrewardperblock={this.state.totalrewardperblock}
-        userSegmentInfo={this.state.userSegmentInfo}
-        poolSegmentInfo={this.state.poolSegmentInfo}
-        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-        pendingSegmentReward={this.state.pendingSegmentReward}
-        buttonPopup={this.state.buttonPopup}
-        farmNetwork={this.state.farmNetwork}
-        tvl={this.state.tvl}
-        apr={this.state.apr}
-        apyDaily={this.state.apyDaily}
-        apyWeekly={this.state.apyWeekly}
-        apyMonthly={this.state.apyMonthly}
-        farmLoading={this.state.farmLoading}
-        aprloading={this.state.aprloading}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        setI={this.setI}
-        setTrigger={this.setTrigger}
-        harvest={this.harvest}
-        stakedBalance={this.state.stakedBalance}
-      />
-      depositcontent = <Deposit
-        lpTokenBalance={this.state.lpTokenBalance}
-        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        i={this.state.i}
-        n={this.state.n}
-        userSegmentInfo={this.state.userSegmentInfo}
-        poolSegmentInfo={this.state.poolSegmentInfo}
-        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-        c={this.state.lpTokenSegmentAsymbol}
-        pendingSegmentReward={this.state.pendingSegmentReward}
-        lpTokenSegmentAllowance={this.state.lpTokenSegmentAllowance}
-        wallet={this.state.wallet}
-        farmNetwork={this.state.farmNetwork}
-        harvest={this.harvest}
-        approve={this.approve}
-        connectWallet={this.connectWallet}
-        walletConnect={this.state.walletConnect}
-      />
-      oneinchContent = <Oneinch
-        lpTokenBalance={this.state.lpTokenBalance}
-        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-        totalpendingReward={this.state.totalpendingReward}
-        totalrewardperblock={this.state.totalrewardperblock}
-        userSegmentInfo={this.state.userSegmentInfo}
-        poolSegmentInfo={this.state.poolSegmentInfo}
-        lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
-        pendingSegmentReward={this.state.pendingSegmentReward}
-        buttonPopup={this.state.buttonPopup}
-        farmNetwork={this.state.farmNetwork}
-        tvl={this.state.tvl}
-        apr={this.state.apr}
-        apyDaily={this.state.apyDaily}
-        apyWeekly={this.state.apyWeekly}
-        apyMonthly={this.state.apyMonthly}
-        farmLoading={this.state.farmLoading}
-        aprloading={this.state.aprloading}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        setI={this.setI}
-        setTrigger={this.setTrigger}
-        harvest={this.harvest}
-      />
-      farmInfoContent = <Farm
-        lpTokenBalance={this.state.lpTokenBalance}
-        purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
-        poolLength={this.state.poolLength}
-        deposit={this.deposit}
-        withdraw={this.withdraw}
-        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-        lpTokenInContract={this.state.lpTokenInContract}
-        totalrewardperblock={this.state.totalrewardperblock}
-        poolCapRewardToken={this.state.poolCapRewardToken}
-        poolMintedRewardToken={this.state.poolMintedRewardToken}
-        poolRewardToken={this.state.poolRewardToken}
-      />
-      distributionContent = <Distribution
-        wallet={this.state.wallet}
-        walletConnect={this.state.walletConnect}
-        connectWallet={this.connectWallet}
-        checkClaimAmount={this.checkClaimAmount}
-        claimDistributePurse={this.claimDistributePurse}
-        account={this.state.account}
-        rewardEndTime={this.state.rewardEndTime}
-        rewardStartTime={this.state.rewardStartTime}
-        distributedAmount={this.state.distributedAmount}
-        distributedPercentage={this.state.distributedPercentage}
-        rewardStartTimeDate={this.state.rewardStartTimeDate}
-        rewardEndTimeDate={this.state.rewardEndTimeDate}
-        claimAmount={this.state.claimAmount}
-        totalTransferAmount={this.state.totalTransferAmount}
-        purseTokenTotalSupply={this.state.purseTokenTotalSupply}
-      />
+    maincontent = <Main
+      lpTokenBalance={this.state.lpTokenBalance}
+      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+      poolLength={this.state.poolLength}
+      deposit={this.deposit}
+      withdraw={this.withdraw}
+      PURSEPrice={this.state.PURSEPrice}
+      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+      lpTokenInContract={this.state.lpTokenInContract}
+      totalrewardperblock={this.state.totalrewardperblock}
+      poolCapRewardToken={this.state.poolCapRewardToken}
+      poolMintedRewardToken={this.state.poolMintedRewardToken}
+      poolRewardToken={this.state.poolRewardToken}
+      totalBurnAmount={this.state.totalBurnAmount}
+      sum30BurnAmount={this.state.sum30BurnAmount}
+      totalTransferAmount={this.state.totalTransferAmount}
+      sum30TransferAmount={this.state.sum30TransferAmount}
+      cumulateTransfer={this.state.cumulateTransfer}
+      cumulateBurn={this.state.cumulateBurn}
+    />
+    menucontent = <Menu
+      lpTokenBalance={this.state.lpTokenBalance}
+      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+      totalpendingReward={this.state.totalpendingReward}
+      totalrewardperblock={this.state.totalrewardperblock}
+      userSegmentInfo={this.state.userSegmentInfo}
+      poolSegmentInfo={this.state.poolSegmentInfo}
+      lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+      pendingSegmentReward={this.state.pendingSegmentReward}
+      buttonPopup={this.state.buttonPopup}
+      farmNetwork={this.state.farmNetwork}
+      tvl={this.state.tvl}
+      apr={this.state.apr}
+      apyDaily={this.state.apyDaily}
+      apyWeekly={this.state.apyWeekly}
+      apyMonthly={this.state.apyMonthly}
+      farmLoading={this.state.farmLoading}
+      aprloading={this.state.aprloading}
+      deposit={this.deposit}
+      withdraw={this.withdraw}
+      setI={this.setI}
+      setTrigger={this.setTrigger}
+      harvest={this.harvest}
+      stakedBalance={this.state.stakedBalance}
+    />
+    depositcontent = <Deposit
+      lpTokenBalance={this.state.lpTokenBalance}
+      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+      deposit={this.deposit}
+      withdraw={this.withdraw}
+      i={this.state.i}
+      n={this.state.n}
+      userSegmentInfo={this.state.userSegmentInfo}
+      poolSegmentInfo={this.state.poolSegmentInfo}
+      lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+      c={this.state.lpTokenSegmentAsymbol}
+      pendingSegmentReward={this.state.pendingSegmentReward}
+      lpTokenSegmentAllowance={this.state.lpTokenSegmentAllowance}
+      wallet={this.state.wallet}
+      farmNetwork={this.state.farmNetwork}
+      harvest={this.harvest}
+      approve={this.approve}
+      connectWallet={this.connectWallet}
+      walletConnect={this.state.walletConnect}
+    />
+    oneinchContent = <Oneinch
+      lpTokenBalance={this.state.lpTokenBalance}
+      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+      totalpendingReward={this.state.totalpendingReward}
+      totalrewardperblock={this.state.totalrewardperblock}
+      userSegmentInfo={this.state.userSegmentInfo}
+      poolSegmentInfo={this.state.poolSegmentInfo}
+      lpTokenSegmentBalance={this.state.lpTokenSegmentBalance}
+      pendingSegmentReward={this.state.pendingSegmentReward}
+      buttonPopup={this.state.buttonPopup}
+      farmNetwork={this.state.farmNetwork}
+      tvl={this.state.tvl}
+      apr={this.state.apr}
+      apyDaily={this.state.apyDaily}
+      apyWeekly={this.state.apyWeekly}
+      apyMonthly={this.state.apyMonthly}
+      farmLoading={this.state.farmLoading}
+      aprloading={this.state.aprloading}
+      deposit={this.deposit}
+      withdraw={this.withdraw}
+      setI={this.setI}
+      setTrigger={this.setTrigger}
+      harvest={this.harvest}
+    />
+    farmInfoContent = <Farm
+      lpTokenBalance={this.state.lpTokenBalance}
+      purseTokenUpgradableBalance={this.state.purseTokenUpgradableBalance}
+      poolLength={this.state.poolLength}
+      deposit={this.deposit}
+      withdraw={this.withdraw}
+      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+      lpTokenInContract={this.state.lpTokenInContract}
+      totalrewardperblock={this.state.totalrewardperblock}
+      poolCapRewardToken={this.state.poolCapRewardToken}
+      poolMintedRewardToken={this.state.poolMintedRewardToken}
+      poolRewardToken={this.state.poolRewardToken}
+    />
+    distributionContent = <Distribution
+      wallet={this.state.wallet}
+      walletConnect={this.state.walletConnect}
+      connectWallet={this.connectWallet}
+      checkClaimAmount={this.checkClaimAmount}
+      claimDistributePurse={this.claimDistributePurse}
+      account={this.state.account}
+      rewardEndTime={this.state.rewardEndTime}
+      rewardStartTime={this.state.rewardStartTime}
+      distributedAmount={this.state.distributedAmount}
+      distributedPercentage={this.state.distributedPercentage}
+      rewardStartTimeDate={this.state.rewardStartTimeDate}
+      rewardEndTimeDate={this.state.rewardEndTimeDate}
+      claimAmount={this.state.claimAmount}
+      totalTransferAmount={this.state.totalTransferAmount}
+      purseTokenTotalSupply={this.state.purseTokenTotalSupply}
+    />
 
     return (
       <Router>
